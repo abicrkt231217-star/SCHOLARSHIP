@@ -2,92 +2,243 @@
 <html lang="hi" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Hello Bacchon 🚀 - ABIC Portal</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#0a0a0f',
+                        cardbg: '#13131a',
+                        neoncyan: '#06b6d4',
+                        neongreen: '#10b981',
+                        neonpurple: '#8b5cf6',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Poppins', sans-serif; background: #0a0a0f; }
+        body { font-family: 'Poppins', sans-serif; }
         .glass { background: rgba(19, 19, 26, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .glow-effect:hover { box-shadow: 0 0 20px rgba(6, 182, 212, 0.4); }
+        .star-btn:hover { transform: scale(1.2); }
+        html { scroll-behavior: smooth; }
     </style>
 </head>
-<body class="text-gray-100 min-h-screen">
+<body class="bg-darkbg text-gray-100 min-h-screen selection:bg-neoncyan selection:text-black">
 
-    <!-- Header & Poster Slider -->
-    <div class="max-w-4xl mx-auto px-4 py-6">
-        <h1 class="text-center text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-neoncyan to-neongreen mb-6">Hello Bacchon 🚀</h1>
-        
-        <!-- Poster Slider Section -->
-        <div id="poster-slider" class="w-full h-48 sm:h-64 rounded-2xl overflow-hidden mb-8 shadow-2xl border border-gray-800">
-            <img src="https://via.placeholder.com/800x400?text=Upload+Poster+in+Sheet" class="w-full h-full object-cover">
-        </div>
-
-        <!-- Navigation Grid -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
-            <button onclick="scrollToPanel('attendance')" class="glass p-4 rounded-xl hover:border-cyan-500 transition">Check Attendance</button>
-            <button onclick="scrollToPanel('status')" class="glass p-4 rounded-xl hover:border-purple-500 transition">Check Status</button>
-            <button onclick="scrollToPanel('know-pen')" class="glass p-4 rounded-xl hover:border-yellow-500 transition">Know PEN No.</button>
-            <button onclick="scrollToPanel('know-reg')" class="glass p-4 rounded-xl hover:border-pink-500 transition">Know Board Reg.</button>
-            <button onclick="scrollToPanel('suggestion')" class="glass p-4 rounded-xl hover:border-green-500 transition">Suggestion</button>
-            <button onclick="scrollToPanel('contact')" class="glass p-4 rounded-xl hover:border-blue-500 transition">Contact</button>
-        </div>
-
-        <!-- Panels (Added smooth scroll targets) -->
-        <div id="attendance" class="glass p-6 rounded-2xl mb-6">... (Existing Attendance Code) ...</div>
-        <div id="status" class="glass p-6 rounded-2xl mb-6">... (Existing Status Code) ...</div>
-        
-        <!-- Know Your Details Panels -->
-        <div id="know-pen" class="glass p-6 rounded-2xl mb-6">
-            <h3 class="text-xl font-bold mb-4">Know Your PEN No.</h3>
-            <input type="text" id="pen-search" onkeyup="searchStudent('PEN_No')" placeholder="Search by SR No, Name or Father Name..." class="w-full bg-black/40 p-3 rounded-xl border border-gray-700">
-            <div id="pen-result" class="mt-4 p-4 bg-black/50 rounded-xl"></div>
-        </div>
-
-        <!-- Footer with Counter -->
-        <footer class="text-center text-gray-500 py-8">
-            <p>Total Visits: <span id="visit-count" class="font-bold text-white">1,240</span></p>
-            <p class="text-xs mt-2">Designed for Aditya Birla Intermediate College</p>
-        </footer>
+    <!-- Top WhatsApp Channel Banner -->
+    <div class="bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 text-white text-xs sm:text-sm py-2 px-3 text-center font-medium flex flex-wrap justify-center items-center gap-2">
+        <span>🔥 Join Official WhatsApp Channel for instant updates!</span>
+        <a href="https://whatsapp.com/channel/0029VbE9nzJIHphK2l9p7s0f" target="_blank" class="bg-white text-black px-3 py-0.5 rounded-full font-bold text-xs hover:bg-opacity-90 transition shadow-md">Join Now</a>
     </div>
 
+    <!-- Main Container -->
+    <div class="max-w-4xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
+
+        <!-- Header -->
+        <header class="text-center mb-8 sm:mb-10">
+            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-neoncyan via-neonpurple to-neongreen bg-clip-text text-transparent">
+                Hello Bacchon 🚀
+            </h1>
+            <p class="text-gray-400 text-xs sm:text-base mt-2">Fast & Smart Scholarship Portal • Aditya Birla Intermediate College</p>
+        </header>
+
+        <!-- Poster Slider Section (Visual Header) -->
+        <div id="poster-slider" class="w-full h-48 sm:h-64 rounded-2xl overflow-hidden mb-8 shadow-2xl border border-gray-800 transition-all duration-500 ease-in-out">
+            <!-- Default/Placeholder Image until SheetDB loads -->
+            <img src="https://via.placeholder.com/800x400/0a0a0f/06b6d4?text=Loading+Poster..." class="w-full h-full object-cover" alt="Poster Slider Placeholder">
+        </div>
+
+        <!-- Dashboard Stats Section (Optional, keeping from previous beautiful template) -->
+        <section class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 sm:gap-3 mb-6 sm:mb-8">
+            <div class="glass p-3.5 sm:p-4 rounded-2xl text-center">
+                <p class="text-[11px] sm:text-xs text-gray-400">Received</p>
+                <h3 id="stat-received" class="text-xl sm:text-2xl font-bold text-neoncyan mt-1">...</h3>
+            </div>
+            <div class="glass p-3.5 sm:p-4 rounded-2xl text-center">
+                <p class="text-[11px] sm:text-xs text-gray-400">Final Submit</p>
+                <h3 id="stat-final" class="text-xl sm:text-2xl font-bold text-purple-400 mt-1">...</h3>
+            </div>
+            <!-- ... other stats ... -->
+            <div class="col-span-2 sm:col-span-1 glass p-3.5 sm:p-4 rounded-2xl text-center">
+                <p class="text-[11px] sm:text-xs text-gray-400">Correction</p>
+                <h3 id="stat-correction" class="text-xl sm:text-2xl font-bold text-yellow-400 mt-1">...</h3>
+            </div>
+        </section>
+
+        <!-- Navigation Buttons (Beautiful & Touch-Friendly) -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
+            <button onclick="scrollToPanel('attendance')" class="glass p-4 rounded-xl text-center glow-effect transition group">
+                <i class="fa-solid fa-user-check text-xl text-neoncyan mb-2 group-hover:scale-110 transition"></i>
+                <h4 class="font-semibold text-sm text-white">Check Attendance</h4>
+            </button>
+            <button onclick="scrollToPanel('status')" class="glass p-4 rounded-xl text-center glow-effect transition group">
+                <i class="fa-solid fa-file-invoice text-xl text-purple-400 mb-2 group-hover:scale-110 transition"></i>
+                <h4 class="font-semibold text-sm text-white">Check Status</h4>
+            </button>
+            <button onclick="scrollToPanel('know-pen')" class="glass p-4 rounded-xl text-center glow-effect transition group">
+                <i class="fa-solid fa-id-card text-xl text-yellow-400 mb-2 group-hover:scale-110 transition"></i>
+                <h4 class="font-semibold text-sm text-white">Know PEN No.</h4>
+            </button>
+            <button onclick="scrollToPanel('know-reg')" class="glass p-4 rounded-xl text-center glow-effect transition group">
+                <i class="fa-solid fa-graduation-cap text-xl text-pink-400 mb-2 group-hover:scale-110 transition"></i>
+                <h4 class="font-semibold text-sm text-white">Board Reg. No.</h4>
+            </button>
+            <button onclick="scrollToPanel('suggestion')" class="glass p-4 rounded-xl text-center glow-effect transition group">
+                <i class="fa-solid fa-comments text-xl text-neongreen mb-2 group-hover:scale-110 transition"></i>
+                <h4 class="font-semibold text-sm text-white">Suggestion</h4>
+            </button>
+            <button onclick="scrollToPanel('contact')" class="glass p-4 rounded-xl text-center glow-effect transition group">
+                <i class="fa-solid fa-address-book text-xl text-blue-400 mb-2 group-hover:scale-110 transition"></i>
+                <h4 class="font-semibold text-sm text-white">Contact</h4>
+            </button>
+        </div>
+
+        <!-- Panels (Scrolling targets with nice glass look) -->
+        <div id="attendance" class="glass p-6 rounded-2xl mb-6">
+            <h3 class="text-xl font-bold mb-4 text-neoncyan">Check Attendance</h3>
+            ... (Attendance Form Code) ...
+        </div>
+        <div id="status" class="glass p-6 rounded-2xl mb-6">
+            <h3 class="text-xl font-bold mb-4 text-neonpurple">Check Status</h3>
+            ... (Status Form Code) ...
+        </div>
+
+        <!-- Know Your Details Panels (New & Integrated) -->
+        <div id="know-pen" class="glass p-6 rounded-2xl mb-6">
+            <h3 class="text-xl font-bold mb-4 text-yellow-400">Know Your PEN No.</h3>
+            <input type="text" id="pen-search" onkeyup="searchStudent('PEN_No')" placeholder="Search by SR No, Name, or Father Name..." class="w-full bg-black/40 p-3 rounded-xl border border-gray-700 text-sm focus:outline-none focus:border-yellow-400">
+            <div id="pen-result" class="mt-4 p-4 bg-black/50 rounded-xl text-sm min-h-[60px] text-gray-300"></div>
+        </div>
+        <div id="know-reg" class="glass p-6 rounded-2xl mb-6">
+            <h3 class="text-xl font-bold mb-4 text-pink-400">Know Your Board Reg. No.</h3>
+            <input type="text" id="reg-search" onkeyup="searchStudent('Board_Reg_No')" placeholder="Search by SR No, Name, or Father Name..." class="w-full bg-black/40 p-3 rounded-xl border border-gray-700 text-sm focus:outline-none focus:border-pink-400">
+            <div id="reg-result" class="mt-4 p-4 bg-black/50 rounded-xl text-sm min-h-[60px] text-gray-300"></div>
+        </div>
+        
+        <!-- Suggestion Panel -->
+        <div id="suggestion" class="glass p-6 rounded-2xl mb-6">
+            <h3 class="text-xl font-bold mb-4 text-neongreen">Suggestion Box</h3>
+            ... (Suggestion Form) ...
+        </div>
+
+        <!-- Contact Panel -->
+        <div id="contact" class="glass p-6 rounded-2xl mb-6">
+            <h3 class="text-xl font-bold mb-4 text-blue-400">Contact Office</h3>
+            ... (Contact Details) ...
+        </div>
+
+        <!-- Footer with Auto-Updated Counter -->
+        <footer class="text-center text-xs text-gray-500 py-6 border-t border-gray-800">
+            <p>Total Visits: <span id="visit-count" class="font-bold text-white animate-pulse">...</span></p>
+            <p class="mt-2">Designed with 💙 for Students • Aditya Birla Intermediate College</p>
+        </footer>
+
+    </div>
+
+    <!-- JavaScript Logic -->
     <script>
-        // Auto Scroll Logic
+        const API_URL = "https://sheetdb.io/api/v1/a137v3i0ffmy9";
+
+        // 1. Auto Scroll Logic
         function scrollToPanel(id) {
             document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Global Search Logic for PEN/Board Reg
-        async function searchStudent(type) {
-            let query = document.getElementById(type === 'PEN_No' ? 'pen-search' : 'reg-search').value.toLowerCase();
-            if(query.length < 3) return;
-
-            let response = await fetch("https://sheetdb.io/api/v1/a137v3i0ffmy9?sheet=StudentDatabase");
-            let data = await response.json();
-            
-            let result = data.find(s => 
-                s.SR_No.toLowerCase().includes(query) || 
-                s.Student_Name.toLowerCase().includes(query) || 
-                s.Father_Name.toLowerCase().includes(query)
-            );
-
-            let resDiv = document.getElementById(type === 'PEN_No' ? 'pen-result' : 'reg-result');
-            if(result) {
-                resDiv.innerHTML = `<p><strong>${result.Student_Name}</strong> (F: ${result.Father_Name})<br> Result: ${type === 'PEN_No' ? result.PEN_No : result.Board_Reg_No}</p>`;
-            } else {
-                resDiv.innerHTML = "No record found.";
-            }
-        }
-
-        // Load Posters dynamically from Sheet
+        // 2. Poster Slider Logic
         async function loadPosters() {
-            let res = await fetch("https://sheetdb.io/api/v1/a137v3i0ffmy9?sheet=Posters");
-            let data = await res.json();
-            if(data.length > 0) {
-                document.getElementById('poster-slider').innerHTML = `<img src="${data[0].Image_URL}" class="w-full h-full object-cover">`;
+            let container = document.getElementById('poster-slider');
+            try {
+                let res = await fetch(`${API_URL}?sheet=Posters`);
+                let data = await res.json();
+                if(data.length > 0 && data[0].Image_URL) {
+                    container.innerHTML = `<img src="${data[0].Image_URL}" class="w-full h-full object-cover transition-all duration-1000 ease-in-out" alt="Dynamic ABIC Portal Poster">`;
+                } else {
+                    container.innerHTML = `<img src="https://via.placeholder.com/800x400/0a0a0f/06b6d4?text=Dynamic+Poster+Comes+Here" class="w-full h-full object-cover" alt="Placeholder Poster">`;
+                }
+            } catch (err) {
+                console.error("Poster Load Error", err);
             }
         }
 
-        window.onload = () => { loadDashboardStats(); loadPosters(); };
-    </script>
-</body>
-</html>
+        // 3. Global Search Logic for PEN/Board Reg
+        async function searchStudent(searchType) {
+            // Identify which search box is being used
+            let query = "";
+            let resDiv = null;
+            
+            if (searchType === 'PEN_No') {
+                query = document.getElementById('pen-search').value.toLowerCase();
+                resDiv = document.getElementById('pen-result');
+            } else {
+                query = document.getElementById('reg-search').value.toLowerCase();
+                resDiv = document.getElementById('reg-result');
+            }
+
+            if(query.length < 3) {
+                resDiv.innerHTML = "Kam se kam 3 akshar likhein...";
+                return;
+            }
+
+            resDiv.innerHTML = `<p class="text-cyan-400 text-xs animate-pulse">Searching database...</p>`;
+
+            try {
+                let response = await fetch(`${API_URL}?sheet=StudentDatabase`);
+                let data = await response.json();
+                
+                // Find match by SR No, Name, or Father Name
+                let result = data.find(s => 
+                    (s.SR_No && s.SR_No.toLowerCase().includes(query)) || 
+                    (s.Student_Name && s.Student_Name.toLowerCase().includes(query)) || 
+                    (s.Father_Name && s.Father_Name.toLowerCase().includes(query))
+                );
+
+                if(result) {
+                    // Clean up null/undefined values for display
+                    let name = result.Student_Name || 'N/A';
+                    let father = result.Father_Name || 'N/A';
+                    let pen = result.PEN_No || 'Not Available';
+                    let boardReg = result.Board_Reg_No || 'Not Available';
+                    let sr = result.SR_No || 'N/A';
+
+                    resDiv.innerHTML = `
+                        <div class="space-y-1 text-white">
+                            <p><strong>Name:</strong> <span class="text-neoncyan">${name}</span></p>
+                            <p><strong>Father:</strong> ${father}</p>
+                            <p><strong>SR No:</strong> ${sr}</p>
+                            <p class="mt-2 pt-2 border-t border-gray-700"><strong>${searchType.replace('_', ' ')}:</strong> <span class="text-xl font-bold text-neongreen">${(searchType === 'PEN_No' ? pen : boardReg)}</span></p>
+                        </div>
+                    `;
+                } else {
+                    resDiv.innerHTML = '<p class="text-red-400">Koi record nahi mila. Sahi jaankari daalein.</p>';
+                }
+            } catch (err) {
+                console.error("Search Error:", err);
+                resDiv.innerHTML = '<p class="text-red-400">Database load karne mein error aayi.</p>';
+            }
+        }
+
+        // 4. Visitor Counter Logic
+        async function loadVisitorCount() {
+            try {
+                // To implement this, you would ideally need a backend or a dedicated counter service.
+                // For a pure SheetDB solution, you would increment a cell in the sheet on page load.
+                // Here we are simulating it to fit the design.
+                let response = await fetch(`${API_URL}?sheet=VisitorCount&single=true`);
+                let data = await response.json();
+                let currentCount = parseInt(data.Total_Visits) || 1240;
+                
+                // Increment count (this requires SheetDB write access, which you have)
+                fetch(`${API_URL}?sheet=VisitorCount`, {
+                    method: 'PATCH', // or PUT depending on setup
+                    headers:
