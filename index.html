@@ -27,11 +27,11 @@
     <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Yahan se Auto-Scroll ke liye zaroori CSS shuru hoti hai */
+        /* --- Yahan se Auto-Scroll ke liye zaroori CSS shuru --- */
         html {
             scroll-behavior: smooth;
         }
-        /* CSS khatam */
+        /* --- CSS khatam --- */
 
         body { font-family: 'Poppins', sans-serif; }
         .glass { background: rgba(19, 19, 26, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
@@ -93,7 +93,7 @@
             </div>
         </section>
 
-        <!-- Dynamic Notice Board Section (Synced from Google Sheet) -->
+        <!-- Dynamic Notice Board Section -->
         <section class="glass p-4 sm:p-5 rounded-2xl mb-6 sm:mb-8 border-l-4 border-neoncyan">
             <h2 class="text-base sm:text-lg font-bold flex items-center gap-2 text-neoncyan mb-3">
                 <i class="fa-solid fa-bullhorn"></i> Jaruri Suchna / Live Notice Board
@@ -103,7 +103,7 @@
             </div>
         </section>
 
-        <!-- Navigation Buttons (Sudhare hue jo ab Auto-Scroll karenge) -->
+        <!-- Navigation Buttons -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
             <button onclick="switchTab('attendance')" class="glass p-3.5 sm:p-4 rounded-xl text-center glow-effect transition group">
                 <i class="fa-solid fa-user-check text-xl sm:text-2xl text-neoncyan mb-2 group-hover:scale-110 transition"></i>
@@ -126,7 +126,6 @@
                 <span class="text-[9px] sm:text-[10px] text-gray-500 block mt-1">Helpdesk</span>
             </button>
         </div>
-        <!-- Navigation Buttons End -->
 
         <!-- 1. Check Attendance Panel -->
         <div id="panel-attendance" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8">
@@ -179,5 +178,4 @@
             </div>
         </div>
 
-        <!-- 3. Suggestion Box & Live Admin List Panel -->
-        <div id="panel-suggestion" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden space-
+        <!-- 3
