@@ -96,7 +96,7 @@
         </section>
 
         <!-- Navigation Buttons -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 sm:gap-3 mb-6 sm:mb-8">
             <button onclick="switchTab('attendance')" class="glass p-3.5 sm:p-4 rounded-xl text-center glow-effect transition group">
                 <i class="fa-solid fa-user-check text-xl sm:text-2xl text-neoncyan mb-2 group-hover:scale-110 transition"></i>
                 <h4 class="font-semibold text-xs sm:text-sm">Check Attendance</h4>
@@ -107,12 +107,17 @@
                 <h4 class="font-semibold text-xs sm:text-sm">Check Status</h4>
                 <span class="text-[9px] sm:text-[10px] text-gray-500 block mt-1">Live Track</span>
             </button>
+            <button onclick="switchTab('regsearch')" class="glass p-3.5 sm:p-4 rounded-xl text-center glow-effect transition group">
+                <i class="fa-solid fa-id-card text-xl sm:text-2xl text-yellow-400 mb-2 group-hover:scale-110 transition"></i>
+                <h4 class="font-semibold text-xs sm:text-sm">Find Board Reg No.</h4>
+                <span class="text-[9px] sm:text-[10px] text-gray-500 block mt-1">Instant Search</span>
+            </button>
             <button onclick="switchTab('suggestion')" class="glass p-3.5 sm:p-4 rounded-xl text-center glow-effect transition group">
                 <i class="fa-solid fa-comments text-xl sm:text-2xl text-neongreen mb-2 group-hover:scale-110 transition"></i>
                 <h4 class="font-semibold text-xs sm:text-sm">Suggestion Box</h4>
                 <span class="text-[9px] sm:text-[10px] text-gray-500 block mt-1">Open 24/7</span>
             </button>
-            <button onclick="switchTab('contact')" class="glass p-3.5 sm:p-4 rounded-xl text-center glow-effect transition group">
+            <button onclick="switchTab('contact')" class="glass p-3.5 sm:p-4 rounded-xl text-center glow-effect transition group col-span-2 sm:col-span-1">
                 <i class="fa-solid fa-address-book text-xl sm:text-2xl text-yellow-400 mb-2 group-hover:scale-110 transition"></i>
                 <h4 class="font-semibold text-xs sm:text-sm">Contact Office</h4>
                 <span class="text-[9px] sm:text-[10px] text-gray-500 block mt-1">Helpdesk</span>
@@ -168,7 +173,20 @@
             </div>
         </div>
 
-        <!-- 3. Suggestion Box Panel -->
+        <!-- 3. Find Board Registration No. Panel (REGISTRATION) -->
+        <div id="panel-regsearch" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden">
+            <h3 class="text-lg sm:text-xl font-bold mb-3 flex items-center gap-2 text-yellow-400">
+                <i class="fa-solid fa-id-card"></i> Board Registration No. Finder
+            </h3>
+            <p class="text-xs text-gray-400 mb-3">Search by Admission No. (SR No.)</p>
+            <div class="flex flex-col sm:flex-row gap-2 mb-4 sm:mb-6">
+                <input type="text" id="reg-input" placeholder="Enter Admission No. (SR No.)..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 sm:py-2.5 text-sm focus:outline-none focus:border-yellow-400 text-white">
+                <button onclick="checkBoardRegNo()" class="w-full sm:w-auto bg-yellow-500 text-black font-semibold px-6 py-3 sm:py-2.5 rounded-xl text-sm hover:bg-opacity-90 transition shadow-lg shadow-yellow-500/20">Find No.</button>
+            </div>
+            <div id="reg-result" class="hidden p-4 rounded-xl bg-black/50 border border-gray-800 text-xs sm:text-sm space-y-2"></div>
+        </div>
+
+        <!-- 4. Suggestion Box Panel -->
         <div id="panel-suggestion" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden space-y-6">
             <div>
                 <h3 class="text-lg sm:text-xl font-bold mb-3 flex items-center gap-2">
@@ -201,7 +219,7 @@
             </div>
         </div>
 
-        <!-- 4. Contact Office Panel -->
+        <!-- 5. Contact Office Panel -->
         <div id="panel-contact" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden space-y-4">
             <h3 class="text-lg sm:text-xl font-bold mb-2 flex items-center gap-2 text-yellow-400">
                 <i class="fa-solid fa-id-badge"></i> Office Contact Details
@@ -245,7 +263,7 @@
         const db = firebase.database();
 
         function switchTab(tabName) {
-            ['attendance', 'status', 'suggestion', 'contact'].forEach(t => {
+            ['attendance', 'status', 'regsearch', 'suggestion', 'contact'].forEach(t => {
                 document.getElementById(`panel-${t}`).classList.add('hidden');
             });
             document.getElementById(`panel-${tabName}`).classList.remove('hidden');
@@ -351,7 +369,7 @@
                 });
         }
 
-        // 3. Check Attendance (Queries 'Attendance' node)
+        // 3. Check Attendance
         function checkAttendance() {
             let query = document.getElementById('att-input').value.trim().toUpperCase();
             let resBox = document.getElementById('att-result');
@@ -414,7 +432,7 @@
                 });
         }
 
-        // 4. Check Status (Queries 'FormStatus')
+        // 4. Check Status
         function checkStatus() {
             let query = document.getElementById('status-input').value.trim().toUpperCase();
             let resBox = document.getElementById('status-result');
@@ -498,7 +516,47 @@
                 });
         }
 
-        // 5. Load Suggestions
+        // 5. Check Board Registration No. (Direct Path Search in 'REGISTRATION' node)
+        function checkBoardRegNo() {
+            let query = document.getElementById('reg-input').value.trim().toUpperCase();
+            let resBox = document.getElementById('reg-result');
+            resBox.classList.remove('hidden');
+
+            if(!query) {
+                resBox.innerHTML = `<p class="text-red-400 text-sm">Kripya Admission No. (SR No.) enter karein.</p>`;
+                return;
+            }
+
+            resBox.innerHTML = `<p class="text-yellow-400 text-sm animate-pulse">Searching in database...</p>`;
+
+            db.ref('REGISTRATION/' + query).once('value')
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        let student = snapshot.val();
+                        
+                        let admVal = student.AdmNo || query;
+                        let nameVal = student.Name || 'N/A';
+                        let classVal = student.Class || 'N/A';
+                        let boardRegVal = student.BoardRegistrationNo || 'N/A';
+
+                        resBox.innerHTML = `
+                            <div class="space-y-2 text-xs sm:text-sm text-white bg-black/40 p-3.5 rounded-xl border border-gray-700">
+                                <p><strong>Name:</strong> ${nameVal}</p>
+                                <p><strong>Admission No (SR):</strong> ${admVal} | <strong>Class:</strong> ${classVal}</p>
+                                <p class="pt-1"><strong>Board Registration No:</strong> <span class="text-yellow-400 font-bold text-base">${boardRegVal}</span></p>
+                            </div>
+                        `;
+                    } else {
+                        resBox.innerHTML = `<p class="text-red-400 text-sm">Yeh Admission No. nahi mila! Sahi number daalein.</p>`;
+                    }
+                })
+                .catch((err) => {
+                    console.error("RegSearch Error:", err);
+                    resBox.innerHTML = `<p class="text-red-400 text-sm">Connection Error! Dobara koshish karein.</p>`;
+                });
+        }
+
+        // 6. Load Suggestions
         function loadAdminSuggestions() {
             let listContainer = document.getElementById('admin-suggestions-list');
             db.ref('Suggestions').once('value')
@@ -528,7 +586,7 @@
                 });
         }
 
-        // 6. Submit Suggestion
+        // 7. Submit Suggestion
         function submitSuggestion(e) {
             e.preventDefault();
             let name = document.getElementById('sug-name').value || "Anonymous";
