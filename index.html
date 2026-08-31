@@ -35,9 +35,100 @@
         body { font-family: 'Poppins', sans-serif; }
         .glass { background: rgba(19, 19, 26, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .glow-effect:hover { box-shadow: 0 0 20px rgba(6, 182, 212, 0.4); }
+        
+        /* Sticky AI Robo Assistant (Scroll Proof) */
+        @keyframes floatBounce {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        @keyframes prabhuDevaDance {
+            0% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-12px) rotate(-8deg) scale(1.08); }
+            50% { transform: translateY(0) rotate(0deg) scale(1); }
+            75% { transform: translateY(-12px) rotate(8deg) scale(1.08); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        .robo-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            animation: floatBounce 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .dancing {
+            animation: prabhuDevaDance 0.6s ease-in-out infinite !important;
+        }
+        .robo-bubble {
+            background: rgba(139, 92, 246, 0.95);
+            backdrop-flow: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 18px 18px 0 18px;
+            font-size: 11px;
+            font-weight: 500;
+            max-width: 190px;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5);
+            pointer-events: auto;
+            transition: all 0.3s ease;
+        }
+        .robo-profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: auto;
+        }
+        .robo-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid #06b6d4;
+            background: #13131a;
+            object-fit: cover;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+            cursor: pointer;
+        }
+        .robo-name {
+            background: #06b6d4;
+            color: #000;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-top: -8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+
+        /* YouTube Banner Style Slider (Crop Fix: contain & responsive height) */
+        .yt-banner {
+            width: 100%;
+            height: auto;
+            max-height: 220px;
+            object-fit: contain;
+            background: #13131a;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: opacity 1s ease-in-out;
+        }
     </style>
 </head>
-<body class="bg-darkbg text-gray-100 min-h-screen selection:bg-neoncyan selection:text-black">
+<body class="bg-darkbg text-gray-100 min-h-screen selection:bg-neoncyan selection:text-black" onclick="triggerFunnyTalk(event)">
+
+    <!-- Sticky AI Robo Assistant with Name "Gaurav" (Scroll Proof) -->
+    <div class="robo-container">
+        <div id="robo-bubble" class="robo-bubble">
+            🤖 Arre bacchon! Portal pe swagat hai. Kuch help chahiye toh batao!
+        </div>
+        <div class="robo-profile" onclick="roboDanceAction()" title="Click me for fun!">
+            <img id="robo-img" src="https://i.ibb.co/TxnNXPrj/ezgif-53f8104525509036.gif" alt="Gaurav Avatar" class="robo-avatar glow-effect">
+            <span class="robo-name">Gaurav</span>
+        </div>
+    </div>
 
     <!-- Top WhatsApp Channel Banner -->
     <div class="bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 text-white text-xs sm:text-sm py-2 px-3 text-center font-medium flex flex-wrap justify-center items-center gap-2">
@@ -48,13 +139,18 @@
     <!-- Main Container -->
     <div class="max-w-4xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
 
-        <!-- Header -->
-        <header class="text-center mb-8 sm:mb-10">
+        <!-- Original Top Header Style -->
+        <header class="text-center mb-6">
             <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-neoncyan via-neonpurple to-neongreen bg-clip-text text-transparent">
                 Hello Bacchon 🚀
             </h1>
             <p class="text-gray-400 text-xs sm:text-base mt-2">Fast & Smart Scholarship Portal • Aditya Birla Intermediate College</p>
         </header>
+
+        <!-- Auto-Changing Banner Section (Full View Fix) -->
+        <section class="mb-8 overflow-hidden rounded-2xl glass p-1.5 relative shadow-2xl flex justify-center items-center bg-cardbg">
+            <img id="banner-slider" src="https://i.ibb.co/fLZZ6j4/Chat-GPT-Image-Aug-31-2026-06-33-36-PM-2.png" alt="College Banner" class="yt-banner">
+        </section>
 
         <!-- Dashboard Stats Section -->
         <section class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 sm:gap-3 mb-6 sm:mb-8">
@@ -96,31 +192,30 @@
         </section>
 
         <!-- Navigation Buttons -->
-        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 sm:gap-3 mb-6 sm:mb-8">
-            <button onclick="switchTab('attendance')" class="glass p-3.5 sm:p-4 rounded-xl text-center glow-effect transition group">
-                <i class="fa-solid fa-user-check text-xl sm:text-2xl text-neoncyan mb-2 group-hover:scale-110 transition"></i>
-                <h4 class="font-semibold text-xs sm:text-sm">Check Attendance</h4>
-                <span class="text-[9px] sm:text-[10px] text-gray-500 block mt-1">Instant Fast</span>
+        <div class="grid grid-cols-2 sm:grid-cols-6 gap-2 sm:gap-3 mb-6 sm:mb-8">
+            <button onclick="switchTab('attendance'); updateRobo('attendance')" class="glass p-3 rounded-xl text-center glow-effect transition group">
+                <i class="fa-solid fa-user-check text-xl text-neoncyan mb-1 group-hover:scale-110 transition"></i>
+                <h4 class="font-semibold text-xs">Attendance</h4>
             </button>
-            <button onclick="switchTab('status')" class="glass p-3.5 sm:p-4 rounded-xl text-center glow-effect transition group">
-                <i class="fa-solid fa-file-invoice text-xl sm:text-2xl text-purple-400 mb-2 group-hover:scale-110 transition"></i>
-                <h4 class="font-semibold text-xs sm:text-sm">Check Status</h4>
-                <span class="text-[9px] sm:text-[10px] text-gray-500 block mt-1">Live Track</span>
+            <button onclick="switchTab('status'); updateRobo('status')" class="glass p-3 rounded-xl text-center glow-effect transition group">
+                <i class="fa-solid fa-file-invoice text-xl text-purple-400 mb-1 group-hover:scale-110 transition"></i>
+                <h4 class="font-semibold text-xs">Status</h4>
             </button>
-            <button onclick="switchTab('regsearch')" class="glass p-3.5 sm:p-4 rounded-xl text-center glow-effect transition group">
-                <i class="fa-solid fa-id-card text-xl sm:text-2xl text-yellow-400 mb-2 group-hover:scale-110 transition"></i>
-                <h4 class="font-semibold text-xs sm:text-sm">Find Board Reg No.</h4>
-                <span class="text-[9px] sm:text-[10px] text-gray-500 block mt-1">Instant Search</span>
+            <button onclick="switchTab('regsearch'); updateRobo('regsearch')" class="glass p-3 rounded-xl text-center glow-effect transition group">
+                <i class="fa-solid fa-id-card text-xl text-yellow-400 mb-1 group-hover:scale-110 transition"></i>
+                <h4 class="font-semibold text-xs">Board Reg No</h4>
             </button>
-            <button onclick="switchTab('suggestion')" class="glass p-3.5 sm:p-4 rounded-xl text-center glow-effect transition group">
-                <i class="fa-solid fa-comments text-xl sm:text-2xl text-neongreen mb-2 group-hover:scale-110 transition"></i>
-                <h4 class="font-semibold text-xs sm:text-sm">Suggestion Box</h4>
-                <span class="text-[9px] sm:text-[10px] text-gray-500 block mt-1">Open 24/7</span>
+            <button onclick="switchTab('otrsearch'); updateRobo('otrsearch')" class="glass p-3 rounded-xl text-center glow-effect transition group">
+                <i class="fa-solid fa-key text-xl text-neongreen mb-1 group-hover:scale-110 transition"></i>
+                <h4 class="font-semibold text-xs">OTR & Last Reg</h4>
             </button>
-            <button onclick="switchTab('contact')" class="glass p-3.5 sm:p-4 rounded-xl text-center glow-effect transition group col-span-2 sm:col-span-1">
-                <i class="fa-solid fa-address-book text-xl sm:text-2xl text-yellow-400 mb-2 group-hover:scale-110 transition"></i>
-                <h4 class="font-semibold text-xs sm:text-sm">Contact Office</h4>
-                <span class="text-[9px] sm:text-[10px] text-gray-500 block mt-1">Helpdesk</span>
+            <button onclick="switchTab('suggestion'); updateRobo('suggestion')" class="glass p-3 rounded-xl text-center glow-effect transition group">
+                <i class="fa-solid fa-comments text-xl text-neongreen mb-1 group-hover:scale-110 transition"></i>
+                <h4 class="font-semibold text-xs">Suggestions</h4>
+            </button>
+            <button onclick="switchTab('contact'); updateRobo('contact')" class="glass p-3 rounded-xl text-center glow-effect transition group col-span-2 sm:col-span-1">
+                <i class="fa-solid fa-address-book text-xl text-yellow-400 mb-1 group-hover:scale-110 transition"></i>
+                <h4 class="font-semibold text-xs">Contact Office</h4>
             </button>
         </div>
 
@@ -131,8 +226,8 @@
             </h3>
             <p class="text-xs text-gray-400 mb-3">Search by Registration No. or SR No.</p>
             <div class="flex flex-col sm:flex-row gap-2 mb-4 sm:mb-6">
-                <input type="text" id="att-input" placeholder="Enter Registration No. or SR No..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 sm:py-2.5 text-sm focus:outline-none focus:border-neoncyan">
-                <button onclick="checkAttendance()" class="w-full sm:w-auto bg-neoncyan text-black font-semibold px-6 py-3 sm:py-2.5 rounded-xl text-sm hover:bg-opacity-90 transition">Search</button>
+                <input type="text" id="att-input" oninput="updateRobo('typing')" placeholder="Enter Registration No. or SR No..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neoncyan text-white">
+                <button onclick="checkAttendance()" class="w-full sm:w-auto bg-neoncyan text-black font-semibold px-6 py-3 rounded-xl text-sm hover:bg-opacity-90 transition">Search</button>
             </div>
             <div id="att-result" class="hidden p-4 rounded-xl bg-black/50 border border-gray-800 text-xs sm:text-sm"></div>
         </div>
@@ -144,8 +239,8 @@
             </h3>
             <p class="text-xs text-gray-400 mb-3">Search by Registration No. or SR No.</p>
             <div class="flex flex-col sm:flex-row gap-2 mb-4 sm:mb-6">
-                <input type="text" id="status-input" placeholder="Enter Registration No. or SR No..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 sm:py-2.5 text-sm focus:outline-none focus:border-purple-500">
-                <button onclick="checkStatus()" class="w-full sm:w-auto bg-purple-600 text-white font-semibold px-6 py-3 sm:py-2.5 rounded-xl text-sm hover:bg-opacity-90 transition">Track</button>
+                <input type="text" id="status-input" oninput="updateRobo('typing')" placeholder="Enter Registration No. or SR No..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-purple-500 text-white">
+                <button onclick="checkStatus()" class="w-full sm:w-auto bg-purple-600 text-white font-semibold px-6 py-3 rounded-xl text-sm hover:bg-opacity-90 transition">Track</button>
             </div>
             
             <div id="status-result" class="hidden space-y-6">
@@ -173,20 +268,33 @@
             </div>
         </div>
 
-        <!-- 3. Find Board Registration No. Panel (REGISTRATION) -->
+        <!-- 3. Find Board Registration No. Panel -->
         <div id="panel-regsearch" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden">
             <h3 class="text-lg sm:text-xl font-bold mb-3 flex items-center gap-2 text-yellow-400">
                 <i class="fa-solid fa-id-card"></i> Board Registration No. Finder
             </h3>
             <p class="text-xs text-gray-400 mb-3">Search by Admission No. (SR No.)</p>
             <div class="flex flex-col sm:flex-row gap-2 mb-4 sm:mb-6">
-                <input type="text" id="reg-input" placeholder="Enter Admission No. (SR No.)..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 sm:py-2.5 text-sm focus:outline-none focus:border-yellow-400 text-white">
-                <button onclick="checkBoardRegNo()" class="w-full sm:w-auto bg-yellow-500 text-black font-semibold px-6 py-3 sm:py-2.5 rounded-xl text-sm hover:bg-opacity-90 transition shadow-lg shadow-yellow-500/20">Find No.</button>
+                <input type="text" id="reg-input" oninput="updateRobo('typing')" placeholder="Enter Admission No. (SR No.)..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 text-white">
+                <button onclick="checkBoardRegNo()" class="w-full sm:w-auto bg-yellow-500 text-black font-semibold px-6 py-3 rounded-xl text-sm hover:bg-opacity-90 transition shadow-lg shadow-yellow-500/20">Find No.</button>
             </div>
             <div id="reg-result" class="hidden p-4 rounded-xl bg-black/50 border border-gray-800 text-xs sm:text-sm space-y-2"></div>
         </div>
 
-        <!-- 4. Suggestion Box Panel -->
+        <!-- 4. OTR & Last Year Registration Finder Panel -->
+        <div id="panel-otrsearch" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden">
+            <h3 class="text-lg sm:text-xl font-bold mb-3 flex items-center gap-2 text-neongreen">
+                <i class="fa-solid fa-key"></i> OTR & Last Year Registration Finder
+            </h3>
+            <p class="text-xs text-gray-400 mb-3">Search by SR No. (Admission No.) or Name.</p>
+            <div class="flex flex-col sm:flex-row gap-2 mb-4 sm:mb-6">
+                <input type="text" id="otr-input" oninput="updateRobo('typing')" placeholder="Enter SR No. or Name..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neongreen text-white">
+                <button onclick="checkOTRRecord()" class="w-full sm:w-auto bg-neongreen text-black font-semibold px-6 py-3 rounded-xl text-sm hover:bg-opacity-90 transition shadow-lg shadow-neongreen/20">Find Details</button>
+            </div>
+            <div id="otr-result" class="hidden p-4 rounded-xl bg-black/50 border border-gray-800 text-xs sm:text-sm space-y-2"></div>
+        </div>
+
+        <!-- 5. Suggestion Box Panel -->
         <div id="panel-suggestion" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden space-y-6">
             <div>
                 <h3 class="text-lg sm:text-xl font-bold mb-3 flex items-center gap-2">
@@ -196,13 +304,13 @@
                 <form onsubmit="submitSuggestion(event)" class="space-y-3 sm:space-y-4">
                     <div>
                         <label class="block text-xs text-gray-400 mb-1">Aapka Naam (Optional)</label>
-                        <input type="text" id="sug-name" placeholder="Enter your name" class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 sm:py-2.5 text-sm focus:outline-none focus:border-neongreen">
+                        <input type="text" id="sug-name" placeholder="Enter your name" class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neongreen text-white">
                     </div>
                     <div>
                         <label class="block text-xs text-gray-400 mb-1">Aapka Sujhav / Message</label>
-                        <textarea id="sug-msg" rows="3" placeholder="Apna message yahan likhein..." required class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 sm:py-2.5 text-sm focus:outline-none focus:border-neongreen"></textarea>
+                        <textarea id="sug-msg" rows="3" placeholder="Apna message yahan likhein..." required class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neongreen text-white"></textarea>
                     </div>
-                    <button type="submit" class="w-full bg-neongreen text-black font-semibold py-3 sm:py-2.5 rounded-xl text-sm hover:bg-opacity-90 transition">Submit Suggestion</button>
+                    <button type="submit" class="w-full bg-neongreen text-black font-semibold py-3 rounded-xl text-sm hover:bg-opacity-90 transition">Submit Suggestion</button>
                 </form>
                 <div id="sug-success" class="hidden mt-3 text-center text-neongreen text-xs sm:text-sm font-medium">✨ Aapka sujhav safalpurvak bhej diya gaya hai!</div>
             </div>
@@ -219,7 +327,7 @@
             </div>
         </div>
 
-        <!-- 5. Contact Office Panel -->
+        <!-- 6. Contact Office Panel -->
         <div id="panel-contact" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden space-y-4">
             <h3 class="text-lg sm:text-xl font-bold mb-2 flex items-center gap-2 text-yellow-400">
                 <i class="fa-solid fa-id-badge"></i> Office Contact Details
@@ -239,9 +347,10 @@
                 </div>
                 <div class="bg-black/40 p-3.5 sm:p-4 rounded-xl border border-gray-800">
                     <p class="text-[11px] text-gray-400">Social Channels</p>
-                    <div class="flex gap-3 mt-1 font-bold text-xs">
+                    <div class="flex flex-wrap gap-3 mt-1 font-bold text-xs">
                         <a href="https://whatsapp.com/channel/0029VbE9nzJIHphK2l9p7s0f" target="_blank" class="text-neongreen hover:underline"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
                         <a href="https://www.instagram.com/gauravshyamshukla4?igsh=cmt6Y3N5dGt3aHZ2&igsi=cmt6Y3N5dGt3aHZ2&utm_source=qr" target="_blank" class="text-pink-400 hover:underline"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                        <a href="https://snapchat.com/t/JceUuZzs" target="_blank" class="text-yellow-400 hover:underline"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
                     </div>
                 </div>
             </div>
@@ -262,8 +371,99 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
+        // 6 Second Banner Slider Logic
+        const banners = [
+            "https://i.ibb.co/fLZZ6j4/Chat-GPT-Image-Aug-31-2026-06-33-36-PM-2.png", 
+            "https://i.ibb.co/7tsHxYCv/Chat-GPT-Image-Aug-31-2026-06-33-34-PM-1.png"
+        ];
+        let currentBannerIndex = 0;
+        setInterval(() => {
+            currentBannerIndex = (currentBannerIndex + 1) % banners.length;
+            let sliderImg = document.getElementById('banner-slider');
+            if(sliderImg) {
+                sliderImg.style.opacity = 0;
+                setTimeout(() => {
+                    sliderImg.src = banners[currentBannerIndex];
+                    sliderImg.style.opacity = 1;
+                }, 500);
+            }
+        }, 6000);
+
+        // Avatar GIFs mapping
+        const avatarGifs = {
+            welcome: "https://i.ibb.co/TxnNXPrj/ezgif-53f8104525509036.gif",
+            typing: "https://i.ibb.co/QvNK7zLN/Chat-GPT-Image-Aug-31-2026-06-16-05-PM.png",
+            dance: "https://i.ibb.co/jkfZqpcq/Chat-GPT-Image-Aug-31-2026-06-00-52-PM.png",
+            notfound: "https://i.ibb.co/RkX81JB5/Chat-GPT-Image-Aug-31-2026-05-51-30-PM.png"
+        };
+
+        const funnyPhrases = [
+            "Arre dhyan se click karo, rocket thodi udana hai! 🚀",
+            "Sahi ja rahe ho bacchon, scholarship pakki hai! 😎",
+            "Sir Gaurav Shukla ka portal hai, yahan sab fast milega! ⚡",
+            "Number yaad nahi hai toh search box use karo bhai! 🔍",
+            "Padhai likhai karo, IAS YAS bano aur desh ko sambhalo! 📚"
+        ];
+
+        function triggerFunnyTalk(e) {
+            let bubble = document.getElementById('robo-bubble');
+            if(['BUTTON', 'INPUT', 'TEXTAREA', 'A', 'IMG'].indexOf(e.target.tagName) === -1) {
+                let randomPhrase = funnyPhrases[Math.floor(Math.random() * funnyPhrases.length)];
+                bubble.innerText = randomPhrase;
+            }
+        }
+
+        function roboDanceAction() {
+            let avatarImg = document.getElementById('robo-img');
+            let bubble = document.getElementById('robo-bubble');
+            avatarImg.src = avatarGifs.dance;
+            avatarImg.classList.add('dancing');
+            bubble.innerText = "🕺 Prabhu Deva style dance! Mazaa aa gaya na?";
+            setTimeout(() => {
+                avatarImg.classList.remove('dancing');
+                avatarImg.src = avatarGifs.welcome;
+                bubble.innerText = "🤖 Aur batao, kya check karna hai?";
+            }, 4000);
+        }
+
+        function updateRobo(action) {
+            let bubble = document.getElementById('robo-bubble');
+            let avatarImg = document.getElementById('robo-img');
+            avatarImg.classList.remove('dancing');
+
+            if (action === 'attendance') {
+                avatarImg.src = avatarGifs.welcome;
+                bubble.innerText = "🔍 75% attendance mandatory hai, check kar lo!";
+            } else if (action === 'status') {
+                avatarImg.src = avatarGils ? avatarGifs.welcome : avatarGifs.welcome;
+                bubble.innerText = "🚀 Dekho form kahan tak pahuncha government office mein!";
+            } else if (action === 'regsearch') {
+                avatarImg.src = avatarGifs.welcome;
+                bubble.innerText = "🆔 Yahan apna Board Registration number nikal lo!";
+            } else if (action === 'otrsearch') {
+                avatarImg.src = avatarGifs.welcome;
+                bubble.innerText = "🔑 OTR aur Last Year ka Registration No. yahan milega!";
+            } else if (action === 'suggestion') {
+                avatarImg.src = avatarGifs.welcome;
+                bubble.innerText = "💡 Seedha office message bhejo, koi dikkat ho toh!";
+            } else if (action === 'contact') {
+                avatarImg.src = avatarGifs.welcome;
+                bubble.innerText = "📞 Incharge: Gaurav Shyam Shukla ji se sampark karein!";
+            } else if (action === 'typing') {
+                avatarImg.src = avatarGifs.typing;
+                bubble.innerText = "👀 Dhyan se number type kar rahe ho na?";
+            } else if (action === 'success') {
+                avatarImg.src = avatarGifs.dance;
+                bubble.innerText = "🎉 Mil gaya data! Dance time! 🕺💃";
+                avatarImg.classList.add('dancing');
+            } else if (action === 'notfound') {
+                avatarImg.src = avatarGifs.notfound;
+                bubble.innerText = "❌ Record nahi mila, spelling ya number check karo!";
+            }
+        }
+
         function switchTab(tabName) {
-            ['attendance', 'status', 'regsearch', 'suggestion', 'contact'].forEach(t => {
+            ['attendance', 'status', 'regsearch', 'otrsearch', 'suggestion', 'contact'].forEach(t => {
                 document.getElementById(`panel-${t}`).classList.add('hidden');
             });
             document.getElementById(`panel-${tabName}`).classList.remove('hidden');
@@ -299,6 +499,22 @@
                 }
             }
             return "";
+        }
+
+        // Universal Copy to Clipboard Function
+        function copyToClipboard(text, btnElem) {
+            navigator.clipboard.writeText(text).then(() => {
+                let originalHTML = btnElem.innerHTML;
+                btnElem.innerHTML = `<i class="fa-solid fa-check text-green-400"></i> Copied!`;
+                btnElem.classList.add('bg-green-900/40', 'border-green-500');
+                setTimeout(() => {
+                    btnElem.innerHTML = originalHTML;
+                    btnElem.classList.remove('bg-green-900/40', 'border-green-500');
+                }, 2000);
+            }).catch(err => {
+                console.error('Copy failed', err);
+                alert("Copy nahi ho paya!");
+            });
         }
 
         // 1. Load Notice Board
@@ -377,10 +593,12 @@
 
             if(!query) {
                 resBox.innerHTML = `<p class="text-red-400 text-sm">Kripya Registration ya SR No. enter karein.</p>`;
+                updateRobo('notfound');
                 return;
             }
 
             resBox.innerHTML = `<p class="text-cyan-400 text-sm animate-pulse">Searching attendance records...</p>`;
+            updateRobo('typing');
 
             db.ref('Attendance').once('value')
                 .then((snapshot) => {
@@ -398,6 +616,7 @@
                         });
 
                         if (foundStudent) {
+                            updateRobo('success');
                             let regVal = getProp(foundStudent, ['Registration_No', 'RegistrationNo', 'RegNo', 'Reg_No', 'Registration']) || query;
                             let srVal = getProp(foundStudent, ['SR_No', 'SRNo', 'SR', 'SrNo']) || 'N/A';
                             let nameVal = getProp(foundStudent, ['Student_Name', 'StudentName', 'Name', 'Student']) || 'N/A';
@@ -413,16 +632,18 @@
                             
                             resBox.innerHTML = `
                                 <div class="space-y-2 text-xs sm:text-sm text-white">
-                                    <p><strong>Registration No:</strong> ${regVal}</p>
-                                    <p><strong>SR No:</strong> ${srVal}</p>
+                                    <p class="flex justify-between items-center"><span><strong>Registration No:</strong> ${regVal}</span> <button onclick="copyToClipboard('${regVal}', this)" class="bg-gray-800 px-2 py-1 rounded text-[10px] border border-gray-700 hover:bg-gray-700"><i class="fa-regular fa-copy"></i> Copy</button></p>
+                                    <p class="flex justify-between items-center"><span><strong>SR No:</strong> ${srVal}</span> <button onclick="copyToClipboard('${srVal}', this)" class="bg-gray-800 px-2 py-1 rounded text-[10px] border border-gray-700 hover:bg-gray-700"><i class="fa-regular fa-copy"></i> Copy</button></p>
                                     <p><strong>Name:</strong> ${nameVal}</p>
                                     <p class="pt-1"><strong>Status:</strong> ${eligibilityHTML}</p>
                                 </div>
                             `;
                         } else {
+                            updateRobo('notfound');
                             resBox.innerHTML = `<p class="text-red-400 text-sm">Yeh record 'Attendance' node mein nahi mila!</p>`;
                         }
                     } else {
+                        updateRobo('notfound');
                         resBox.innerHTML = `<p class="text-red-400 text-sm">Database mein 'Attendance' node khali hai.</p>`;
                     }
                 })
@@ -440,11 +661,13 @@
 
             if(!query) {
                 alert("Kripya Registration ya SR No. enter karein.");
+                updateRobo('notfound');
                 return;
             }
 
             resBox.classList.remove('hidden');
             descBox.innerHTML = `<p class="text-purple-400 text-sm animate-pulse">Tracking form status...</p>`;
+            updateRobo('typing');
 
             db.ref('FormStatus').once('value')
                 .then((snapshot) => {
@@ -462,6 +685,7 @@
                         });
 
                         if (foundStudent) {
+                            updateRobo('success');
                             let regVal = getProp(foundStudent, ['Registration_No', 'RegistrationNo', 'RegNo', 'Reg_No', 'Registration']) || query;
                             let srVal = getProp(foundStudent, ['SR_No', 'SRNo', 'SR', 'SrNo']) || 'N/A';
                             let nameVal = getProp(foundStudent, ['Student_Name', 'StudentName', 'Name', 'Student']) || 'N/A';
@@ -498,6 +722,7 @@
                                 </div>
                             `;
                         } else {
+                            updateRobo('notfound');
                             for(let i=1; i<=6; i++) {
                                 document.getElementById(`step-${i}`).classList.add('opacity-40');
                             }
@@ -507,6 +732,7 @@
                             descBox.innerHTML = `<p class="text-red-400 text-sm">Registration No. ya SR No. nahi mila!</p>`;
                         }
                     } else {
+                        updateRobo('notfound');
                         descBox.innerHTML = `<p class="text-red-400 text-sm">Database khali hai.</p>`;
                     }
                 })
@@ -516,7 +742,7 @@
                 });
         }
 
-        // 5. Check Board Registration No. (Direct Path Search in 'REGISTRATION' node)
+        // 5. Check Board Registration No. (REGISTRATION)
         function checkBoardRegNo() {
             let query = document.getElementById('reg-input').value.trim().toUpperCase();
             let resBox = document.getElementById('reg-result');
@@ -524,14 +750,17 @@
 
             if(!query) {
                 resBox.innerHTML = `<p class="text-red-400 text-sm">Kripya Admission No. (SR No.) enter karein.</p>`;
+                updateRobo('notfound');
                 return;
             }
 
             resBox.innerHTML = `<p class="text-yellow-400 text-sm animate-pulse">Searching in database...</p>`;
+            updateRobo('typing');
 
             db.ref('REGISTRATION/' + query).once('value')
                 .then((snapshot) => {
                     if (snapshot.exists()) {
+                        updateRobo('success');
                         let student = snapshot.val();
                         
                         let admVal = student.AdmNo || query;
@@ -543,10 +772,14 @@
                             <div class="space-y-2 text-xs sm:text-sm text-white bg-black/40 p-3.5 rounded-xl border border-gray-700">
                                 <p><strong>Name:</strong> ${nameVal}</p>
                                 <p><strong>Admission No (SR):</strong> ${admVal} | <strong>Class:</strong> ${classVal}</p>
-                                <p class="pt-1"><strong>Board Registration No:</strong> <span class="text-yellow-400 font-bold text-base">${boardRegVal}</span></p>
+                                <p class="pt-1 flex justify-between items-center">
+                                    <span><strong>Board Registration No:</strong> <span class="text-yellow-400 font-bold text-sm sm:text-base">${boardRegVal}</span></span>
+                                    <button onclick="copyToClipboard('${boardRegVal}', this)" class="bg-gray-800 px-2.5 py-1 rounded text-xs border border-gray-700 hover:bg-gray-700"><i class="fa-regular fa-copy"></i> Copy</button>
+                                </p>
                             </div>
                         `;
                     } else {
+                        updateRobo('notfound');
                         resBox.innerHTML = `<p class="text-red-400 text-sm">Yeh Admission No. nahi mila! Sahi number daalein.</p>`;
                     }
                 })
@@ -556,7 +789,79 @@
                 });
         }
 
-        // 6. Load Suggestions
+        // 6. Check OTR & Last Year Registration No. (OTR Node)
+        function checkOTRRecord() {
+            let query = document.getElementById('otr-input').value.trim().toUpperCase();
+            let resBox = document.getElementById('otr-result');
+            resBox.classList.remove('hidden');
+
+            if(!query) {
+                resBox.innerHTML = `<p class="text-red-400 text-sm">Kripya SR No. ya Name enter karein.</p>`;
+                updateRobo('notfound');
+                return;
+            }
+
+            resBox.innerHTML = `<p class="text-neongreen text-sm animate-pulse">Searching OTR records...</p>`;
+            updateRobo('typing');
+
+            db.ref('OTR').once('value')
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        let allRecords = snapshot.val();
+                        let foundRecords = [];
+
+                        Object.values(allRecords).forEach(record => {
+                            let srNo = String(getProp(record, ['SR', 'SRNo', 'SR_No', 'AdmNo', 'AdmissionNo'])).trim().toUpperCase();
+                            let name = String(getProp(record, ['Name', 'StudentName', 'Student_Name'])).trim().toUpperCase();
+                            
+                            if (srNo === query || name === query || name.includes(query) || srNo.includes(query)) {
+                                foundRecords.push(record);
+                            }
+                        });
+
+                        if (foundRecords.length > 0) {
+                            updateRobo('success');
+                            let htmlContent = `<div class="space-y-3">`;
+                            foundRecords.forEach(student => {
+                                let srVal = getProp(student, ['SR', 'SRNo', 'SR_No', 'AdmNo']) || 'N/A';
+                                let nameVal = getProp(student, ['Name', 'StudentName']) || 'N/A';
+                                let lastRegVal = getProp(student, ['LastYearScholarshipRegistrationNo', 'LastYearRegNo', 'LastYearRegistrationNo']) || 'N/A';
+                                let otrVal = getProp(student, ['OTRNo', 'OTR', 'OtrNo']) || 'N/A';
+
+                                htmlContent += `
+                                    <div class="bg-black/40 p-3.5 rounded-xl border border-gray-700 space-y-2 text-white">
+                                        <p><strong>Name:</strong> ${nameVal} | <strong>SR No:</strong> ${srVal}</p>
+                                        <div class="pt-1 border-t border-gray-800 space-y-1.5">
+                                            <div class="flex justify-between items-center">
+                                                <span><strong>Last Year Reg No:</strong> <span class="text-neoncyan">${lastRegVal}</span></span>
+                                                <button onclick="copyToClipboard('${lastRegVal}', this)" class="bg-gray-800 px-2 py-1 rounded text-[10px] border border-gray-700 hover:bg-gray-700"><i class="fa-regular fa-copy"></i> Copy</button>
+                                            </div>
+                                            <div class="flex justify-between items-center">
+                                                <span><strong>OTR No:</strong> <span class="text-neongreen font-bold">${otrVal}</span></span>
+                                                <button onclick="copyToClipboard('${otrVal}', this)" class="bg-gray-800 px-2 py-1 rounded text-[10px] border border-gray-700 hover:bg-gray-700"><i class="fa-regular fa-copy"></i> Copy</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                            htmlContent += `</div>`;
+                            resBox.innerHTML = htmlContent;
+                        } else {
+                            updateRobo('notfound');
+                            resBox.innerHTML = `<p class="text-red-400 text-sm">Koi OTR record nahi mila! Sahi SR No. ya Name daalein.</p>`;
+                        }
+                    } else {
+                        updateRobo('notfound');
+                        resBox.innerHTML = `<p class="text-red-400 text-sm">Database mein 'OTR' node khali hai.</p>`;
+                    }
+                })
+                .catch((err) => {
+                    console.error("OTR Search Error:", err);
+                    resBox.innerHTML = `<p class="text-red-400 text-sm">Connection Error!</p>`;
+                });
+        }
+
+        // 7. Load Suggestions
         function loadAdminSuggestions() {
             let listContainer = document.getElementById('admin-suggestions-list');
             db.ref('Suggestions').once('value')
@@ -586,7 +891,7 @@
                 });
         }
 
-        // 7. Submit Suggestion
+        // 8. Submit Suggestion
         function submitSuggestion(e) {
             e.preventDefault();
             let name = document.getElementById('sug-name').value || "Anonymous";
