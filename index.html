@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Hello Bacchon 🚀 - Scholarship & Attendance Portal</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -21,65 +22,86 @@
             }
         }
     </script>
+    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Caveat:wght@600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     
+    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
     <style>
-        body { font-family: 'Poppins', sans-serif; }
+        body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
         .glass { background: rgba(19, 19, 26, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .glow-effect:hover { box-shadow: 0 0 20px rgba(6, 182, 212, 0.4); }
         
-        /* Preloader Handwriting Animation with Website Matching Theme */
         #preloader {
-            position: fixed;
-            inset: 0;
-            background: #0a0a0f;
-            z-index: 99999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            position: fixed; inset: 0; background: #0a0a0f; z-index: 99999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             transition: opacity 0.8s ease;
         }
         .handwriting-main {
-            font-family: 'Caveat', cursive;
-            font-size: 4.5rem;
-            font-weight: 700;
+            font-family: 'Caveat', cursive; font-size: 4.5rem; font-weight: 700;
             background: linear-gradient(to right, #06b6d4, #8b5cf6, #10b981);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 2px;
-            white-space: nowrap;
-            overflow: hidden;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: 2px; white-space: nowrap; overflow: hidden;
             animation: typing 2s steps(20, end);
         }
-        .handwriting-sub {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            color: #9ca3af;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-top: 5px;
-            opacity: 0;
-            animation: fadeInSub 1s ease 1.8s forwards;
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+
+        /* Club LED Screen Marquee */
+        .led-panel {
+            background: #020205; border: 2px solid #ff0055;
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.5), inset 0 0 10px rgba(255, 0, 85, 0.3);
+            border-radius: 14px; overflow: hidden; position: relative;
         }
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
+        .led-text {
+            font-family: 'Share Tech Mono', monospace; color: #ff3366;
+            text-shadow: 0 0 8px rgba(255, 51, 102, 0.8); letter-spacing: 2px; white-space: nowrap;
+            animation: marquee 18s linear infinite;
         }
-        @keyframes fadeInSub {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        /* Left Side Gadgets Container (Retro Clock + Learn + G Apps + MeChat) */
+        .left-gadgets-container {
+            position: fixed; bottom: 20px; left: 20px; z-index: 9988;
+            display: flex; flex-direction: column; gap: 10px; align-items: flex-start;
+        }
+        .retro-clock-box {
+            background: #111116; border: 2px solid #333; border-radius: 12px; padding: 8px 12px;
+            width: 155px; box-shadow: 0 5px 20px rgba(0,0,0,0.8); transition: all 0.4s ease;
+        }
+        .retro-clock-box.litup {
+            border-color: #f59e0b; box-shadow: 0 0 25px rgba(245, 158, 11, 0.8); background: #221a0e;
+        }
+        .retro-screen { font-family: 'Share Tech Mono', monospace; color: #71717a; }
+        .retro-clock-box.litup .retro-screen { color: #fbbf24; text-shadow: 0 0 8px rgba(251, 191, 36, 0.9); }
+
+        .left-side-btn {
+            background: rgba(19, 19, 26, 0.9); backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15); color: #fff;
+            padding: 6px 12px; border-radius: 10px; font-size: 11px; font-weight: 600;
+            display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: all 0.3s ease; text-decoration: none; cursor: pointer;
+        }
+        .left-side-btn:hover { border-color: #06b6d4; transform: translateY(-2px); }
+
+        /* Professional 3D ID Card (Above Gaurav Avatar) */
+        .id-card-panel {
+            background: linear-gradient(145deg, #13131a, #1a1a24);
+            border: 2px solid rgba(6, 182, 212, 0.4);
+            border-radius: 20px; padding: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 25px rgba(6, 182, 212, 0.3);
+            transform-style: preserve-3d; transition: all 0.4s ease;
+        }
+        .profile-3d-img {
+            width: 75px; height: 75px; border-radius: 50%; object-fit: cover;
+            border: 3px solid #06b6d4; box-shadow: 0 8px 20px rgba(0,0,0,0.6), inset 0 0 10px rgba(6,182,212,0.5);
         }
 
-        /* Sticky AI Robo Assistant (Right Side) */
-        @keyframes floatBounce {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-        }
+        /* Sticky AI Robo & MeChat */
+        @keyframes floatBounce { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
         @keyframes prabhuDevaDance {
             0% { transform: translateY(0) rotate(0deg); }
             25% { transform: translateY(-12px) rotate(-8deg) scale(1.08); }
@@ -87,105 +109,169 @@
             75% { transform: translateY(-12px) rotate(8deg) scale(1.08); }
             100% { transform: translateY(0) rotate(0deg); }
         }
-        .robo-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 9999;
-            display: flex;
-            align-items: flex-end;
-            gap: 10px;
-            animation: floatBounce 3s ease-in-out infinite;
-            pointer-events: none;
-        }
+        .robo-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; pointer-events: none; }
         .dancing { animation: prabhuDevaDance 0.6s ease-in-out infinite !important; }
         .robo-bubble {
-            background: rgba(139, 92, 246, 0.95);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
-            padding: 10px 14px;
-            border-radius: 18px 18px 0 18px;
-            font-size: 11px;
-            font-weight: 500;
-            max-width: 190px;
-            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5);
-            pointer-events: auto;
-            transition: all 0.3s ease;
+            background: rgba(139, 92, 246, 0.95); backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 10px 14px;
+            border-radius: 18px 18px 0 18px; font-size: 11px; font-weight: 500; max-width: 190px;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5); pointer-events: auto;
         }
         .robo-profile { display: flex; flex-direction: column; align-items: center; pointer-events: auto; }
         .robo-avatar { width: 70px; height: 70px; border-radius: 50%; border: 3px solid #06b6d4; background: #13131a; object-fit: cover; box-shadow: 0 0 20px rgba(6, 182, 212, 0.6); cursor: pointer; }
         .robo-name { background: #06b6d4; color: #000; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-top: -8px; z-index: 10; }
 
-        /* Left Side MeChat Floating Icon */
-        .mechat-container {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 9999;
-            display: flex;
-            align-items: flex-end;
-            gap: 10px;
-            animation: floatBounce 3s ease-in-out infinite;
-        }
-        .mechat-avatar { width: 65px; height: 65px; border-radius: 50%; border: 3px solid #10b981; background: #13131a; object-fit: cover; box-shadow: 0 0 20px rgba(16, 185, 129, 0.6); cursor: pointer; }
-        .mechat-name { background: #10b981; color: #000; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-top: -8px; z-index: 10; text-align: center; }
-
-        /* YouTube Banner Style Slider */
-        .yt-banner {
-            width: 100%;
-            height: auto;
-            max-height: 220px;
-            object-fit: contain;
-            background: #13131a;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: opacity 1s ease-in-out;
-        }
+        .yt-banner { width: 100%; max-height: 220px; object-fit: contain; background: #13131a; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .birthday-card { background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(139, 92, 246, 0.15)); border: 1px solid rgba(6, 182, 212, 0.3); }
     </style>
 </head>
-<body class="bg-darkbg text-gray-100 min-h-screen selection:bg-neoncyan selection:text-black">
+<body id="main-body" class="bg-darkbg text-gray-100 min-h-screen selection:bg-neoncyan selection:text-black" onclick="triggerFunnyTalk(event)">
 
+    <!-- Preloader -->
     <div id="preloader">
         <div class="handwriting-main">HELLO BACCHO</div>
         <div class="handwriting-sub">Developed by Gaurav Shyam Shukla</div>
     </div>
 
-    <div class="robo-container">
-        <div id="robo-bubble" class="robo-bubble">
-            🤖 Arre bacchon! Portal pe swagat hai. Kuch help chahiye toh batao!
+    <!-- Left Side Gadgets: Retro Clock + Learn Coding + G Apps + MeChat -->
+    <div class="left-gadgets-container hidden sm:flex">
+        <!-- Retro Clock Widget -->
+        <div id="retro-widget" class="retro-clock-box">
+            <div class="flex justify-between items-center mb-1 border-b border-gray-800 pb-1">
+                <span class="text-[9px] uppercase tracking-wider text-gray-400 font-bold"><i class="fa-solid fa-clock"></i> Retro Station</span>
+                <button onclick="lightUpRetroWidget()" class="w-3 h-3 rounded-full bg-red-600 border border-red-400" title="Light Up"></button>
+            </div>
+            <div class="retro-screen text-center py-0.5 space-y-0.5">
+                <div id="retro-time" class="text-xs font-extrabold tracking-widest">12:00:00 PM</div>
+                <div id="retro-date" class="text-[9px] text-gray-400">SUN, 06 SEP</div>
+                <div class="pt-1 border-t border-gray-800 flex justify-around items-center text-[9px] text-gray-400">
+                    <span><i class="fa-solid fa-temperature-three-quarters text-amber-500"></i> <span id="retro-temp">32°C</span></span>
+                    <span><i class="fa-solid fa-cloud text-cyan-400"></i> Renukoot</span>
+                </div>
+            </div>
         </div>
+
+        <!-- Let's Learn Coding Button -->
+        <button onclick="switchTab('learn'); updateRobo('learn')" class="left-side-btn">
+            <i class="fa-solid fa-graduation-cap text-yellow-400"></i> Let's Learn Coding
+        </button>
+
+        <!-- G Apps Button -->
+        <button onclick="switchTab('gapps'); updateRobo('gapps')" class="left-side-btn">
+            <i class="fa-solid fa-cubes text-purple-400"></i> G Apps
+        </button>
+
+        <!-- MeChat Floating Icon -->
+        <a href="https://gurv1432.github.io/ME-CHAT/" target="_blank" class="left-side-btn border-emerald-500/50">
+            <img src="https://i.ibb.co/YBHz9sRr/Whats-App-Image-2026-09-03-at-2-34-12-PM.jpg" alt="MeChat" class="w-5 h-5 rounded-full object-cover"> MeChat
+        </a>
+    </div>
+
+    <!-- Sticky AI Robo Assistant & Professional 3D ID Card Above It (Right Side) -->
+    <div class="robo-container">
+        <!-- Professional 3D ID Card Panel -->
+        <div id="user-id-card-panel" class="id-card-panel hidden w-72 text-xs pointer-events-auto space-y-2.5">
+            <div class="flex items-center gap-3 border-b border-gray-700/80 pb-2.5">
+                <img id="id-card-photo" src="" alt="Profile" class="profile-3d-img">
+                <div class="overflow-hidden">
+                    <h4 id="id-card-name" class="font-extrabold text-sm text-white truncate">Student Name</h4>
+                    <div class="flex items-center gap-1.5 mt-0.5">
+                        <span id="id-card-tag" class="px-2 py-0.5 rounded text-[9px] font-bold">Standard</span>
+                        <span id="id-card-verification" class="text-[9px] font-semibold"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="space-y-1 text-[11px] text-gray-300">
+                <p><strong>SR No:</strong> <span id="id-sr" class="text-white">--</span></p>
+                <p><strong>Class/Sec:</strong> <span id="id-class" class="text-white">--</span></p>
+                <p><strong>Attendance:</strong> <span id="id-att" class="text-white">--</span></p>
+                <p><strong>Board Reg No:</strong> <span id="id-board-reg" class="text-neoncyan truncate block">--</span></p>
+                <p><strong>OTR No:</strong> <span id="id-otr" class="text-neongreen truncate block">--</span></p>
+                <p><strong>Last Year Reg:</strong> <span id="id-last-reg" class="text-yellow-400 truncate block">--</span></p>
+                <p><strong>Last Year Passing %:</strong> <span id="id-last-pct" class="text-purple-400">--</span></p>
+            </div>
+
+            <!-- Theme Selector inside ID Card -->
+            <div class="pt-2 border-t border-gray-700/80 space-y-1">
+                <label class="text-[10px] text-gray-400 block font-semibold"><i class="fa-solid fa-palette"></i> Aesthetic Color Theme:</label>
+                <select id="theme-selector" onchange="changeUserTheme(this.value)" class="w-full bg-black/60 border border-gray-700 rounded-lg px-2 py-1 text-[11px] text-white focus:outline-none">
+                    <option value="default">Default Dark Vibe</option>
+                    <option value="cyan">Neon Cyan Glow</option>
+                    <option value="emerald">Emerald Green</option>
+                    <option value="purple">Royal Purple</option>
+                    <option value="sunset">Sunset Gold</option>
+                </select>
+            </div>
+
+            <div class="pt-1 flex justify-between text-[10px]">
+                <button onclick="switchTab('profile-edit')" class="text-yellow-400 hover:underline">Edit Profile / SR Fix</button>
+                <button onclick="userLogout()" class="text-red-400 hover:underline">Logout</button>
+            </div>
+        </div>
+
+        <div id="login-floating-btn-container">
+            <button onclick="openLoginModal()" id="login-floating-btn" class="glass px-4 py-2.5 rounded-2xl text-xs font-bold text-neoncyan border border-neoncyan/40 shadow-xl hover:bg-neoncyan/20 transition pointer-events-auto flex items-center gap-2">
+                <i class="fa-solid fa-user-circle text-base"></i> <span id="login-btn-text">Student Login</span>
+            </button>
+        </div>
+
+        <div id="robo-bubble" class="robo-bubble">🤖 Namaste bacchon! Login karke apna 3D ID Card dekho!</div>
         <div class="robo-profile" onclick="roboDanceAction()" title="Click me for fun!">
             <img id="robo-img" src="https://i.ibb.co/TxnNXPrj/ezgif-53f8104525509036.gif" alt="Gaurav Avatar" class="robo-avatar glow-effect">
             <span class="robo-name">Gaurav</span>
         </div>
     </div>
 
-    <div class="mechat-container" title="Click to open MeChat">
-        <a href="https://gurv1432.github.io/ME-CHAT/" target="_blank" class="flex flex-col items-center">
-            <img src="https://i.ibb.co/YBHz9sRr/Whats-App-Image-2026-09-03-at-2-34-12-PM.jpg" alt="MeChat" class="mechat-avatar glow-effect hover:scale-110 transition">
-            <span class="mechat-name">MeChat</span>
-        </a>
-    </div>
-
+    <!-- Top WhatsApp Channel Banner -->
     <div class="bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 text-white text-xs sm:text-sm py-2 px-3 text-center font-medium flex flex-wrap justify-center items-center gap-2">
         <span>🔥 Join Official WhatsApp Channel for instant updates!</span>
         <a href="https://whatsapp.com/channel/0029VbE9nzJIHphK2l9p7s0f" target="_blank" class="bg-white text-black px-3 py-0.5 rounded-full font-bold text-xs hover:bg-opacity-90 transition shadow-md">Join Now</a>
     </div>
 
+    <!-- Main Container -->
     <div class="max-w-4xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
 
+        <!-- Top Header Style -->
         <header class="text-center mb-6">
             <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-neoncyan via-neonpurple to-neongreen bg-clip-text text-transparent">
                 Hello Bacchon 🚀
             </h1>
-            <p class="text-gray-400 text-xs sm:text-base mt-2">Fast & Smart Scholarship Portal • Aditya Birla Intermediate College</p>
+            <p class="text-gray-400 text-xs sm:text-base mt-2">Fast & Smart Scholarship Portal • Aditya Birla Intermediate College, Renukoot</p>
         </header>
 
+        <!-- LED Marquee Bar -->
+        <section class="mb-5 led-panel py-2 px-4 flex items-center">
+            <div class="flex items-center gap-2 text-xs font-bold text-pink-500 mr-2 uppercase tracking-wider shrink-0">
+                <i class="fa-solid fa-circle text-[8px] animate-ping"></i> LED Live:
+            </div>
+            <div class="overflow-hidden w-full">
+                <div id="led-marquee-text" class="led-text text-xs sm:text-sm font-bold">
+                    ✨ Welcome to Aditya Birla Intermediate College Portal! • 🚀 Fast Scholarship & Attendance Verification
+                </div>
+            </div>
+        </section>
+
+        <!-- Auto-Changing Banner Section -->
         <section class="mb-8 overflow-hidden rounded-2xl glass p-1.5 relative shadow-2xl flex justify-center items-center bg-cardbg">
             <img id="banner-slider" src="https://i.ibb.co/fLZZ6j4/Chat-GPT-Image-Aug-31-2026-06-33-36-PM-2.png" alt="College Banner" class="yt-banner">
         </section>
 
+        <!-- 3D Birthday Wishes Slider Section -->
+        <section class="mb-8">
+            <div class="flex justify-between items-center mb-3">
+                <h2 class="text-base sm:text-lg font-bold text-yellow-400 flex items-center gap-2">
+                    <i class="fa-solid fa-cake-candles animate-bounce"></i> Today's Birthday Stars 🥳
+                </h2>
+                <button onclick="switchTab('birthday-req'); updateRobo('suggestion')" class="text-xs bg-yellow-500/20 text-yellow-300 border border-yellow-500/40 px-3 py-1.5 rounded-lg hover:bg-yellow-500 hover:text-black transition font-semibold">
+                    + Request Your Birthday Wish
+                </button>
+            </div>
+            <div id="birthday-slider-container" class="relative overflow-hidden rounded-2xl birthday-card p-5 min-h-[140px] flex items-center justify-center">
+                <p class="text-gray-400 text-xs sm:text-sm animate-pulse">Loading birthday wishes...</p>
+            </div>
+        </section>
+
+        <!-- Scholarship Eligibility Checker Collapsible Section -->
         <section class="mb-8">
             <button onclick="toggleEligibilityPanel()" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-neoncyan via-neonpurple to-neongreen text-black font-extrabold text-sm sm:text-base shadow-xl hover:opacity-95 transition transform hover:scale-[1.01] flex items-center justify-center gap-3">
                 <i class="fa-solid fa-square-check text-xl"></i> 
@@ -199,7 +285,7 @@
                         <h2 class="text-lg sm:text-xl font-bold text-neoncyan flex items-center gap-2">
                             <i class="fa-solid fa-user-graduate"></i> Enter Your SR No.
                         </h2>
-                        <p class="text-xs text-gray-400 mt-1">Apna admission/SR number daal kar turant apni eligibility aur attendance check karein.</p>
+                        <p class="text-xs text-gray-400 mt-1">Apna admission/SR number daal kar turant apni eligibility check karein.</p>
                     </div>
                     <div id="quick-overall-status" class="hidden px-4 py-2 rounded-xl text-xs sm:text-sm font-bold border"></div>
                 </div>
@@ -208,11 +294,11 @@
                     <input type="text" id="elig-sr-input" placeholder="Enter SR No. (Admission No.)..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neoncyan text-white">
                     <button onclick="checkScholarshipEligibility()" class="bg-gradient-to-r from-neoncyan to-neongreen text-black font-bold px-6 py-3 rounded-xl text-sm hover:opacity-90 transition shadow-lg">Check Status</button>
                 </div>
-
                 <div id="elig-result-box" class="hidden p-4 rounded-xl bg-black/60 border border-gray-800 space-y-3 text-xs sm:text-sm"></div>
             </div>
         </section>
 
+        <!-- Dashboard Stats Section -->
         <section class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 sm:gap-3 mb-6 sm:mb-8">
             <div class="glass p-3.5 sm:p-4 rounded-2xl text-center">
                 <p class="text-[11px] sm:text-xs text-gray-400">Received</p>
@@ -241,6 +327,7 @@
             </div>
         </section>
 
+        <!-- Dynamic Notice Board Section -->
         <section class="glass p-4 sm:p-5 rounded-2xl mb-6 sm:mb-8 border-l-4 border-neoncyan">
             <h2 class="text-base sm:text-lg font-bold flex items-center gap-2 text-neoncyan mb-3">
                 <i class="fa-solid fa-bullhorn"></i> Jaruri Suchna / Live Notice Board
@@ -250,52 +337,96 @@
             </div>
         </section>
 
+        <!-- Navigation Buttons -->
         <div class="grid grid-cols-2 sm:grid-cols-6 gap-2 sm:gap-3 mb-6 sm:mb-8">
-            <button onclick="switchTab('attendance')" class="glass p-3 rounded-xl text-center glow-effect transition group">
+            <button onclick="switchTab('attendance'); updateRobo('attendance')" class="glass p-3 rounded-xl text-center glow-effect transition group">
                 <i class="fa-solid fa-user-check text-xl text-neoncyan mb-1 group-hover:scale-110 transition"></i>
                 <h4 class="font-semibold text-xs">Attendance</h4>
             </button>
-            <button onclick="switchTab('status')" class="glass p-3 rounded-xl text-center glow-effect transition group">
+            <button onclick="switchTab('status'); updateRobo('status')" class="glass p-3 rounded-xl text-center glow-effect transition group">
                 <i class="fa-solid fa-file-invoice text-xl text-purple-400 mb-1 group-hover:scale-110 transition"></i>
                 <h4 class="font-semibold text-xs">Status</h4>
             </button>
-            <button onclick="switchTab('regsearch')" class="glass p-3 rounded-xl text-center glow-effect transition group">
+            <button onclick="switchTab('regsearch'); updateRobo('regsearch')" class="glass p-3 rounded-xl text-center glow-effect transition group">
                 <i class="fa-solid fa-id-card text-xl text-yellow-400 mb-1 group-hover:scale-110 transition"></i>
                 <h4 class="font-semibold text-xs">Board Reg No</h4>
             </button>
-            <button onclick="switchTab('otrsearch')" class="glass p-3 rounded-xl text-center glow-effect transition group">
+            <button onclick="switchTab('otrsearch'); updateRobo('otrsearch')" class="glass p-3 rounded-xl text-center glow-effect transition group">
                 <i class="fa-solid fa-key text-xl text-neongreen mb-1 group-hover:scale-110 transition"></i>
                 <h4 class="font-semibold text-xs">OTR & Last Reg</h4>
             </button>
-            <button onclick="switchTab('suggestion')" class="glass p-3 rounded-xl text-center glow-effect transition group">
+            <button onclick="switchTab('suggestion'); updateRobo('suggestion')" class="glass p-3 rounded-xl text-center glow-effect transition group">
                 <i class="fa-solid fa-comments text-xl text-neongreen mb-1 group-hover:scale-110 transition"></i>
                 <h4 class="font-semibold text-xs">Suggestions</h4>
             </button>
-            <button onclick="switchTab('contact')" class="glass p-3 rounded-xl text-center glow-effect transition group col-span-2 sm:col-span-1">
+            <button onclick="switchTab('contact'); updateRobo('contact')" class="glass p-3 rounded-xl text-center glow-effect transition group col-span-2 sm:col-span-1">
                 <i class="fa-solid fa-address-book text-xl text-yellow-400 mb-1 group-hover:scale-110 transition"></i>
                 <h4 class="font-semibold text-xs">Contact Office</h4>
             </button>
         </div>
 
-        <div id="panel-attendance" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8">
-            <h3 class="text-lg sm:text-xl font-bold mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-neoncyan"></i> Attendance & Eligibility Checker</h3>
+        <!-- 📦 PANELS -->
+
+        <!-- HOME -->
+        <div id="panel-home" class="space-y-6"></div>
+
+        <!-- LET'S LEARN CODING -->
+        <div id="panel-learn" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden space-y-4">
+            <h3 class="text-lg sm:text-xl font-bold text-yellow-400 flex items-center gap-2"><i class="fa-solid fa-graduation-cap"></i> Let's Learn Coding • HTML & CSS Course</h3>
+            <p class="text-xs text-gray-400">Yahan aapko Gaurav sir ke YouTube coding tutorials aur HTML/CSS playlists milengi.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div class="bg-black/40 p-4 rounded-xl border border-gray-800 space-y-2">
+                    <h4 class="font-bold text-white text-sm">🌐 HTML & CSS Complete Playlist</h4>
+                    <p class="text-xs text-gray-400">Zero se hero banein web development mein.</p>
+                    <a href="https://youtube.com" target="_blank" class="inline-block bg-yellow-500 text-black text-xs font-bold px-4 py-2 rounded-lg hover:bg-yellow-400">Watch Playlist</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- G APPS -->
+        <div id="panel-gapps" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden space-y-4">
+            <h3 class="text-lg sm:text-xl font-bold text-purple-400 flex items-center gap-2"><i class="fa-solid fa-cubes"></i> G Apps & Web Tools</h3>
+            <p class="text-xs text-gray-400">Gaurav Shukla dwara banaye gaye smart applications:</p>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <a href="https://gurv1432.github.io/ME-CHAT/" target="_blank" class="bg-black/40 p-4 rounded-xl border border-gray-800 text-center hover:border-neoncyan transition group">
+                    <img src="https://i.ibb.co/HLzZTk8M/Chat-GPT-Image-Sep-6-2026-02-38-08-PM.png" alt="App" class="w-12 h-12 mx-auto rounded-xl mb-2 object-cover group-hover:scale-110 transition">
+                    <h4 class="font-bold text-xs text-white">MeChat</h4>
+                    <span class="text-[10px] text-neoncyan">Open App ↗</span>
+                </a>
+                <a href="https://gurv1432.github.io/APS-TALK/" target="_blank" class="bg-black/40 p-4 rounded-xl border border-gray-800 text-center hover:border-neoncyan transition group">
+                    <img src="https://i.ibb.co/zY7msm0/Chat-GPT-Image-Sep-6-2026-02-38-12-PM.png" alt="App" class="w-12 h-12 mx-auto rounded-xl mb-2 object-cover group-hover:scale-110 transition">
+                    <h4 class="font-bold text-xs text-white">Apsi Talk</h4>
+                    <span class="text-[10px] text-neoncyan">Open App ↗</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- 1. Check Attendance Panel -->
+        <div id="panel-attendance" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden">
+            <h3 class="text-lg sm:text-xl font-bold mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-magnifying-glass text-neoncyan"></i> Attendance & Eligibility Checker
+            </h3>
             <p class="text-xs text-gray-400 mb-3">Search by Registration No. or SR No.</p>
-            <div class="flex flex-col sm:flex-row gap-2 mb-4">
-                <input type="text" id="att-input" placeholder="Enter Registration No. or SR No..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neoncyan text-white">
-                <button onclick="checkAttendance()" class="w-full sm:w-auto bg-neoncyan text-black font-semibold px-6 py-3 rounded-xl text-sm">Search</button>
+            <div class="flex flex-col sm:flex-row gap-2 mb-4 sm:mb-6">
+                <input type="text" id="att-input" oninput="updateRobo('typing')" placeholder="Enter Registration No. or SR No..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neoncyan text-white">
+                <button onclick="checkAttendance()" class="w-full sm:w-auto bg-neoncyan text-black font-semibold px-6 py-3 rounded-xl text-sm hover:bg-opacity-90 transition">Search</button>
             </div>
             <div id="att-result" class="hidden p-4 rounded-xl bg-black/50 border border-gray-800 text-xs sm:text-sm"></div>
         </div>
 
+        <!-- 2. Check Status Panel -->
         <div id="panel-status" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden">
-            <h3 class="text-lg sm:text-xl font-bold mb-3 flex items-center gap-2"><i class="fa-solid fa-road text-purple-400"></i> Form Status Roadmap Tracker</h3>
+            <h3 class="text-lg sm:text-xl font-bold mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-road text-purple-400"></i> Form Status Roadmap Tracker
+            </h3>
             <p class="text-xs text-gray-400 mb-3">Search by Registration No. or SR No.</p>
-            <div class="flex flex-col sm:flex-row gap-2 mb-4">
-                <input type="text" id="status-input" placeholder="Enter Registration No. or SR No..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-purple-500 text-white">
-                <button onclick="checkStatus()" class="w-full sm:w-auto bg-purple-600 text-white font-semibold px-6 py-3 rounded-xl text-sm">Track</button>
+            <div class="flex flex-col sm:flex-row gap-2 mb-4 sm:mb-6">
+                <input type="text" id="status-input" oninput="updateRobo('typing')" placeholder="Enter Registration No. or SR No..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-purple-500 text-white">
+                <button onclick="checkStatus()" class="w-full sm:w-auto bg-purple-600 text-white font-semibold px-6 py-3 rounded-xl text-sm hover:bg-opacity-90 transition">Track</button>
             </div>
+            
             <div id="status-result" class="hidden space-y-6">
-                <div class="bg-purple-950/30 border border-purple-500/30 p-3.5 rounded-xl text-xs sm:text-sm space-y-1">
+                <div id="student-identity-card" class="bg-purple-950/30 border border-purple-500/30 p-3.5 rounded-xl text-xs sm:text-sm space-y-1">
                     <p class="text-purple-300 font-bold mb-1"><i class="fa-solid fa-user-graduate"></i> Student Details Verified:</p>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                         <p><strong>Name:</strong> <span id="res-name" class="text-white">--</span></p>
@@ -303,58 +434,247 @@
                         <p><strong>SR No:</strong> <span id="res-sr" class="text-white">--</span></p>
                     </div>
                 </div>
+
+                <div class="overflow-x-auto py-2">
+                    <div class="grid grid-cols-6 min-w-[320px] gap-1 text-center text-[10px] sm:text-xs relative my-2">
+                        <div id="step-1" class="flex flex-col items-center opacity-40"><div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-800 flex items-center justify-center font-bold mb-1">1</div>Received</div>
+                        <div id="step-2" class="flex flex-col items-center opacity-40"><div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-800 flex items-center justify-center font-bold mb-1">2</div>Correction</div>
+                        <div id="step-3" class="flex flex-col items-center opacity-40"><div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-800 flex items-center justify-center font-bold mb-1">3</div>Final</div>
+                        <div id="step-4" class="flex flex-col items-center opacity-40"><div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-800 flex items-center justify-center font-bold mb-1">4</div>Verify</div>
+                        <div id="step-5" class="flex flex-col items-center opacity-40"><div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-800 flex items-center justify-center font-bold mb-1">5</div>Fingerprint</div>
+                        <div id="step-6" class="flex flex-col items-center opacity-40"><div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-800 flex items-center justify-center font-bold mb-1">6</div>Forwarded</div>
+                    </div>
+                </div>
+
                 <div id="status-desc-box" class="p-4 rounded-xl bg-black/50 border border-gray-800 text-xs sm:text-sm"></div>
             </div>
         </div>
 
+        <!-- 3. Find Board Registration No. Panel -->
         <div id="panel-regsearch" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden">
-            <h3 class="text-lg sm:text-xl font-bold mb-3 flex items-center gap-2 text-yellow-400"><i class="fa-solid fa-id-card"></i> Board Registration No. Finder</h3>
-            <div class="flex flex-col sm:flex-row gap-2 mb-4">
-                <input type="text" id="reg-input" placeholder="Enter Admission No. (SR No.)..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
-                <button onclick="checkBoardRegNo()" class="w-full sm:w-auto bg-yellow-500 text-black font-semibold px-6 py-3 rounded-xl text-sm">Find No.</button>
+            <h3 class="text-lg sm:text-xl font-bold mb-3 flex items-center gap-2 text-yellow-400">
+                <i class="fa-solid fa-id-card"></i> Board Registration No. Finder
+            </h3>
+            <p class="text-xs text-gray-400 mb-3">Search by Admission No. (SR No.)</p>
+            <div class="flex flex-col sm:flex-row gap-2 mb-4 sm:mb-6">
+                <input type="text" id="reg-input" oninput="updateRobo('typing')" placeholder="Enter Admission No. (SR No.)..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 text-white">
+                <button onclick="checkBoardRegNo()" class="w-full sm:w-auto bg-yellow-500 text-black font-semibold px-6 py-3 rounded-xl text-sm hover:bg-opacity-90 transition shadow-lg shadow-yellow-500/20">Find No.</button>
             </div>
             <div id="reg-result" class="hidden p-4 rounded-xl bg-black/50 border border-gray-800 text-xs sm:text-sm space-y-2"></div>
         </div>
 
+        <!-- 4. OTR & Last Year Registration Finder Panel -->
         <div id="panel-otrsearch" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden">
-            <h3 class="text-lg sm:text-xl font-bold mb-3 flex items-center gap-2 text-neongreen"><i class="fa-solid fa-key"></i> OTR & Last Year Registration Finder</h3>
-            <div class="flex flex-col sm:flex-row gap-2 mb-4">
-                <input type="text" id="otr-input" placeholder="Enter SR No. or Name..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
-                <button onclick="checkOTRRecord()" class="w-full sm:w-auto bg-neongreen text-black font-semibold px-6 py-3 rounded-xl text-sm">Find Details</button>
+            <h3 class="text-lg sm:text-xl font-bold mb-3 flex items-center gap-2 text-neongreen">
+                <i class="fa-solid fa-key"></i> OTR & Last Year Registration Finder
+            </h3>
+            <p class="text-xs text-gray-400 mb-3">Search by SR No. (Admission No.) or Name.</p>
+            <div class="flex flex-col sm:flex-row gap-2 mb-4 sm:mb-6">
+                <input type="text" id="otr-input" oninput="updateRobo('typing')" placeholder="Enter SR No. or Name..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neongreen text-white">
+                <button onclick="checkOTRRecord()" class="w-full sm:w-auto bg-neongreen text-black font-semibold px-6 py-3 rounded-xl text-sm hover:bg-opacity-90 transition shadow-lg shadow-neongreen/20">Find Details</button>
             </div>
             <div id="otr-result" class="hidden p-4 rounded-xl bg-black/50 border border-gray-800 text-xs sm:text-sm space-y-2"></div>
         </div>
 
+        <!-- 5. Suggestion Box Panel -->
         <div id="panel-suggestion" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden space-y-6">
-            <form onsubmit="submitSuggestion(event)" class="space-y-3">
-                <input type="text" id="sug-name" placeholder="Enter your name" class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
-                <textarea id="sug-msg" rows="3" placeholder="Apna message yahan likhein..." required class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white"></textarea>
-                <button type="submit" class="w-full bg-neongreen text-black font-semibold py-3 rounded-xl text-sm">Submit Suggestion</button>
+            <div>
+                <h3 class="text-lg sm:text-xl font-bold mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-paper-plane text-neongreen"></i> Suggestion Box
+                </h3>
+                <p class="text-xs text-gray-400 mb-3">Aapka sujhav seedha office tak pahunchega.</p>
+                <form onsubmit="submitSuggestion(event)" class="space-y-3 sm:space-y-4">
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Aapka Naam (Optional)</label>
+                        <input type="text" id="sug-name" placeholder="Enter your name" class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neongreen text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Aapka Sujhav / Message</label>
+                        <textarea id="sug-msg" rows="3" placeholder="Apna message yahan likhein..." required class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neongreen text-white"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-neongreen text-black font-semibold py-3 rounded-xl text-sm hover:bg-opacity-90 transition">Submit Suggestion</button>
+                </form>
+                <div id="sug-success" class="hidden mt-3 text-center text-neongreen text-xs sm:text-sm font-medium">✨ Aapka sujhav safalpurvak bhej diya gaya hai!</div>
+            </div>
+
+            <!-- Admin View: Recent Suggestions from Firebase -->
+            <div class="border-t border-gray-800 pt-6">
+                <h3 class="text-base sm:text-lg font-bold mb-2 flex items-center gap-2 text-neoncyan">
+                    <i class="fa-solid fa-list-check"></i> Admin View: Recent Suggestions
+                </h3>
+                <p class="text-xs text-gray-400 mb-3">Firebase se live sync kiye gaye suggestions:</p>
+                <div id="admin-suggestions-list" class="space-y-2 max-h-48 overflow-y-auto pr-1 text-xs">
+                    <p class="text-gray-500">Loading suggestions...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Birthday Wish Request Form Panel -->
+        <div id="panel-birthday-req" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden space-y-4">
+            <h3 class="text-lg sm:text-xl font-bold text-yellow-400 flex items-center gap-2"><i class="fa-solid fa-gift"></i> Birthday Wish Request Form</h3>
+            <p class="text-xs text-gray-400">Apni detail submit karein. Admin approve hone ke baad live 3D slider par dikhega.</p>
+            <form onsubmit="submitBirthdayRequest(event)" class="space-y-3">
+                <input type="text" id="b-name" placeholder="Full Name" required class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
+                <input type="text" id="b-class" placeholder="Class & Section (e.g. 10th A)" required class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
+                <input type="file" id="b-photo" accept="image/*" required class="w-full bg-black/40 border border-gray-700 rounded-xl px-3 py-2 text-xs text-gray-300">
+                <textarea id="b-msg" rows="2" placeholder="Birthday Message..." class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white"></textarea>
+                <button type="submit" class="w-full bg-yellow-500 text-black font-bold py-3 rounded-xl text-sm">Submit Request</button>
             </form>
-            <div id="admin-suggestions-list" class="space-y-2 max-h-48 overflow-y-auto pr-1 text-xs text-gray-400"></div>
         </div>
 
+        <!-- 6. Contact Office Panel -->
         <div id="panel-contact" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden space-y-4">
-            <h3 class="text-lg sm:text-xl font-bold mb-2 text-yellow-400">Office Contact Details</h3>
-            <p class="text-xs sm:text-sm">Incharge: <strong>Gaurav Shyam Shukla</strong> | Phone: <a href="tel:8127971282" class="text-neoncyan">8127971282</a></p>
+            <h3 class="text-lg sm:text-xl font-bold mb-2 flex items-center gap-2 text-yellow-400">
+                <i class="fa-solid fa-id-badge"></i> Office Contact Details
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+                <div class="bg-black/40 p-3.5 sm:p-4 rounded-xl border border-gray-800">
+                    <p class="text-[11px] text-gray-400">Incharge Name</p>
+                    <p class="font-bold text-sm sm:text-base mt-0.5">Gaurav Shyam Shukla</p>
+                </div>
+                <div class="bg-black/40 p-3.5 sm:p-4 rounded-xl border border-gray-800">
+                    <p class="text-[11px] text-gray-400">Phone Number</p>
+                    <p class="font-bold text-sm sm:text-base mt-0.5"><a href="tel:8127971282" class="text-neoncyan hover:underline">8127971282</a></p>
+                </div>
+                <div class="bg-black/40 p-3.5 sm:p-4 rounded-xl border border-gray-800">
+                    <p class="text-[11px] text-gray-400">Email Address</p>
+                    <p class="font-bold text-sm sm:text-base mt-0.5"><a href="mailto:Gaurav.s.shukla@adityabirla.com" class="text-purple-400 hover:underline">Gaurav.s.shukla@adityabirla.com</a></p>
+                </div>
+                <div class="bg-black/40 p-3.5 sm:p-4 rounded-xl border border-gray-800">
+                    <p class="text-[11px] text-gray-400">Social Channels</p>
+                    <div class="flex flex-wrap gap-3 mt-1 font-bold text-xs">
+                        <a href="https://whatsapp.com/channel/0029VbE9nzJIHphK2l9p7s0f" target="_blank" class="text-neongreen hover:underline"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                        <a href="https://www.instagram.com/gauravshyamshukla4?igsh=cmt6Y3N5dGt3aHZ2&igsi=cmt6Y3N5dGt3aHZ2&utm_source=qr" target="_blank" class="text-pink-400 hover:underline"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                        <a href="https://snapchat.com/t/JceUuZzs" target="_blank" class="text-yellow-400 hover:underline"><i class="fa-brands fa-snapchat"></i> Snapchat</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
+        <!-- Profile Edit Panel -->
+        <div id="panel-profile-edit" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden space-y-4">
+            <h3 class="text-lg font-bold text-yellow-400">Edit My Profile / Fix SR No.</h3>
+            <form onsubmit="updateUserProfile(event)" class="space-y-3">
+                <input type="text" id="edit-sr" placeholder="Correct SR No." required class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
+                <input type="text" id="edit-phone" placeholder="Phone Number" required class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
+                <input type="password" id="edit-pass" placeholder="New Passcode" required class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
+                <button type="submit" class="w-full bg-neoncyan text-black font-bold py-3 rounded-xl text-sm">Update Profile</button>
+            </form>
+        </div>
+
+        <!-- 7. Secret Hash Admin Panel (#admin) -->
+        <div id="panel-admin" class="glass p-5 rounded-2xl mb-6 sm:mb-8 hidden space-y-4 border border-red-500/30">
+            <div id="admin-auth-box" class="space-y-3">
+                <h3 class="text-base sm:text-lg font-bold text-red-400"><i class="fa-solid fa-shield-halved"></i> Secret Admin Access</h3>
+                <p class="text-xs text-gray-400">Enter Admin Password:</p>
+                <input type="password" id="admin-pass-input" placeholder="Password..." class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none">
+                <button onclick="verifyAdminLogin()" class="w-full bg-red-600 text-white font-bold py-3 rounded-xl text-sm">Login</button>
+            </div>
+            <div id="admin-dashboard" class="hidden space-y-4">
+                <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                    <h3 class="text-sm font-bold text-neongreen">Admin Control Panel (Gaurav)</h3>
+                    <button onclick="window.location.hash=''; switchTab('attendance');" class="text-xs bg-gray-800 px-3 py-1 rounded text-gray-300">Exit</button>
+                </div>
+                <h4 class="text-xs font-bold text-yellow-400">Pending Birthday Requests Approval</h4>
+                <div id="admin-bday-list" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
+                <h4 class="text-xs font-bold text-neoncyan pt-3 border-t border-gray-800">Password Reset & VIP Manager</h4>
+                <div class="space-y-2">
+                    <input type="text" id="admin-target-sr" placeholder="Target User SR No." class="w-full bg-black/40 border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
+                    <input type="password" id="admin-new-pass" placeholder="New Passcode" class="w-full bg-black/40 border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
+                    <div class="flex gap-2">
+                        <button onclick="adminResetPassword()" class="flex-1 bg-yellow-500 text-black text-xs font-bold py-2 rounded-xl">Reset Pass</button>
+                        <button onclick="adminToggleVIP(true)" class="bg-green-600 text-black text-xs font-bold px-3 py-2 rounded-xl">Make VIP</button>
+                        <button onclick="adminToggleVIP(false)" class="bg-red-600 text-white text-xs font-bold px-3 py-2 rounded-xl">Remove VIP</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
         <footer class="text-center text-[11px] sm:text-xs text-gray-500 py-4 border-t border-gray-800">
             <p>Designed with 💙 for Students • Aditya Birla Intermediate College, Renukoot</p>
         </footer>
+
     </div>
 
+    <!-- 👤 USER LOGIN MODAL -->
+    <div id="login-modal" class="fixed inset-0 z-[99999] bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-3">
+        <div class="glass p-5 rounded-2xl w-full max-w-sm space-y-4 border border-cyan-500/30">
+            <div class="flex justify-between items-center">
+                <h3 class="text-base font-bold text-neoncyan"><i class="fa-solid fa-user-lock"></i> Student Portal Login</h3>
+                <button onclick="closeLoginModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="handleUserLogin(event)" class="space-y-3">
+                <input type="text" id="login-sr" placeholder="Admission / SR No." required class="w-full bg-black/40 border border-gray-700 rounded-xl px-3 py-2.5 text-xs text-white">
+                <input type="tel" id="login-phone" placeholder="Phone Number" required class="w-full bg-black/40 border border-gray-700 rounded-xl px-3 py-2.5 text-xs text-white">
+                <input type="password" id="login-pass" placeholder="Passcode (4-digit)" required class="w-full bg-black/40 border border-gray-700 rounded-xl px-3 py-2.5 text-xs text-white">
+                <div class="space-y-1">
+                    <label class="text-[10px] text-gray-400">Profile Photo (3D ID Card)</label>
+                    <input type="file" id="login-photo" accept="image/*" required class="w-full bg-black/40 border border-gray-700 rounded-xl px-3 py-1.5 text-[10px] text-gray-300">
+                </div>
+                <button type="submit" class="w-full bg-neoncyan text-black font-bold py-2.5 rounded-xl text-xs">Login / Register</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase Logic & Portal Scripts -->
     <script>
         window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
             preloader.style.opacity = '0';
             setTimeout(() => preloader.style.display = 'none', 800);
             loadDashboardStats();
+            loadApprovedBirthdays();
+            checkUrlHashRoute();
+            startRetroClock();
+            checkActiveUserSession();
         });
 
-        const firebaseConfig = { databaseURL: "https://hellobacchonportal-default-rtdb.firebaseio.com" };
+        window.addEventListener('hashchange', checkUrlHashRoute);
+
+        function checkUrlHashRoute() {
+            if (window.location.hash === '#admin') {
+                ['attendance', 'status', 'regsearch', 'otrsearch', 'suggestion', 'contact', 'birthday-req', 'learn', 'gapps'].forEach(t => {
+                    let el = document.getElementById(`panel-${t}`);
+                    if(el) el.classList.add('hidden');
+                });
+                let adminPanel = document.getElementById('panel-admin');
+                if(adminPanel) {
+                    adminPanel.classList.remove('hidden');
+                    adminPanel.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+
+        const firebaseConfig = {
+            databaseURL: "https://hellobacchonportal-default-rtdb.firebaseio.com"
+        };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
+
+        function startRetroClock() {
+            function updateClock() {
+                let now = new Date();
+                let timeEl = document.getElementById('retro-time');
+                let dateEl = document.getElementById('retro-date');
+                if(timeEl) timeEl.innerText = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                if(dateEl) dateEl.innerText = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }).toUpperCase();
+            }
+            setInterval(updateClock, 1000);
+            updateClock();
+        }
+
+        function lightUpRetroWidget() {
+            let widget = document.getElementById('retro-widget');
+            if(widget) { widget.classList.add('litup'); setTimeout(() => widget.classList.remove('litup'), 3000); }
+        }
+
+        function updateLedMarquee(bdayNames) {
+            let ledEl = document.getElementById('led-marquee-text');
+            if(!ledEl) return;
+            let bdayMsg = bdayNames.length > 0 ? `🎉 Today's Birthday Stars: ${bdayNames.join(' • ')}! Happy Birthday! 🎂` : "✨ Welcome to Aditya Birla Intermediate College Portal!";
+            ledEl.innerText = `✨ Welcome to ABIC Portal • 🚀 Fast Scholarship & Attendance • ${bdayMsg}`;
+        }
 
         const banners = [
             "https://i.ibb.co/fLZZ6j4/Chat-GPT-Image-Aug-31-2026-06-33-36-PM-2.png", 
@@ -366,7 +686,10 @@
             let sliderImg = document.getElementById('banner-slider');
             if(sliderImg) {
                 sliderImg.style.opacity = 0;
-                setTimeout(() => { sliderImg.src = banners[currentBannerIndex]; sliderImg.style.opacity = 1; }, 500);
+                setTimeout(() => {
+                    sliderImg.src = banners[currentBannerIndex];
+                    sliderImg.style.opacity = 1;
+                }, 500);
             }
         }, 6000);
 
@@ -376,6 +699,22 @@
             dance: "https://i.ibb.co/jkfZqpcq/Chat-GPT-Image-Aug-31-2026-06-00-52-PM.png",
             notfound: "https://i.ibb.co/RkX81JB5/Chat-GPT-Image-Aug-31-2026-05-51-30-PM.png"
         };
+
+        const funnyPhrases = [
+            "Arre dhyan se click karo, rocket thodi udana hai! 🚀",
+            "Sahi ja rahe ho bacchon, scholarship pakki hai! 😎",
+            "Sir Gaurav Shukla ka portal hai, yahan sab fast milega! ⚡",
+            "Number yaad nahi hai toh search box use karo bhai! 🔍",
+            "Padhai likhai karo, IAS YAS bano aur desh ko sambhalo! 📚"
+        ];
+
+        function triggerFunnyTalk(e) {
+            let bubble = document.getElementById('robo-bubble');
+            if(['BUTTON', 'INPUT', 'TEXTAREA', 'A', 'IMG'].indexOf(e.target.tagName) === -1) {
+                let randomPhrase = funnyPhrases[Math.floor(Math.random() * funnyPhrases.length)];
+                bubble.innerText = randomPhrase;
+            }
+        }
 
         function roboDanceAction() {
             let avatarImg = document.getElementById('robo-img');
@@ -390,7 +729,63 @@
             }, 4000);
         }
 
-        // Toggle Function to Show/Hide Eligibility Panel smoothly
+        function updateRobo(action) {
+            let bubble = document.getElementById('robo-bubble');
+            let avatarImg = document.getElementById('robo-img');
+            avatarImg.classList.remove('dancing');
+
+            if (action === 'attendance') {
+                avatarImg.src = avatarGifs.welcome;
+                bubble.innerText = "🔍 75% attendance mandatory hai, check kar lo!";
+            } else if (action === 'status') {
+                avatarImg.src = avatarGifs.welcome;
+                bubble.innerText = "🚀 Dekho form kahan tak pahuncha government office mein!";
+            } else if (action === 'regsearch') {
+                avatarImg.src = avatarGifs.welcome;
+                bubble.innerText = "🆔 Yahan apna Board Registration number nikal lo!";
+            } else if (action === 'otrsearch') {
+                avatarImg.src = avatarGifs.welcome;
+                bubble.innerText = "🔑 OTR aur Last Year ka Registration No. yahan milega!";
+            } else if (action === 'suggestion') {
+                avatarImg.src = avatarGifs.welcome;
+                bubble.innerText = "💡 Seedha office message bhejo, koi dikkat ho toh!";
+            } else if (action === 'contact') {
+                avatarImg.src = avatarGifs.welcome;
+                bubble.innerText = "📞 Incharge: Gaurav Shyam Shukla ji se sampark karein!";
+            } else if (action === 'learn') {
+                avatarImg.src = avatarGifs.welcome;
+                bubble.innerText = "💻 HTML aur CSS seekho, zero se hero bano!";
+            } else if (action === 'gapps') {
+                avatarImg.src = avatarGifs.welcome;
+                bubble.innerText = "📱 Gaurav sir ke banaye gaye smart apps use karo!";
+            } else if (action === 'typing') {
+                avatarImg.src = avatarGifs.typing;
+                bubble.innerText = "👀 Dhyan se number type kar rahe ho na?";
+            } else if (action === 'success') {
+                avatarImg.src = avatarGifs.dance;
+                bubble.innerText = "🎉 Mil gaya data! Dance time! 🕺💃";
+                avatarImg.classList.add('dancing');
+            } else if (action === 'notfound') {
+                avatarImg.src = avatarGifs.notfound;
+                bubble.innerText = "❌ Record nahi mila, spelling ya number check karo!";
+            }
+        }
+
+        function switchTab(tabName) {
+            ['attendance', 'status', 'regsearch', 'otrsearch', 'suggestion', 'contact', 'birthday-req', 'admin', 'learn', 'gapps', 'profile-edit'].forEach(t => {
+                let el = document.getElementById(`panel-${t}`);
+                if(el) el.classList.add('hidden');
+            });
+            let target = document.getElementById(`panel-${tabName}`);
+            if(target) {
+                target.classList.remove('hidden');
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            if(tabName === 'suggestion') {
+                loadAdminSuggestions();
+            }
+        }
+
         function toggleEligibilityPanel() {
             let panel = document.getElementById('eligibility-collapsible');
             let icon = document.getElementById('toggle-icon');
@@ -403,13 +798,15 @@
             }
         }
 
-        function switchTab(tabName) {
-            ['attendance', 'status', 'regsearch', 'otrsearch', 'suggestion', 'contact'].forEach(t => {
-                document.getElementById(`panel-${t}`).classList.add('hidden');
-            });
-            document.getElementById(`panel-${tabName}`).classList.remove('hidden');
-            if(tabName === 'suggestion') loadAdminSuggestions();
-        }
+        const statusMap = { "Received": 1, "Correction": 2, "Final": 3, "Verify": 4, "Fingerprint": 5, "Forwarded": 6 };
+        const statusDescriptions = {
+            "Received": "Form office ko prapt ho gaya hai aur check kiya ja raha hai.",
+            "Correction": "Form mein kami hai. Kripya office se prapt karein ya correct karke final submit karein.",
+            "Final": "Apka form finally mil gaya hai aur verification process mein hai.",
+            "Verify": "Apka form verify kar liya gaya hai.",
+            "Fingerprint": "Apko fingerprint ke liye agle 2 dino mein office akar biometric complete karna hai.",
+            "Forwarded": "Apka form finally UP GOVERNMENT ko bhej diya gaya hai. Thank you!"
+        };
 
         function getProp(obj, keys) {
             if (!obj) return "";
@@ -424,119 +821,296 @@
             navigator.clipboard.writeText(text).then(() => {
                 let originalHTML = btnElem.innerHTML;
                 btnElem.innerHTML = `<i class="fa-solid fa-check text-green-400"></i> Copied!`;
-                setTimeout(() => btnElem.innerHTML = originalHTML, 2000);
-            });
+                btnElem.classList.add('bg-green-900/40', 'border-green-500');
+                setTimeout(() => {
+                    btnElem.innerHTML = originalHTML;
+                    btnElem.classList.remove('bg-green-900/40', 'border-green-500');
+                }, 2000);
+            }).catch(err => { console.error('Copy failed', err); });
         }
 
-        // Scholarship Eligibility Checker (From Attendance Tab)
-        function checkScholarshipEligibility() {
-            let srQuery = document.getElementById('elig-sr-input').value.trim();
-            let resultBox = document.getElementById('elig-result-box');
-            let quickStatus = document.getElementById('quick-overall-status');
-            let bubble = document.getElementById('robo-bubble');
-            let avatarImg = document.getElementById('robo-img');
+        // Login & ID Card Management
+        function openLoginModal() { document.getElementById('login-modal').classList.remove('hidden'); }
+        function closeLoginModal() { document.getElementById('login-modal').classList.add('hidden'); }
 
-            resultBox.classList.remove('hidden');
-            if (!srQuery) {
-                resultBox.innerHTML = `<p class="text-red-400">Kripya apna SR No. enter karein.</p>`;
-                quickStatus.classList.add('hidden');
-                return;
+        function handleUserLogin(e) {
+            e.preventDefault();
+            let sr = document.getElementById('login-sr').value.trim();
+            let phone = document.getElementById('login-phone').value.trim();
+            let pass = document.getElementById('login-pass').value.trim();
+            let fileInput = document.getElementById('login-photo');
+
+            if(fileInput.files && fileInput.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function(event) {
+                    let userData = { SR: sr, Phone: phone, Passcode: pass, Photo: event.target.result, VIP: false };
+                    db.ref('PortalUsers/' + sr).set(userData).then(() => {
+                        localStorage.setItem('abic_logged_sr', sr);
+                        alert("✨ Login Successful!");
+                        closeLoginModal();
+                        checkActiveUserSession();
+                    });
+                };
+                reader.readAsDataURL(fileInput.files[0]);
             }
+        }
 
-            resultBox.innerHTML = `<p class="text-cyan-400 animate-pulse">Checking eligibility from Attendance database...</p>`;
+        function checkActiveUserSession() {
+            let loggedSR = localStorage.getItem('abic_logged_sr');
+            let idCardPanel = document.getElementById('user-id-card-panel');
+            let loginBtn = document.getElementById('login-floating-btn');
 
-            db.ref('Attendance').once('value').then((snapshot) => {
-                if (!snapshot.exists()) {
-                    resultBox.innerHTML = `<p class="text-red-400">Attendance database khali hai!</p>`;
-                    quickStatus.classList.add('hidden');
-                    return;
-                }
+            if (loggedSR) {
+                db.ref('PortalUsers/' + loggedSR).once('value').then(userSnap => {
+                    if (userSnap.exists()) {
+                        let user = userSnap.val();
+                        if(loginBtn) loginBtn.classList.add('hidden');
+                        idCardPanel.classList.remove('hidden');
 
-                let allStudents = snapshot.val();
-                let student = null;
+                        document.getElementById('id-card-photo').src = user.Photo;
+                        document.getElementById('id-card-name').innerText = "Student Profile";
 
-                Object.values(allStudents).forEach(s => {
-                    let sSR = String(getProp(s, ['SR_No', 'SRNo', 'SR', 'SR.NO.'])).trim();
-                    if (sSR === srQuery) {
-                        student = s;
+                        let tagEl = document.getElementById('id-card-tag');
+                        let verifyEl = document.getElementById('id-card-verification');
+
+                        if (user.VIP) {
+                            tagEl.innerText = "⭐ VIP USER";
+                            tagEl.className = "px-2 py-0.5 rounded text-[9px] font-bold bg-yellow-500 text-black";
+                        } else {
+                            tagEl.innerText = "STANDARD";
+                            tagEl.className = "px-2 py-0.5 rounded text-[9px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30";
+                        }
+
+                        Promise.all([
+                            db.ref('Attendance').once('value'),
+                            db.ref('REGISTRATION/' + loggedSR).once('value'),
+                            db.ref('OTR').once('value')
+                        ]).then(([attSnap, regSnap, otrSnap]) => {
+                            let attData = Object.values(attSnap.val() || {}).find(s => String(getProp(s, ['SR_No', 'SR'])).trim() === loggedSR);
+                            
+                            if (attData) {
+                                verifyEl.innerHTML = `<span class="text-neongreen"><i class="fa-solid fa-circle-check"></i> Verified User</span>`;
+                                document.getElementById('id-card-name').innerText = getProp(attData, ['Student_Name', 'Name']);
+                                document.getElementById('id-sr').innerText = loggedSR;
+                                
+                                let classSec = getProp(attData, ['CLASS/SEC', 'Class']);
+                                document.getElementById('id-class').innerText = typeof classSec === 'object' ? classSec.SEC || 'N/A' : classSec;
+                                
+                                let pct = parseFloat(getProp(attData, ['Percentage', 'ATTENDENCE PERCENTAG'])) || 0;
+                                if(pct > 0 && pct <= 1) pct *= 100;
+                                document.getElementById('id-att').innerText = pct + '%';
+                            } else {
+                                verifyEl.innerHTML = `<span class="text-red-400"><i class="fa-solid fa-triangle-exclamation"></i> Unverified User</span>`;
+                                document.getElementById('id-sr').innerText = loggedSR;
+                                document.getElementById('id-class').innerText = "Not Mapped";
+                                document.getElementById('id-att').innerText = "N/A";
+                            }
+
+                            let boardReg = regSnap.exists() ? regSnap.val().BoardRegistrationNo : 'Not Assigned';
+                            document.getElementById('id-board-reg').innerText = boardReg;
+
+                            let otrFound = Object.values(otrSnap.val() || {}).find(o => String(getProp(o, ['SR', 'SRNo'])).trim() === loggedSR);
+                            if (otrFound) {
+                                document.getElementById('id-otr').innerText = getProp(otrFound, ['OTRNo', 'OTR']) || 'N/A';
+                                document.getElementById('id-last-reg').innerText = getProp(otrFound, ['LastYearScholarshipRegistrationNo', 'LastYearRegNo']) || 'N/A';
+                                document.getElementById('id-last-pct').innerText = getProp(otrFound, ['LastYearPassingPercentage', 'Percentage']) || 'N/A';
+                            } else {
+                                document.getElementById('id-otr').innerText = 'N/A';
+                                document.getElementById('id-last-reg').innerText = 'N/A';
+                                document.getElementById('id-last-pct').innerText = 'N/A';
+                            }
+                        });
                     }
                 });
+            } else {
+                idCardPanel.classList.add('hidden');
+                if(loginBtn) loginBtn.classList.remove('hidden');
+            }
+        }
 
-                if (!student) {
-                    resultBox.innerHTML = `<p class="text-red-400">Yeh SR No. Attendance database mein nahi mila!</p>`;
-                    quickStatus.classList.add('hidden');
-                    avatarImg.src = avatarGifs.notfound;
-                    bubble.innerText = "❌ SR No. galat hai bhai, dhyan se check karo!";
-                    return;
+        function changeUserTheme(theme) {
+            let body = document.getElementById('main-body');
+            if (theme === 'cyan') body.className = "bg-[#020817] text-cyan-100 min-h-screen selection:bg-neoncyan selection:text-black";
+            else if (theme === 'emerald') body.className = "bg-[#022c22] text-emerald-100 min-h-screen selection:bg-neongreen selection:text-black";
+            else if (theme === 'purple') body.className = "bg-[#1e1b4b] text-purple-100 min-h-screen selection:bg-neonpurple selection:text-black";
+            else if (theme === 'sunset') body.className = "bg-[#29170b] text-amber-100 min-h-screen selection:bg-yellow-500 selection:text-black";
+            else body.className = "bg-darkbg text-gray-100 min-h-screen selection:bg-neoncyan selection:text-black";
+        }
+
+        function userLogout() {
+            localStorage.removeItem('abic_logged_sr');
+            checkActiveUserSession();
+            alert("Logged out successfully.");
+        }
+
+        function updateUserProfile(e) {
+            e.preventDefault();
+            let sr = document.getElementById('edit-sr').value.trim();
+            let phone = document.getElementById('edit-phone').value.trim();
+            let pass = document.getElementById('edit-pass').value.trim();
+            let oldSR = localStorage.getItem('abic_logged_sr');
+
+            db.ref('PortalUsers/' + oldSR).once('value').then(snap => {
+                if(snap.exists()) {
+                    let data = snap.val();
+                    data.SR = sr; data.Phone = phone; data.Passcode = pass;
+                    db.ref('PortalUsers/' + sr).set(data).then(() => {
+                        if(oldSR !== sr) db.ref('PortalUsers/' + oldSR).remove();
+                        localStorage.setItem('abic_logged_sr', sr);
+                        alert("Profile Updated!");
+                        switchTab('home');
+                        checkActiveUserSession();
+                    });
                 }
-
-                let name = getProp(student, ['Student_Name', 'Name', 'NAME']) || 'N/A';
-                let regNo = getProp(student, ['Registration_No', 'REGISTRATION NO.', 'RegNo']) || 'N/A';
-                let category = String(getProp(student, ['CATEGORY', 'GEN', 'Category']) || 'GEN').toUpperCase();
-                let classSec = getProp(student, ['CLASS/SEC', 'Class', 'CLASS']) || 'N/A';
-                if (typeof classSec === 'object') classSec = classSec.SEC || 'N/A';
-
-                let rawPct = getProp(student, ['Percentage', 'ATTENDENCE PERCENTAG', 'Attendance_Percent']);
-                let attPercent = parseFloat(rawPct) || 0;
-                if (attPercent > 0 && attPercent <= 1) attPercent = attPercent * 100;
-                let isAttEligible = attPercent >= 75;
-
-                let obt = parseFloat(getProp(student, ['OBT', 'ObtainedMarks'])) || 0;
-                let max = parseFloat(getProp(student, ['MAX', 'MaxMarks'])) || 0;
-                let marksPercent = max > 0 ? (obt * 100) / max : 0;
-                
-                let minRequiredMarks = (category === 'GEN' || category === 'OBC') ? 50 : 33;
-                let isMarksEligible = max > 0 ? (marksPercent >= minRequiredMarks) : true;
-
-                let overallEligible = isAttEligible && isMarksEligible;
-
-                quickStatus.classList.remove('hidden');
-                if (overallEligible) {
-                    quickStatus.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-green-950/80 border border-green-500 text-green-300";
-                    quickStatus.innerHTML = `⭐ Overall Status: <span class="text-white">ELIGIBLE</span>`;
-                    avatarImg.src = avatarGifs.dance;
-                    avatarImg.classList.add('dancing');
-                    bubble.innerText = "🎉 Jaldi form bhar ke jama karo, scholarship pakki hai! 🚀";
-                } else {
-                    quickStatus.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-red-950/80 border border-red-500 text-red-300";
-                    quickStatus.innerHTML = `⭐ Overall Status: <span class="text-white">REJECTED</span>`;
-                    avatarImg.src = avatarGifs.notfound;
-                    bubble.innerText = "🛑 Form mat bharo bacchon, paisa barbaad ho jayega! 💸";
-                }
-
-                resultBox.innerHTML = `
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-black/40 p-3.5 rounded-xl border border-gray-700">
-                        <p><strong>Name:</strong> <span class="text-white font-semibold">${name}</span></p>
-                        <p><strong>SR No:</strong> <span class="text-white font-semibold">${srQuery}</span></p>
-                        <p><strong>Class:</strong> <span class="text-white">${classSec}</span></p>
-                        <p><strong>Category:</strong> <span class="text-yellow-400 font-bold">${category}</span></p>
-                        <p><strong>Scholarship Reg No:</strong> <span class="text-neoncyan">${regNo}</span></p>
-                        <p><strong>Last Exam Marks:</strong> <span class="text-white">${max > 0 ? marksPercent.toFixed(1) + '%' : 'Data pending'} (OBT: ${obt} / MAX: ${max})</span></p>
-                    </div>
-                    <div class="space-y-2 pt-2">
-                        <div class="flex justify-between items-center bg-black/30 p-2.5 rounded-lg border border-gray-800">
-                            <div class="flex items-center gap-2">
-                                <span class="text-gray-300">1. Marks Criteria (${minRequiredMarks}% required for ${category}):</span>
-                                ${isMarksEligible ? '<i class="fa-solid fa-circle-check text-green-400 text-base"></i>' : '<i class="fa-solid fa-circle-xmark text-red-500 text-base"></i>'}
-                            </div>
-                            <span class="cursor-pointer text-cyan-400 text-xs hover:underline" onclick="alert('Rule: General aur OBC ke liye 50% ya usse jyada aur baaki categories ke liye 33% marks anivarya hain.')"><i class="fa-solid fa-circle-info"></i> Remarks</span>
-                        </div>
-                        <div class="flex justify-between items-center bg-black/30 p-2.5 rounded-lg border border-gray-800">
-                            <div class="flex items-center gap-2">
-                                <span class="text-gray-300">2. Attendance Criteria (75% Minimum):</span>
-                                <span class="text-white font-bold">${attPercent}%</span>
-                                ${isAttEligible ? '<i class="fa-solid fa-circle-check text-green-400 text-base"></i>' : '<i class="fa-solid fa-circle-xmark text-red-500 text-base"></i>'}
-                            </div>
-                            <span class="cursor-pointer text-cyan-400 text-xs hover:underline" onclick="alert('Rule: Attendance kam se kam 75% honi chahiye.')"><i class="fa-solid fa-circle-info"></i> Remarks</span>
-                        </div>
-                    </div>
-                `;
-            }).catch(err => {
-                console.error("Eligibility Check Error:", err);
-                resultBox.innerHTML = `<p class="text-red-400">Data fetch karne mein error aayi.</p>`;
             });
         }
 
+        function verifyAdminLogin() {
+            let pass = document.getElementById('admin-pass-input').value.trim();
+            if (pass === "1234") {
+                document.getElementById('admin-auth-box').classList.add('hidden');
+                document.getElementById('admin-dashboard').classList.remove('hidden');
+                loadPendingBirthdayRequests();
+            } else { alert("❌ Wrong Password!"); }
+        }
+
+        function adminResetPassword() {
+            let sr = document.getElementById('admin-target-sr').value.trim();
+            let newPass = document.getElementById('admin-new-pass').value.trim();
+            db.ref(`PortalUsers/${sr}/Passcode`).set(newPass).then(() => alert("Password reset successfully!"));
+        }
+
+        function adminToggleVIP(status) {
+            let sr = document.getElementById('admin-target-sr').value.trim();
+            db.ref(`PortalUsers/${sr}/VIP`).set(status).then(() => alert(`VIP status set to ${status}!`));
+        }
+
+        // 🎂 FIXED BIRTHDAY SUBMISSION & REAL-TIME FETCHING
+        function submitBirthdayRequest(e) {
+            e.preventDefault();
+            let name = document.getElementById('b-name').value.trim();
+            let className = document.getElementById('b-class').value.trim();
+            let msg = document.getElementById('b-msg').value.trim() || "Happy Birthday! 🎂🥳";
+            let fileInput = document.getElementById('b-photo');
+
+            if (fileInput.files && fileInput.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function(event) {
+                    db.ref('BirthdayRequests').push({
+                        Name: name,
+                        Class: className,
+                        Message: msg,
+                        Photo: event.target.result,
+                        Status: 'Pending',
+                        Timestamp: Date.now()
+                    }).then(() => {
+                        alert("🎂 Birthday request successfully submit ho gayi hai! Admin approval ke baad yeh live dikhegi.");
+                        e.target.reset();
+                        switchTab('home');
+                    }).catch(err => {
+                        console.error("Birthday submit error:", err);
+                        alert("Request bhejte samay error aayi.");
+                    });
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                alert("Kripya photo select karein!");
+            }
+        }
+
+        function loadApprovedBirthdays() {
+            let container = document.getElementById('birthday-slider-container');
+            if(!container) return;
+
+            db.ref('BirthdayRequests').on('value', (snapshot) => {
+                if (snapshot.exists()) {
+                    let data = snapshot.val();
+                    let list = [];
+                    Object.keys(data).forEach(key => {
+                        let item = data[key];
+                        if (item && item.Status && item.Status.toLowerCase() === 'approved') {
+                            list.push(item);
+                        }
+                    });
+
+                    let namesArray = list.map(i => `${i.Name} (${i.Class})`);
+                    updateLedMarquee(namesArray);
+
+                    if (list.length > 0) {
+                        let idx = 0;
+                        function renderSlide() {
+                            if(list.length === 0) return;
+                            let b = list[idx % list.length];
+                            container.innerHTML = `
+                                <div class="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+                                    <img src="${b.Photo}" alt="${b.Name}" class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-yellow-400 shadow-lg">
+                                    <div>
+                                        <span class="bg-yellow-500/20 text-yellow-300 text-[10px] font-bold px-2 py-0.5 rounded-full">✨ BIRTHDAY STAR ✨</span>
+                                        <h3 class="text-base sm:text-lg font-bold text-white mt-1">${b.Name} <span class="text-xs text-gray-400">(${b.Class})</span></h3>
+                                        <p class="text-xs text-yellow-200 italic">"${b.Message}"</p>
+                                    </div>
+                                </div>
+                            `;
+                            idx++;
+                        }
+                        renderSlide();
+                        if (window.bdayInterval) clearInterval(window.bdayInterval);
+                        if (list.length > 1) {
+                            window.bdayInterval = setInterval(renderSlide, 4500);
+                        }
+                    } else {
+                        container.innerHTML = `<p class="text-xs text-gray-400">Aaj koi active birthday wish nahi hai. <br><span class="text-yellow-400 cursor-pointer" onclick="switchTab('birthday-req')">Request Your Wish here</span></p>`;
+                    }
+                } else {
+                    container.innerHTML = `<p class="text-xs text-gray-400">Request your birthday wish from top right button!</p>`;
+                }
+            });
+        }
+
+        function loadPendingBirthdayRequests() {
+            let list = document.getElementById('admin-bday-list');
+            if(!list) return;
+
+            db.ref('BirthdayRequests').on('value', (snapshot) => {
+                if (snapshot.exists()) {
+                    list.innerHTML = "";
+                    let data = snapshot.val();
+                    let hasPending = false;
+                    Object.keys(data).forEach(key => {
+                        let req = data[key];
+                        if (req && req.Status && req.Status.toLowerCase() === 'pending') {
+                            hasPending = true;
+                            list.innerHTML += `
+                                <div class="bg-black/40 p-3 rounded-xl border border-gray-800 flex items-center justify-between gap-3">
+                                    <div class="flex items-center gap-3">
+                                        <img src="${req.Photo}" class="w-12 h-12 rounded-lg object-cover">
+                                        <div>
+                                            <p class="font-bold text-white text-xs">${req.Name} <span class="text-gray-400 font-normal">(${req.Class})</span></p>
+                                            <p class="text-[11px] text-gray-400">"${req.Message}"</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-1.5">
+                                        <button onclick="updateBirthdayStatus('${key}', 'Approved')" class="bg-green-600 text-black px-3 py-1.5 rounded-lg text-xs font-bold">Approve</button>
+                                        <button onclick="updateBirthdayStatus('${key}', 'Rejected')" class="bg-red-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold">Reject</button>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    });
+                    if(!hasPending) list.innerHTML = `<p class="text-xs text-gray-500">Koi pending request nahi hai.</p>`;
+                } else {
+                    list.innerHTML = `<p class="text-xs text-gray-500">Koi request nahi mili.</p>`;
+                }
+            });
+        }
+
+        function updateBirthdayStatus(key, status) {
+            db.ref(`BirthdayRequests/${key}/Status`).set(status).then(() => {
+                alert(`Request ${status} ho gayi!`);
+            });
+        }
+
+        // Standard Portal Functions
         function loadNoticeBoard() {
             let container = document.getElementById('notice-container');
             db.ref('NoticeBoard').once('value').then((snapshot) => {
@@ -547,7 +1121,7 @@
                         let title = getProp(n, ['Notice_Title', 'Title']) || 'Aavashyak Suchna';
                         let content = getProp(n, ['Notice_Content', 'Content', 'Message']) || '';
                         let date = getProp(n, ['Last_Updated', 'Date']) || '';
-                        container.innerHTML += `<div class="bg-black/30 p-2.5 rounded-lg border border-gray-800"><p class="font-bold text-neoncyan"><i class="fa-solid fa-circle-dot text-[10px] mr-1"></i> ${title}</p><p class="text-gray-300 mt-0.5 whitespace-pre-line">${content}</p>${date ? `<p class="text-[9px] text-gray-500 mt-1">${date}</p>` : ''}</div>`;
+                        container.innerHTML += `<div class="bg-black/30 p-2.5 rounded-lg border border-gray-800"><p class="font-bold text-neoncyan"><i class="fa-solid fa-circle-dot text-[10px] mr-1"></i> ${title}</p><p class="text-gray-300 mt-0.5">${content}</p>${date ? `<p class="text-[9px] text-gray-500 mt-1">${date}</p>` : ''}</div>`;
                     });
                 }
             });
@@ -576,18 +1150,129 @@
             });
         }
 
+        function checkScholarshipEligibility() {
+            let srQuery = document.getElementById('elig-sr-input').value.trim();
+            let resultBox = document.getElementById('elig-result-box');
+            let quickStatus = document.getElementById('quick-overall-status');
+            let bubble = document.getElementById('robo-bubble');
+            let avatarImg = document.getElementById('robo-img');
+
+            resultBox.classList.remove('hidden');
+            if (!srQuery) {
+                resultBox.innerHTML = `<p class="text-red-400">Kripya apna SR No. enter karein.</p>`;
+                quickStatus.classList.add('hidden');
+                return;
+            }
+
+            resultBox.innerHTML = `<p class="text-cyan-400 animate-pulse">Checking eligibility from Attendance database...</p>`;
+
+            db.ref('Attendance').once('value').then((snapshot) => {
+                if (!snapshot.exists()) {
+                    resultBox.innerHTML = `<p class="text-red-400">Attendance database khali hai!</p>`;
+                    quickStatus.classList.add('hidden');
+                    return;
+                }
+
+                let allStudents = snapshot.val();
+                let student = null;
+
+                Object.values(allStudents).forEach(s => {
+                    let sSR = String(getProp(s, ['SR_No', 'SRNo', 'SR', 'SR.NO.'])).trim();
+                    if (sSR === srQuery) student = s;
+                });
+
+                if (!student) {
+                    resultBox.innerHTML = `<p class="text-red-400">Yeh SR No. Attendance database mein nahi mila!</p>`;
+                    quickStatus.classList.add('hidden');
+                    return;
+                }
+
+                let name = getProp(student, ['Student_Name', 'Name', 'NAME']) || 'N/A';
+                let regNo = getProp(student, ['Registration_No', 'REGISTRATION NO.', 'RegNo']) || 'N/A';
+                let category = String(getProp(student, ['CATEGORY', 'GEN', 'Category']) || 'GEN').toUpperCase();
+                let classSec = getProp(student, ['CLASS/SEC', 'Class', 'CLASS']) || 'N/A';
+                if (typeof classSec === 'object') classSec = classSec.SEC || 'N/A';
+
+                let rawPct = getProp(student, ['Percentage', 'ATTENDENCE PERCENTAG', 'Attendance_Percent']);
+                let attPercent = parseFloat(rawPct) || 0;
+                if (attPercent > 0 && attPercent <= 1) attPercent = attPercent * 100;
+                let isAttEligible = attPercent >= 75;
+
+                let obt = parseFloat(getProp(student, ['OBT', 'ObtainedMarks'])) || 0;
+                let max = parseFloat(getProp(student, ['MAX', 'MaxMarks'])) || 0;
+                let marksPercent = max > 0 ? (obt * 100) / max : 0;
+                let minRequiredMarks = (category === 'GEN' || category === 'OBC') ? 50 : 33;
+                let isMarksEligible = max > 0 ? (marksPercent >= minRequiredMarks) : true;
+                let overallEligible = isAttEligible && isMarksEligible;
+
+                quickStatus.classList.remove('hidden');
+                if (overallEligible) {
+                    quickStatus.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-green-950/80 border border-green-500 text-green-300";
+                    quickStatus.innerHTML = `⭐ Overall Status: <span class="text-white">ELIGIBLE</span>`;
+                    avatarImg.src = avatarGifs.dance;
+                    avatarImg.classList.add('dancing');
+                } else {
+                    quickStatus.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-red-950/80 border border-red-500 text-red-300";
+                    quickStatus.innerHTML = `⭐ Overall Status: <span class="text-white">REJECTED</span>`;
+                }
+
+                resultBox.innerHTML = `
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-black/40 p-3.5 rounded-xl border border-gray-700">
+                        <p><strong>Name:</strong> <span class="text-white font-semibold">${name}</span></p>
+                        <p><strong>SR No:</strong> <span class="text-white font-semibold">${srQuery}</span></p>
+                        <p><strong>Class:</strong> <span class="text-white">${classSec}</span></p>
+                        <p><strong>Category:</strong> <span class="text-yellow-400 font-bold">${category}</span></p>
+                        <p><strong>Scholarship Reg No:</strong> <span class="text-neoncyan">${regNo}</span></p>
+                        <p><strong>Last Exam Marks:</strong> <span class="text-white">${max > 0 ? marksPercent.toFixed(1) + '%' : 'Data pending'} (OBT: ${obt} / MAX: ${max})</span></p>
+                    </div>
+                `;
+            });
+        }
+
         function checkAttendance() {
             let query = document.getElementById('att-input').value.trim().toUpperCase();
             let resBox = document.getElementById('att-result');
             resBox.classList.remove('hidden');
-            if(!query) { resBox.innerHTML = `<p class="text-red-400 text-sm">Kripya Registration ya SR No. enter karein.</p>`; return; }
+
+            if(!query) {
+                resBox.innerHTML = `<p class="text-red-400 text-sm">Kripya Registration ya SR No. enter karein.</p>`;
+                updateRobo('notfound');
+                return;
+            }
+
             db.ref('Attendance').once('value').then((snapshot) => {
                 if (snapshot.exists()) {
-                    let found = Object.values(snapshot.val()).find(s => String(getProp(s, ['Registration_No', 'RegNo'])).toUpperCase() === query || String(getProp(s, ['SR_No', 'SR'])).toUpperCase() === query);
-                    if (found) {
-                        let pct = parseFloat(getProp(found, ['Percentage'])) || 0;
-                        resBox.innerHTML = `<div class="space-y-2 text-xs sm:text-sm text-white"><p><strong>Name:</strong> ${getProp(found, ['Student_Name', 'Name'])}</p><p><strong>Status:</strong> ${pct >= 75 ? `<span class="text-neongreen font-bold">Eligible (${pct}%)</span>` : `<span class="text-red-400 font-bold">Not Eligible (${pct}%)</span>`}</p></div>`;
-                    } else { resBox.innerHTML = `<p class="text-red-400 text-sm">Record nahi mila!</p>`; }
+                    let foundStudent = null;
+                    Object.values(snapshot.val()).forEach(student => {
+                        let reg = String(getProp(student, ['Registration_No', 'RegistrationNo', 'RegNo', 'Reg_No'])).trim().toUpperCase();
+                        let sr = String(getProp(student, ['SR_No', 'SRNo', 'SR', 'SrNo'])).trim().toUpperCase();
+                        if (reg === query || sr === query || reg.includes(query) || sr.includes(query)) {
+                            foundStudent = student;
+                        }
+                    });
+
+                    if (foundStudent) {
+                        updateRobo('success');
+                        let regVal = getProp(foundStudent, ['Registration_No', 'RegistrationNo', 'RegNo']) || query;
+                        let srVal = getProp(foundStudent, ['SR_No', 'SRNo', 'SR']) || 'N/A';
+                        let nameVal = getProp(foundStudent, ['Student_Name', 'Name']) || 'N/A';
+                        let rawPct = getProp(foundStudent, ['Percentage', 'ATTENDENCE PERCENTAG', 'Attendance_Percent']);
+                        let percentVal = parseFloat(rawPct) || 0;
+                        if(percentVal > 0 && percentVal <= 1) percentVal = percentVal * 100;
+                        let isEligible = percentVal >= 75;
+
+                        resBox.innerHTML = `
+                            <div class="space-y-2 text-xs sm:text-sm text-white">
+                                <p class="flex justify-between items-center"><span><strong>Registration No:</strong> ${regVal}</span> <button onclick="copyToClipboard('${regVal}', this)" class="bg-gray-800 px-2 py-1 rounded text-[10px] border border-gray-700"><i class="fa-regular fa-copy"></i> Copy</button></p>
+                                <p class="flex justify-between items-center"><span><strong>SR No:</strong> ${srVal}</span> <button onclick="copyToClipboard('${srVal}', this)" class="bg-gray-800 px-2 py-1 rounded text-[10px] border border-gray-700"><i class="fa-regular fa-copy"></i> Copy</button></p>
+                                <p><strong>Name:</strong> ${nameVal}</p>
+                                <p class="pt-1"><strong>Status:</strong> ${percentVal > 0 ? (isEligible ? `<span class="text-neongreen font-bold">Eligible (${percentVal}%)</span>` : `<span class="text-red-400 font-bold">Not Eligible (${percentVal}%)</span>`) : `<span class="text-yellow-400">Record found successfully.</span>`}</p>
+                            </div>
+                        `;
+                    } else {
+                        updateRobo('notfound');
+                        resBox.innerHTML = `<p class="text-red-400 text-sm">Yeh record nahi mila!</p>`;
+                    }
                 }
             });
         }
@@ -596,17 +1281,57 @@
             let query = document.getElementById('status-input').value.trim().toUpperCase();
             let resBox = document.getElementById('status-result');
             let descBox = document.getElementById('status-desc-box');
+
             if(!query) { alert("Kripya enter karein."); return; }
             resBox.classList.remove('hidden');
+            updateRobo('typing');
+
             db.ref('FormStatus').once('value').then((snapshot) => {
                 if (snapshot.exists()) {
-                    let found = Object.values(snapshot.val()).find(s => String(getProp(s, ['Registration_No'])).toUpperCase() === query || String(getProp(s, ['SR_No'])).toUpperCase() === query);
-                    if (found) {
-                        document.getElementById('res-name').innerText = getProp(found, ['Student_Name', 'Name']);
-                        document.getElementById('res-reg').innerText = getProp(found, ['Registration_No']);
-                        document.getElementById('res-sr').innerText = getProp(found, ['SR_No']);
-                        descBox.innerHTML = `<p class="text-white"><strong>Status:</strong> <span class="text-neoncyan">${getProp(found, ['Status'])}</span><br><strong>Remarks:</strong> <span class="text-yellow-400">${getProp(found, ['Remarks'])}</span></p>`;
-                    } else { descBox.innerHTML = `<p class="text-red-400">Record nahi mila!</p>`; }
+                    let foundStudent = null;
+                    Object.values(snapshot.val()).forEach(student => {
+                        let reg = String(getProp(student, ['Registration_No', 'RegNo'])).trim().toUpperCase();
+                        let sr = String(getProp(student, ['SR_No', 'SR'])).trim().toUpperCase();
+                        if (reg === query || sr === query) foundStudent = student;
+                    });
+
+                    if (foundStudent) {
+                        updateRobo('success');
+                        document.getElementById('res-name').innerText = getProp(foundStudent, ['Student_Name', 'Name']) || 'N/A';
+                        document.getElementById('res-reg').innerText = getProp(foundStudent, ['Registration_No', 'RegNo']) || query;
+                        document.getElementById('res-sr').innerText = getProp(foundStudent, ['SR_No', 'SR']) || 'N/A';
+
+                        let currentStatus = getProp(foundStudent, ['Status', 'FormStatus']) || "Received";
+                        let currentStep = statusMap[currentStatus] || 1;
+
+                        for(let i=1; i<=6; i++) {
+                            let stepEl = document.getElementById(`step-${i}`);
+                            let circle = stepEl.querySelector('div');
+                            if(i <= currentStep) {
+                                stepEl.classList.remove('opacity-40');
+                                circle.className = "w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-neoncyan text-black flex items-center justify-center font-bold mb-1 shadow-lg shadow-cyan-500/50";
+                            } else {
+                                stepEl.classList.add('opacity-40');
+                                circle.className = "w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-800 text-gray-400 flex items-center justify-center font-bold mb-1";
+                            }
+                        }
+
+                        let descText = statusDescriptions[currentStatus] || "Status update ho raha hai.";
+                        let remarksVal = getProp(foundStudent, ['Remarks', 'Remark']) || 'No remarks';
+                        let updatedVal = getProp(foundStudent, ['Last_Updated', 'Date']) || 'Just now';
+
+                        descBox.innerHTML = `
+                            <div class="space-y-2 text-xs sm:text-sm text-white">
+                                <p><strong>Current Status:</strong> <span class="text-neoncyan font-bold">${currentStatus}</span></p>
+                                <p><strong>Description:</strong> ${descText}</p>
+                                <p><strong>Remarks from Office:</strong> <span class="text-yellow-400">${remarksVal}</span></p>
+                                <p class="text-[10px] text-gray-500 pt-1 border-t border-gray-800">Last Updated: ${updatedVal}</p>
+                            </div>
+                        `;
+                    } else {
+                        updateRobo('notfound');
+                        descBox.innerHTML = `<p class="text-red-400 text-sm">Registration No. ya SR No. nahi mila!</p>`;
+                    }
                 }
             });
         }
@@ -615,11 +1340,27 @@
             let query = document.getElementById('reg-input').value.trim().toUpperCase();
             let resBox = document.getElementById('reg-result');
             resBox.classList.remove('hidden');
+            if(!query) { resBox.innerHTML = `<p class="text-red-400 text-sm">SR No. enter karein.</p>`; return; }
+
             db.ref('REGISTRATION/' + query).once('value').then((snapshot) => {
                 if (snapshot.exists()) {
+                    updateRobo('success');
                     let s = snapshot.val();
-                    resBox.innerHTML = `<p class="text-white"><strong>Name:</strong> ${s.Name} <br><strong>Board Reg No:</strong> <span class="text-yellow-400 font-bold">${s.BoardRegistrationNo}</span></p>`;
-                } else { resBox.innerHTML = `<p class="text-red-400">Record nahi mila!</p>`; }
+                    let boardRegVal = s.BoardRegistrationNo || 'N/A';
+                    resBox.innerHTML = `
+                        <div class="space-y-2 text-xs sm:text-sm text-white">
+                            <p><strong>Name:</strong> ${s.Name || 'N/A'}</p>
+                            <p><strong>Class:</strong> ${s.Class || 'N/A'}</p>
+                            <p class="flex justify-between items-center pt-1">
+                                <span><strong>Board Registration No:</strong> <span class="text-yellow-400 font-bold">${boardRegVal}</span></span>
+                                <button onclick="copyToClipboard('${boardRegVal}', this)" class="bg-gray-800 px-2 py-1 rounded text-[10px] border border-gray-700"><i class="fa-regular fa-copy"></i> Copy</button>
+                            </p>
+                        </div>
+                    `;
+                } else {
+                    updateRobo('notfound');
+                    resBox.innerHTML = `<p class="text-red-400 text-sm">Record nahi mila!</p>`;
+                }
             });
         }
 
@@ -627,21 +1368,74 @@
             let query = document.getElementById('otr-input').value.trim().toUpperCase();
             let resBox = document.getElementById('otr-result');
             resBox.classList.remove('hidden');
+
+            if(!query) {
+                resBox.innerHTML = `<p class="text-red-400 text-sm">SR No. ya Name enter karein.</p>`;
+                return;
+            }
+
+            resBox.innerHTML = `<p class="text-neongreen text-sm animate-pulse">Searching OTR records...</p>`;
+
             db.ref('OTR').once('value').then((snapshot) => {
                 if (snapshot.exists()) {
-                    let found = Object.values(snapshot.val()).find(s => String(getProp(s, ['SR'])).toUpperCase() === query || String(getProp(s, ['NAME'])).toUpperCase().includes(query));
-                    if (found) {
-                        resBox.innerHTML = `<p class="text-white"><strong>Name:</strong> ${getProp(found, ['NAME'])}<br><strong>OTR No:</strong> <span class="text-neongreen font-bold">${getProp(found, ['OTR_NO', 'OTR NO'])}</span></p>`;
-                    } else { resBox.innerHTML = `<p class="text-red-400">Record nahi mila!</p>`; }
+                    let foundRecords = [];
+                    Object.values(snapshot.val()).forEach(record => {
+                        let srNo = String(getProp(record, ['SR', 'SRNo', 'SR_No'])).trim().toUpperCase();
+                        let name = String(getProp(record, ['Name', 'StudentName', 'NAME'])).trim().toUpperCase();
+                        if (srNo === query || name === query || name.includes(query) || srNo.includes(query)) {
+                            foundRecords.push(record);
+                        }
+                    });
+
+                    if (foundRecords.length > 0) {
+                        updateRobo('success');
+                        let htmlContent = `<div class="space-y-3">`;
+                        foundRecords.forEach(student => {
+                            let srVal = getProp(student, ['SR', 'SRNo', 'SR_No']) || 'N/A';
+                            let nameVal = getProp(student, ['Name', 'StudentName', 'NAME']) || 'N/A';
+                            let lastRegVal = getProp(student, ['LastYearScholarshipRegistrationNo', 'LastYearRegNo', 'LastRegNo']) || 'N/A';
+                            let otrVal = getProp(student, ['OTRNo', 'OTR', 'OTR NO']) || 'N/A';
+
+                            htmlContent += `
+                                <div class="bg-black/40 p-3.5 rounded-xl border border-gray-700 space-y-2 text-white">
+                                    <p><strong>Name:</strong> ${nameVal} | <strong>SR No:</strong> ${srVal}</p>
+                                    <div class="pt-1 border-t border-gray-800 space-y-1.5">
+                                        <div class="flex justify-between items-center">
+                                            <span><strong>Last Year Reg No:</strong> <span class="text-neoncyan">${lastRegVal}</span></span>
+                                            <button onclick="copyToClipboard('${lastRegVal}', this)" class="bg-gray-800 px-2.5 py-1 rounded text-xs border border-gray-700"><i class="fa-regular fa-copy"></i> Copy</button>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span><strong>OTR No:</strong> <span class="text-neongreen font-bold">${otrVal}</span></span>
+                                            <button onclick="copyToClipboard('${otrVal}', this)" class="bg-gray-800 px-2.5 py-1 rounded text-xs border border-gray-700"><i class="fa-regular fa-copy"></i> Copy</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        htmlContent += `</div>`;
+                        resBox.innerHTML = htmlContent;
+                    } else {
+                        updateRobo('notfound');
+                        resBox.innerHTML = `<p class="text-red-400 text-sm">Koi OTR record nahi mila!</p>`;
+                    }
+                } else {
+                    resBox.innerHTML = `<p class="text-red-400 text-sm">OTR database empty hai.</p>`;
                 }
             });
         }
 
         function loadAdminSuggestions() {
+            let listContainer = document.getElementById('admin-suggestions-list');
             db.ref('Suggestions').once('value').then((snapshot) => {
                 if (snapshot.exists()) {
-                    let list = document.getElementById('admin-suggestions-list');
-                    list.innerHTML = Object.values(snapshot.val()).reverse().map(s => `<div class="bg-black/40 p-2.5 rounded border border-gray-800"><p class="font-bold text-neongreen">${s.Name}</p><p class="text-gray-300">"${s.Message}"</p></div>`).join('');
+                    listContainer.innerHTML = Object.values(snapshot.val()).reverse().map(s => `
+                        <div class="bg-black/40 p-2.5 rounded-xl border border-gray-800 space-y-1">
+                            <p class="font-bold text-neongreen"><i class="fa-solid fa-user"></i> ${getProp(s, ['Name']) || 'Anonymous'}</p>
+                            <p class="text-gray-300">"${getProp(s, ['Message', 'Suggestion'])}"</p>
+                        </div>
+                    `).join('');
+                } else {
+                    listContainer.innerHTML = `<p class="text-gray-500">Koi suggestion nahi hai.</p>`;
                 }
             });
         }
@@ -651,9 +1445,12 @@
             let name = document.getElementById('sug-name').value || "Anonymous";
             let message = document.getElementById('sug-msg').value;
             db.ref('Suggestions').push({ Name: name, Message: message, Last_Updated: new Date().toLocaleString() }).then(() => {
-                alert("Sujhav bhej diya gaya hai!");
+                document.getElementById('sug-success').classList.remove('hidden');
                 loadAdminSuggestions();
-                e.target.reset();
+                setTimeout(() => {
+                    document.getElementById('sug-success').classList.add('hidden');
+                    e.target.reset();
+                }, 3000);
             });
         }
     </script>
