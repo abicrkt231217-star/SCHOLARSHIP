@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Hello Bacchon 🚀 - Scholarship & Attendance Portal</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -22,12 +21,9 @@
             }
         }
     </script>
-    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Caveat:wght@600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     
-    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
@@ -63,11 +59,23 @@
         }
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* Left Side Gadgets Container (Retro Clock + Learn + G Apps + MeChat) */
+        /* Left Side Gadgets Container */
         .left-gadgets-container {
             position: fixed; bottom: 20px; left: 20px; z-index: 9988;
             display: flex; flex-direction: column; gap: 10px; align-items: flex-start;
         }
+
+        /* 🛠️ Mobile Drop-Up Layout */
+        @media (max-width: 640px) {
+            .left-gadgets-container {
+                flex-direction: column-reverse;
+                justify-content: flex-end;
+            }
+            #left-menu-drawer {
+                margin-bottom: 8px;
+            }
+        }
+
         .retro-clock-box {
             background: #111116; border: 2px solid #333; border-radius: 12px; padding: 8px 12px;
             width: 155px; box-shadow: 0 5px 20px rgba(0,0,0,0.8); transition: all 0.4s ease;
@@ -87,7 +95,7 @@
         }
         .left-side-btn:hover { border-color: #06b6d4; transform: translateY(-2px); }
 
-        /* Professional 3D ID Card (Above Gaurav Avatar) */
+        /* Professional 3D ID Card */
         .id-card-panel {
             background: linear-gradient(145deg, #13131a, #1a1a24);
             border: 2px solid rgba(6, 182, 212, 0.4);
@@ -95,22 +103,19 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 25px rgba(6, 182, 212, 0.3);
             transform-style: preserve-3d; transition: all 0.4s ease;
         }
+        .id-card-panel.vip-glow {
+            border-color: #f59e0b;
+            box-shadow: 0 10px 35px rgba(245, 158, 11, 0.6), 0 0 30px rgba(245, 158, 11, 0.4);
+            background: linear-gradient(145deg, #181510, #261f10);
+        }
         .profile-3d-img {
-            width: 75px; height: 75px; border-radius: 50%; object-fit: cover;
-            border: 3px solid #06b6d4; box-shadow: 0 8px 20px rgba(0,0,0,0.6), inset 0 0 10px rgba(6,182,212,0.5);
+            width: 70px; height: 70px; border-radius: 50%; object-fit: cover;
+            border: 3px solid #06b6d4; box-shadow: 0 8px 20px rgba(0,0,0,0.6);
         }
 
         /* Sticky AI Robo & MeChat */
         @keyframes floatBounce { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
-        @keyframes prabhuDevaDance {
-            0% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(-12px) rotate(-8deg) scale(1.08); }
-            50% { transform: translateY(0) rotate(0deg) scale(1); }
-            75% { transform: translateY(-12px) rotate(8deg) scale(1.08); }
-            100% { transform: translateY(0) rotate(0deg); }
-        }
         .robo-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; pointer-events: none; }
-        .dancing { animation: prabhuDevaDance 0.6s ease-in-out infinite !important; }
         .robo-bubble {
             background: rgba(139, 92, 246, 0.95); backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 10px 14px;
@@ -127,85 +132,88 @@
 </head>
 <body id="main-body" class="bg-darkbg text-gray-100 min-h-screen selection:bg-neoncyan selection:text-black" onclick="triggerFunnyTalk(event)">
 
-    <!-- Preloader -->
     <div id="preloader">
         <div class="handwriting-main">HELLO BACCHO</div>
-        <div class="handwriting-sub">Developed by Gaurav Shyam Shukla</div>
+        <div class="text-gray-400 text-sm mt-2">Loading Portal...</div>
     </div>
 
-    <!-- Left Side Gadgets: Retro Clock + Learn Coding + G Apps + MeChat -->
-    <div class="left-gadgets-container hidden sm:flex">
-        <!-- Retro Clock Widget -->
-        <div id="retro-widget" class="retro-clock-box">
-            <div class="flex justify-between items-center mb-1 border-b border-gray-800 pb-1">
-                <span class="text-[9px] uppercase tracking-wider text-gray-400 font-bold"><i class="fa-solid fa-clock"></i> Retro Station</span>
-                <button onclick="lightUpRetroWidget()" class="w-3 h-3 rounded-full bg-red-600 border border-red-400" title="Light Up"></button>
-            </div>
-            <div class="retro-screen text-center py-0.5 space-y-0.5">
-                <div id="retro-time" class="text-xs font-extrabold tracking-widest">12:00:00 PM</div>
-                <div id="retro-date" class="text-[9px] text-gray-400">SUN, 06 SEP</div>
-                <div class="pt-1 border-t border-gray-800 flex justify-around items-center text-[9px] text-gray-400">
-                    <span><i class="fa-solid fa-temperature-three-quarters text-amber-500"></i> <span id="retro-temp">32°C</span></span>
-                    <span><i class="fa-solid fa-cloud text-cyan-400"></i> Renukoot</span>
+    <div class="left-gadgets-container">
+        <button onclick="toggleMobileLeftMenu()" class="sm:hidden bg-emerald-600 text-black px-3 py-2 rounded-full font-bold text-xs shadow-xl pointer-events-auto flex items-center gap-1.5 border border-emerald-400">
+            <i class="fa-solid fa-bars"></i> <span>Tools & Apps</span>
+        </button>
+
+        <div id="left-menu-drawer" class="hidden sm:flex flex-col gap-2.5 items-start pointer-events-auto">
+            <div id="retro-widget" class="retro-clock-box">
+                <div class="flex justify-between items-center mb-1 border-b border-gray-800 pb-1">
+                    <span class="text-[9px] uppercase tracking-wider text-gray-400 font-bold"><i class="fa-solid fa-clock"></i> Retro Station</span>
+                    <button onclick="lightUpRetroWidget()" class="w-3 h-3 rounded-full bg-red-600 border border-red-400" title="Light Up"></button>
                 </div>
-            </div>
-        </div>
-
-        <!-- Let's Learn Coding Button -->
-        <button onclick="switchTab('learn'); updateRobo('learn')" class="left-side-btn">
-            <i class="fa-solid fa-graduation-cap text-yellow-400"></i> Let's Learn Coding
-        </button>
-
-        <!-- G Apps Button -->
-        <button onclick="switchTab('gapps'); updateRobo('gapps')" class="left-side-btn">
-            <i class="fa-solid fa-cubes text-purple-400"></i> G Apps
-        </button>
-
-        <!-- MeChat Floating Icon -->
-        <a href="https://gurv1432.github.io/ME-CHAT/" target="_blank" class="left-side-btn border-emerald-500/50">
-            <img src="https://i.ibb.co/YBHz9sRr/Whats-App-Image-2026-09-03-at-2-34-12-PM.jpg" alt="MeChat" class="w-5 h-5 rounded-full object-cover"> MeChat
-        </a>
-    </div>
-
-    <!-- Sticky AI Robo Assistant & Professional 3D ID Card Above It (Right Side) -->
-    <div class="robo-container">
-        <!-- Professional 3D ID Card Panel -->
-        <div id="user-id-card-panel" class="id-card-panel hidden w-72 text-xs pointer-events-auto space-y-2.5">
-            <div class="flex items-center gap-3 border-b border-gray-700/80 pb-2.5">
-                <img id="id-card-photo" src="" alt="Profile" class="profile-3d-img">
-                <div class="overflow-hidden">
-                    <h4 id="id-card-name" class="font-extrabold text-sm text-white truncate">Student Name</h4>
-                    <div class="flex items-center gap-1.5 mt-0.5">
-                        <span id="id-card-tag" class="px-2 py-0.5 rounded text-[9px] font-bold">Standard</span>
-                        <span id="id-card-verification" class="text-[9px] font-semibold"></span>
+                <div class="retro-screen text-center py-0.5 space-y-0.5">
+                    <div id="retro-time" class="text-xs font-extrabold tracking-widest">12:00:00 PM</div>
+                    <div id="retro-date" class="text-[9px] text-gray-400">SUN, 06 SEP</div>
+                    <div class="pt-1 border-t border-gray-800 flex justify-around items-center text-[9px] text-gray-400">
+                        <span><i class="fa-solid fa-temperature-three-quarters text-amber-500"></i> <span id="retro-temp">32°C</span></span>
+                        <span><i class="fa-solid fa-cloud text-cyan-400"></i> Renukoot</span>
                     </div>
                 </div>
             </div>
-            <div class="space-y-1 text-[11px] text-gray-300">
+
+            <button onclick="switchTab('learn'); updateRobo('learn')" class="left-side-btn">
+                <i class="fa-solid fa-graduation-cap text-yellow-400"></i> Let's Learn Coding
+            </button>
+
+            <button onclick="switchTab('gapps'); updateRobo('gapps')" class="left-side-btn">
+                <i class="fa-solid fa-cubes text-purple-400"></i> G Apps
+            </button>
+
+            <a href="https://gurv1432.github.io/ME-CHAT/" target="_blank" class="left-side-btn border-emerald-500/50">
+                <img src="https://i.ibb.co/YBHz9sRr/Whats-App-Image-2026-09-03-at-2-34-12-PM.jpg" alt="MeChat" class="w-5 h-5 rounded-full object-cover"> MeChat
+            </a>
+        </div>
+    </div>
+
+    <div class="robo-container">
+        <div id="user-id-card-panel" class="id-card-panel hidden w-72 text-xs pointer-events-auto space-y-2.5">
+            <div class="flex justify-between items-center border-b border-gray-700/80 pb-2">
+                <div class="flex items-center gap-2.5 overflow-hidden">
+                    <img id="id-card-photo" src="" alt="Profile" class="profile-3d-img">
+                    <div class="overflow-hidden">
+                        <h4 id="id-card-name" class="font-extrabold text-xs text-white truncate">Student Name</h4>
+                        <div class="flex items-center gap-1 mt-0.5">
+                            <span id="id-card-tag" class="px-1.5 py-0.5 rounded text-[8px] font-bold">Standard</span>
+                            <span id="id-card-verification" class="text-[8px] font-semibold"></span>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="toggleIdCardMinimize()" class="text-gray-400 hover:text-white p-1" title="Minimize ID Card">
+                    <i class="fa-solid fa-chevron-down text-sm" id="minimize-icon"></i>
+                </button>
+            </div>
+
+            <div id="id-card-body" class="space-y-1 text-[11px] text-gray-300">
                 <p><strong>SR No:</strong> <span id="id-sr" class="text-white">--</span></p>
                 <p><strong>Class/Sec:</strong> <span id="id-class" class="text-white">--</span></p>
                 <p><strong>Attendance:</strong> <span id="id-att" class="text-white">--</span></p>
                 <p><strong>Board Reg No:</strong> <span id="id-board-reg" class="text-neoncyan truncate block">--</span></p>
                 <p><strong>OTR No:</strong> <span id="id-otr" class="text-neongreen truncate block">--</span></p>
                 <p><strong>Last Year Reg:</strong> <span id="id-last-reg" class="text-yellow-400 truncate block">--</span></p>
-                <p><strong>Last Year Passing %:</strong> <span id="id-last-pct" class="text-purple-400">--</span></p>
-            </div>
+                <p><strong>Last Year Passing %:</strong> <span id="id-last-pct" class="text-amber-400 font-bold">--</span></p>
 
-            <!-- Theme Selector inside ID Card -->
-            <div class="pt-2 border-t border-gray-700/80 space-y-1">
-                <label class="text-[10px] text-gray-400 block font-semibold"><i class="fa-solid fa-palette"></i> Aesthetic Color Theme:</label>
-                <select id="theme-selector" onchange="changeUserTheme(this.value)" class="w-full bg-black/60 border border-gray-700 rounded-lg px-2 py-1 text-[11px] text-white focus:outline-none">
-                    <option value="default">Default Dark Vibe</option>
-                    <option value="cyan">Neon Cyan Glow</option>
-                    <option value="emerald">Emerald Green</option>
-                    <option value="purple">Royal Purple</option>
-                    <option value="sunset">Sunset Gold</option>
-                </select>
-            </div>
+                <div class="pt-2 border-t border-gray-700/80 space-y-1">
+                    <label class="text-[10px] text-gray-400 block font-semibold"><i class="fa-solid fa-palette"></i> Aesthetic Color Theme:</label>
+                    <select id="theme-selector" onchange="changeUserTheme(this.value)" class="w-full bg-black/60 border border-gray-700 rounded-lg px-2 py-1 text-[11px] text-white focus:outline-none">
+                        <option value="default">Default Dark Vibe</option>
+                        <option value="cyan">Neon Cyan Glow</option>
+                        <option value="emerald">Emerald Green</option>
+                        <option value="purple">Royal Purple</option>
+                        <option value="sunset">Sunset Gold</option>
+                    </select>
+                </div>
 
-            <div class="pt-1 flex justify-between text-[10px]">
-                <button onclick="switchTab('profile-edit')" class="text-yellow-400 hover:underline">Edit Profile / SR Fix</button>
-                <button onclick="userLogout()" class="text-red-400 hover:underline">Logout</button>
+                <div class="pt-1 flex justify-between text-[10px]">
+                    <button onclick="switchTab('profile-edit')" class="text-yellow-400 hover:underline">Edit Profile / SR Fix</button>
+                    <button onclick="userLogout()" class="text-red-400 hover:underline">Logout</button>
+                </div>
             </div>
         </div>
 
@@ -222,16 +230,13 @@
         </div>
     </div>
 
-    <!-- Top WhatsApp Channel Banner -->
     <div class="bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 text-white text-xs sm:text-sm py-2 px-3 text-center font-medium flex flex-wrap justify-center items-center gap-2">
         <span>🔥 Join Official WhatsApp Channel for instant updates!</span>
         <a href="https://whatsapp.com/channel/0029VbE9nzJIHphK2l9p7s0f" target="_blank" class="bg-white text-black px-3 py-0.5 rounded-full font-bold text-xs hover:bg-opacity-90 transition shadow-md">Join Now</a>
     </div>
 
-    <!-- Main Container -->
     <div class="max-w-4xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
 
-        <!-- Top Header Style -->
         <header class="text-center mb-6">
             <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-neoncyan via-neonpurple to-neongreen bg-clip-text text-transparent">
                 Hello Bacchon 🚀
@@ -239,7 +244,6 @@
             <p class="text-gray-400 text-xs sm:text-base mt-2">Fast & Smart Scholarship Portal • Aditya Birla Intermediate College, Renukoot</p>
         </header>
 
-        <!-- LED Marquee Bar -->
         <section class="mb-5 led-panel py-2 px-4 flex items-center">
             <div class="flex items-center gap-2 text-xs font-bold text-pink-500 mr-2 uppercase tracking-wider shrink-0">
                 <i class="fa-solid fa-circle text-[8px] animate-ping"></i> LED Live:
@@ -251,12 +255,10 @@
             </div>
         </section>
 
-        <!-- Auto-Changing Banner Section -->
         <section class="mb-8 overflow-hidden rounded-2xl glass p-1.5 relative shadow-2xl flex justify-center items-center bg-cardbg">
             <img id="banner-slider" src="https://i.ibb.co/fLZZ6j4/Chat-GPT-Image-Aug-31-2026-06-33-36-PM-2.png" alt="College Banner" class="yt-banner">
         </section>
 
-        <!-- 3D Birthday Wishes Slider Section -->
         <section class="mb-8">
             <div class="flex justify-between items-center mb-3">
                 <h2 class="text-base sm:text-lg font-bold text-yellow-400 flex items-center gap-2">
@@ -271,7 +273,6 @@
             </div>
         </section>
 
-        <!-- Scholarship Eligibility Checker Collapsible Section -->
         <section class="mb-8">
             <button onclick="toggleEligibilityPanel()" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-neoncyan via-neonpurple to-neongreen text-black font-extrabold text-sm sm:text-base shadow-xl hover:opacity-95 transition transform hover:scale-[1.01] flex items-center justify-center gap-3">
                 <i class="fa-solid fa-square-check text-xl"></i> 
@@ -298,7 +299,6 @@
             </div>
         </section>
 
-        <!-- Dashboard Stats Section -->
         <section class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 sm:gap-3 mb-6 sm:mb-8">
             <div class="glass p-3.5 sm:p-4 rounded-2xl text-center">
                 <p class="text-[11px] sm:text-xs text-gray-400">Received</p>
@@ -327,7 +327,6 @@
             </div>
         </section>
 
-        <!-- Dynamic Notice Board Section -->
         <section class="glass p-4 sm:p-5 rounded-2xl mb-6 sm:mb-8 border-l-4 border-neoncyan">
             <h2 class="text-base sm:text-lg font-bold flex items-center gap-2 text-neoncyan mb-3">
                 <i class="fa-solid fa-bullhorn"></i> Jaruri Suchna / Live Notice Board
@@ -337,7 +336,6 @@
             </div>
         </section>
 
-        <!-- Navigation Buttons -->
         <div class="grid grid-cols-2 sm:grid-cols-6 gap-2 sm:gap-3 mb-6 sm:mb-8">
             <button onclick="switchTab('attendance'); updateRobo('attendance')" class="glass p-3 rounded-xl text-center glow-effect transition group">
                 <i class="fa-solid fa-user-check text-xl text-neoncyan mb-1 group-hover:scale-110 transition"></i>
@@ -365,12 +363,8 @@
             </button>
         </div>
 
-        <!-- 📦 PANELS -->
-
-        <!-- HOME -->
         <div id="panel-home" class="space-y-6"></div>
 
-        <!-- LET'S LEARN CODING -->
         <div id="panel-learn" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden space-y-4">
             <h3 class="text-lg sm:text-xl font-bold text-yellow-400 flex items-center gap-2"><i class="fa-solid fa-graduation-cap"></i> Let's Learn Coding • HTML & CSS Course</h3>
             <p class="text-xs text-gray-400">Yahan aapko Gaurav sir ke YouTube coding tutorials aur HTML/CSS playlists milengi.</p>
@@ -383,7 +377,6 @@
             </div>
         </div>
 
-        <!-- G APPS -->
         <div id="panel-gapps" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden space-y-4">
             <h3 class="text-lg sm:text-xl font-bold text-purple-400 flex items-center gap-2"><i class="fa-solid fa-cubes"></i> G Apps & Web Tools</h3>
             <p class="text-xs text-gray-400">Gaurav Shukla dwara banaye gaye smart applications:</p>
@@ -401,7 +394,6 @@
             </div>
         </div>
 
-        <!-- 1. Check Attendance Panel -->
         <div id="panel-attendance" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden">
             <h3 class="text-lg sm:text-xl font-bold mb-3 flex items-center gap-2">
                 <i class="fa-solid fa-magnifying-glass text-neoncyan"></i> Attendance & Eligibility Checker
@@ -414,7 +406,6 @@
             <div id="att-result" class="hidden p-4 rounded-xl bg-black/50 border border-gray-800 text-xs sm:text-sm"></div>
         </div>
 
-        <!-- 2. Check Status Panel -->
         <div id="panel-status" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden">
             <h3 class="text-lg sm:text-xl font-bold mb-3 flex items-center gap-2">
                 <i class="fa-solid fa-road text-purple-400"></i> Form Status Roadmap Tracker
@@ -450,7 +441,6 @@
             </div>
         </div>
 
-        <!-- 3. Find Board Registration No. Panel -->
         <div id="panel-regsearch" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden">
             <h3 class="text-lg sm:text-xl font-bold mb-3 flex items-center gap-2 text-yellow-400">
                 <i class="fa-solid fa-id-card"></i> Board Registration No. Finder
@@ -463,7 +453,6 @@
             <div id="reg-result" class="hidden p-4 rounded-xl bg-black/50 border border-gray-800 text-xs sm:text-sm space-y-2"></div>
         </div>
 
-        <!-- 4. OTR & Last Year Registration Finder Panel -->
         <div id="panel-otrsearch" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden">
             <h3 class="text-lg sm:text-xl font-bold mb-3 flex items-center gap-2 text-neongreen">
                 <i class="fa-solid fa-key"></i> OTR & Last Year Registration Finder
@@ -476,7 +465,6 @@
             <div id="otr-result" class="hidden p-4 rounded-xl bg-black/50 border border-gray-800 text-xs sm:text-sm space-y-2"></div>
         </div>
 
-        <!-- 5. Suggestion Box Panel -->
         <div id="panel-suggestion" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden space-y-6">
             <div>
                 <h3 class="text-lg sm:text-xl font-bold mb-3 flex items-center gap-2">
@@ -497,7 +485,6 @@
                 <div id="sug-success" class="hidden mt-3 text-center text-neongreen text-xs sm:text-sm font-medium">✨ Aapka sujhav safalpurvak bhej diya gaya hai!</div>
             </div>
 
-            <!-- Admin View: Recent Suggestions from Firebase -->
             <div class="border-t border-gray-800 pt-6">
                 <h3 class="text-base sm:text-lg font-bold mb-2 flex items-center gap-2 text-neoncyan">
                     <i class="fa-solid fa-list-check"></i> Admin View: Recent Suggestions
@@ -509,7 +496,6 @@
             </div>
         </div>
 
-        <!-- Birthday Wish Request Form Panel -->
         <div id="panel-birthday-req" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden space-y-4">
             <h3 class="text-lg sm:text-xl font-bold text-yellow-400 flex items-center gap-2"><i class="fa-solid fa-gift"></i> Birthday Wish Request Form</h3>
             <p class="text-xs text-gray-400">Apni detail submit karein. Admin approve hone ke baad live 3D slider par dikhega.</p>
@@ -522,7 +508,6 @@
             </form>
         </div>
 
-        <!-- 6. Contact Office Panel -->
         <div id="panel-contact" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden space-y-4">
             <h3 class="text-lg sm:text-xl font-bold mb-2 flex items-center gap-2 text-yellow-400">
                 <i class="fa-solid fa-id-badge"></i> Office Contact Details
@@ -551,7 +536,6 @@
             </div>
         </div>
 
-        <!-- Profile Edit Panel -->
         <div id="panel-profile-edit" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden space-y-4">
             <h3 class="text-lg font-bold text-yellow-400">Edit My Profile / Fix SR No.</h3>
             <form onsubmit="updateUserProfile(event)" class="space-y-3">
@@ -562,7 +546,6 @@
             </form>
         </div>
 
-        <!-- 7. Secret Hash Admin Panel (#admin) -->
         <div id="panel-admin" class="glass p-5 rounded-2xl mb-6 sm:mb-8 hidden space-y-4 border border-red-500/30">
             <div id="admin-auth-box" class="space-y-3">
                 <h3 class="text-base sm:text-lg font-bold text-red-400"><i class="fa-solid fa-shield-halved"></i> Secret Admin Access</h3>
@@ -590,14 +573,12 @@
             </div>
         </div>
 
-        <!-- Footer -->
         <footer class="text-center text-[11px] sm:text-xs text-gray-500 py-4 border-t border-gray-800">
             <p>Designed with 💙 for Students • Aditya Birla Intermediate College, Renukoot</p>
         </footer>
 
     </div>
 
-    <!-- 👤 USER LOGIN MODAL -->
     <div id="login-modal" class="fixed inset-0 z-[99999] bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-3">
         <div class="glass p-5 rounded-2xl w-full max-w-sm space-y-4 border border-cyan-500/30">
             <div class="flex justify-between items-center">
@@ -617,7 +598,6 @@
         </div>
     </div>
 
-    <!-- Firebase Logic & Portal Scripts -->
     <script>
         window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
@@ -812,7 +792,9 @@
             if (!obj) return "";
             for (let k of keys) {
                 let foundKey = Object.keys(obj).find(vk => vk.toLowerCase().replace(/[^a-z0-9]/g, '') === k.toLowerCase().replace(/[^a-z0-9]/g, ''));
-                if (foundKey && obj[foundKey] !== undefined && obj[foundKey] !== "") return obj[foundKey];
+                if (foundKey && obj[foundKey] !== undefined && obj[foundKey] !== "") {
+                    return obj[foundKey];
+                }
             }
             return "";
         }
@@ -826,7 +808,33 @@
                     btnElem.innerHTML = originalHTML;
                     btnElem.classList.remove('bg-green-900/40', 'border-green-500');
                 }, 2000);
-            }).catch(err => { console.error('Copy failed', err); });
+            }).catch(err => {
+                console.error('Copy failed', err);
+                alert("Copy nahi ho paya!");
+            });
+        }
+
+        // 🌟 1. ID CARD MINIMIZE / TOGGLE FEATURE
+        function toggleIdCardMinimize() {
+            let cardBody = document.getElementById('id-card-body');
+            let icon = document.getElementById('minimize-icon');
+            if(cardBody.classList.contains('hidden')) {
+                cardBody.classList.remove('hidden');
+                icon.className = "fa-solid fa-chevron-down text-sm";
+            } else {
+                cardBody.classList.add('hidden');
+                icon.className = "fa-solid fa-chevron-up text-sm";
+            }
+        }
+
+        // 🌟 2. MOBILE LEFT MENU DRAWER TOGGLE (Drop-up)
+        function toggleMobileLeftMenu() {
+            let drawer = document.getElementById('left-menu-drawer');
+            if(drawer.classList.contains('hidden')) {
+                drawer.classList.remove('hidden');
+            } else {
+                drawer.classList.add('hidden');
+            }
         }
 
         // Login & ID Card Management
@@ -858,13 +866,13 @@
         function checkActiveUserSession() {
             let loggedSR = localStorage.getItem('abic_logged_sr');
             let idCardPanel = document.getElementById('user-id-card-panel');
-            let loginBtn = document.getElementById('login-floating-btn');
+            let loginBtnContainer = document.getElementById('login-floating-btn-container');
 
             if (loggedSR) {
                 db.ref('PortalUsers/' + loggedSR).once('value').then(userSnap => {
                     if (userSnap.exists()) {
                         let user = userSnap.val();
-                        if(loginBtn) loginBtn.classList.add('hidden');
+                        if(loginBtnContainer) loginBtnContainer.classList.add('hidden');
                         idCardPanel.classList.remove('hidden');
 
                         document.getElementById('id-card-photo').src = user.Photo;
@@ -875,10 +883,12 @@
 
                         if (user.VIP) {
                             tagEl.innerText = "⭐ VIP USER";
-                            tagEl.className = "px-2 py-0.5 rounded text-[9px] font-bold bg-yellow-500 text-black";
+                            tagEl.className = "px-2 py-0.5 rounded text-[9px] font-bold bg-yellow-500 text-black shadow-lg shadow-yellow-500/50 animate-pulse";
+                            idCardPanel.classList.add('vip-glow');
                         } else {
                             tagEl.innerText = "STANDARD";
                             tagEl.className = "px-2 py-0.5 rounded text-[9px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30";
+                            idCardPanel.classList.remove('vip-glow');
                         }
 
                         Promise.all([
@@ -899,11 +909,17 @@
                                 let pct = parseFloat(getProp(attData, ['Percentage', 'ATTENDENCE PERCENTAG'])) || 0;
                                 if(pct > 0 && pct <= 1) pct *= 100;
                                 document.getElementById('id-att').innerText = pct + '%';
+
+                                let obt = parseFloat(getProp(attData, ['OBT', 'ObtainedMarks'])) || 0;
+                                let max = parseFloat(getProp(attData, ['MAX', 'MaxMarks'])) || 0;
+                                let passingPct = max > 0 ? ((obt * 100) / max).toFixed(1) + '%' : 'N/A';
+                                document.getElementById('id-last-pct').innerText = passingPct;
                             } else {
                                 verifyEl.innerHTML = `<span class="text-red-400"><i class="fa-solid fa-triangle-exclamation"></i> Unverified User</span>`;
                                 document.getElementById('id-sr').innerText = loggedSR;
                                 document.getElementById('id-class').innerText = "Not Mapped";
                                 document.getElementById('id-att').innerText = "N/A";
+                                document.getElementById('id-last-pct').innerText = "N/A";
                             }
 
                             let boardReg = regSnap.exists() ? regSnap.val().BoardRegistrationNo : 'Not Assigned';
@@ -913,18 +929,16 @@
                             if (otrFound) {
                                 document.getElementById('id-otr').innerText = getProp(otrFound, ['OTRNo', 'OTR']) || 'N/A';
                                 document.getElementById('id-last-reg').innerText = getProp(otrFound, ['LastYearScholarshipRegistrationNo', 'LastYearRegNo']) || 'N/A';
-                                document.getElementById('id-last-pct').innerText = getProp(otrFound, ['LastYearPassingPercentage', 'Percentage']) || 'N/A';
                             } else {
                                 document.getElementById('id-otr').innerText = 'N/A';
                                 document.getElementById('id-last-reg').innerText = 'N/A';
-                                document.getElementById('id-last-pct').innerText = 'N/A';
                             }
                         });
                     }
                 });
             } else {
                 idCardPanel.classList.add('hidden');
-                if(loginBtn) loginBtn.classList.remove('hidden');
+                if(loginBtnContainer) loginBtnContainer.classList.remove('hidden');
             }
         }
 
@@ -985,7 +999,7 @@
             db.ref(`PortalUsers/${sr}/VIP`).set(status).then(() => alert(`VIP status set to ${status}!`));
         }
 
-        // 🎂 FIXED BIRTHDAY SUBMISSION & REAL-TIME FETCHING
+        // 🎂 FULLY FIXED BIRTHDAY SUBMISSION & REAL-TIME FETCHING
         function submitBirthdayRequest(e) {
             e.preventDefault();
             let name = document.getElementById('b-name').value.trim();
@@ -1064,6 +1078,8 @@
                 } else {
                     container.innerHTML = `<p class="text-xs text-gray-400">Request your birthday wish from top right button!</p>`;
                 }
+            }, (error) => {
+                console.error("Birthday read error:", error);
             });
         }
 
@@ -1113,120 +1129,68 @@
         // Standard Portal Functions
         function loadNoticeBoard() {
             let container = document.getElementById('notice-container');
-            db.ref('NoticeBoard').once('value').then((snapshot) => {
-                if (snapshot.exists()) {
-                    let data = Object.values(snapshot.val());
-                    container.innerHTML = "";
-                    data.reverse().forEach(n => {
-                        let title = getProp(n, ['Notice_Title', 'Title']) || 'Aavashyak Suchna';
-                        let content = getProp(n, ['Notice_Content', 'Content', 'Message']) || '';
-                        let date = getProp(n, ['Last_Updated', 'Date']) || '';
-                        container.innerHTML += `<div class="bg-black/30 p-2.5 rounded-lg border border-gray-800"><p class="font-bold text-neoncyan"><i class="fa-solid fa-circle-dot text-[10px] mr-1"></i> ${title}</p><p class="text-gray-300 mt-0.5">${content}</p>${date ? `<p class="text-[9px] text-gray-500 mt-1">${date}</p>` : ''}</div>`;
-                    });
-                }
-            });
+            db.ref('NoticeBoard').once('value')
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        let dataObj = snapshot.val();
+                        let data = Object.values(dataObj);
+                        container.innerHTML = "";
+                        data.reverse().forEach(n => {
+                            let title = getProp(n, ['Notice_Title', 'NoticeTitle', 'Title', 'Notice']) || 'Aavashyak Suchna';
+                            let content = getProp(n, ['Notice_Content', 'NoticeContent', 'Content', 'Message']) || '';
+                            let date = getProp(n, ['Last_Updated', 'LastUpdated', 'Date']) || '';
+
+                            container.innerHTML += `
+                                <div class="bg-black/30 p-2.5 rounded-lg border border-gray-800">
+                                    <p class="font-bold text-neoncyan"><i class="fa-solid fa-circle-dot text-[10px] mr-1"></i> ${title}</p>
+                                    <p class="text-gray-300 mt-0.5">${content}</p>
+                                    ${date ? `<p class="text-[9px] text-gray-500 mt-1">${date}</p>` : ''}
+                                </div>
+                            `;
+                        });
+                    } else {
+                        container.innerHTML = `
+                            <ul class="text-xs sm:text-sm text-gray-300 space-y-1.5 list-disc list-inside">
+                                <li>Aay Praman Patra (Income Certificate) sirf Pita ya Mata ke naam ka hona chahiye.</li>
+                                <li>Attendance kam se kam 75% honi anivarya hai, warna form eligible nahi hoga.</li>
+                                <li>Final Printout nikal kar school office mein samay par jama karein.</li>
+                            </ul>
+                        `;
+                    }
+                })
+                .catch((err) => {
+                    console.error("Notice Error:", err);
+                });
         }
 
         function loadDashboardStats() {
             loadNoticeBoard();
-            db.ref('FormStatus').once('value').then((snapshot) => {
-                if (snapshot.exists()) {
-                    let data = Object.values(snapshot.val());
-                    let received = 0, finalSub = 0, verified = 0, forwarded = 0, correction = 0;
-                    data.forEach(r => {
-                        let stat = String(getProp(r, ['Status', 'FormStatus'])).toLowerCase();
-                        if (stat.includes('received')) received++;
-                        if (stat.includes('final')) finalSub++;
-                        if (stat.includes('verify')) verified++;
-                        if (stat.includes('forward')) forwarded++;
-                        if (stat.includes('correction')) correction++;
-                    });
-                    document.getElementById('stat-received').innerText = received;
-                    document.getElementById('stat-final').innerText = finalSub;
-                    document.getElementById('stat-verify').innerText = verified;
-                    document.getElementById('stat-forward').innerText = forwarded;
-                    document.getElementById('stat-correction').innerText = correction;
-                }
-            });
-        }
+            db.ref('FormStatus').once('value')
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        let dataObj = snapshot.val();
+                        let data = Object.values(dataObj);
+                        let received = 0, finalSub = 0, verified = 0, forwarded = 0, correction = 0;
+                        
+                        data.forEach(r => {
+                            let stat = String(getProp(r, ['Status', 'FormStatus', 'Form_Status'])).toLowerCase();
+                            if (stat.includes('received')) received++;
+                            if (stat.includes('final')) finalSub++;
+                            if (stat.includes('verify')) verified++;
+                            if (stat.includes('forward')) forwarded++;
+                            if (stat.includes('correction')) correction++;
+                        });
 
-        function checkScholarshipEligibility() {
-            let srQuery = document.getElementById('elig-sr-input').value.trim();
-            let resultBox = document.getElementById('elig-result-box');
-            let quickStatus = document.getElementById('quick-overall-status');
-            let bubble = document.getElementById('robo-bubble');
-            let avatarImg = document.getElementById('robo-img');
-
-            resultBox.classList.remove('hidden');
-            if (!srQuery) {
-                resultBox.innerHTML = `<p class="text-red-400">Kripya apna SR No. enter karein.</p>`;
-                quickStatus.classList.add('hidden');
-                return;
-            }
-
-            resultBox.innerHTML = `<p class="text-cyan-400 animate-pulse">Checking eligibility from Attendance database...</p>`;
-
-            db.ref('Attendance').once('value').then((snapshot) => {
-                if (!snapshot.exists()) {
-                    resultBox.innerHTML = `<p class="text-red-400">Attendance database khali hai!</p>`;
-                    quickStatus.classList.add('hidden');
-                    return;
-                }
-
-                let allStudents = snapshot.val();
-                let student = null;
-
-                Object.values(allStudents).forEach(s => {
-                    let sSR = String(getProp(s, ['SR_No', 'SRNo', 'SR', 'SR.NO.'])).trim();
-                    if (sSR === srQuery) student = s;
+                        document.getElementById('stat-received').innerText = received;
+                        document.getElementById('stat-final').innerText = finalSub;
+                        document.getElementById('stat-verify').innerText = verified;
+                        document.getElementById('stat-forward').innerText = forwarded;
+                        document.getElementById('stat-correction').innerText = correction;
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error fetching stats:", error);
                 });
-
-                if (!student) {
-                    resultBox.innerHTML = `<p class="text-red-400">Yeh SR No. Attendance database mein nahi mila!</p>`;
-                    quickStatus.classList.add('hidden');
-                    return;
-                }
-
-                let name = getProp(student, ['Student_Name', 'Name', 'NAME']) || 'N/A';
-                let regNo = getProp(student, ['Registration_No', 'REGISTRATION NO.', 'RegNo']) || 'N/A';
-                let category = String(getProp(student, ['CATEGORY', 'GEN', 'Category']) || 'GEN').toUpperCase();
-                let classSec = getProp(student, ['CLASS/SEC', 'Class', 'CLASS']) || 'N/A';
-                if (typeof classSec === 'object') classSec = classSec.SEC || 'N/A';
-
-                let rawPct = getProp(student, ['Percentage', 'ATTENDENCE PERCENTAG', 'Attendance_Percent']);
-                let attPercent = parseFloat(rawPct) || 0;
-                if (attPercent > 0 && attPercent <= 1) attPercent = attPercent * 100;
-                let isAttEligible = attPercent >= 75;
-
-                let obt = parseFloat(getProp(student, ['OBT', 'ObtainedMarks'])) || 0;
-                let max = parseFloat(getProp(student, ['MAX', 'MaxMarks'])) || 0;
-                let marksPercent = max > 0 ? (obt * 100) / max : 0;
-                let minRequiredMarks = (category === 'GEN' || category === 'OBC') ? 50 : 33;
-                let isMarksEligible = max > 0 ? (marksPercent >= minRequiredMarks) : true;
-                let overallEligible = isAttEligible && isMarksEligible;
-
-                quickStatus.classList.remove('hidden');
-                if (overallEligible) {
-                    quickStatus.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-green-950/80 border border-green-500 text-green-300";
-                    quickStatus.innerHTML = `⭐ Overall Status: <span class="text-white">ELIGIBLE</span>`;
-                    avatarImg.src = avatarGifs.dance;
-                    avatarImg.classList.add('dancing');
-                } else {
-                    quickStatus.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-red-950/80 border border-red-500 text-red-300";
-                    quickStatus.innerHTML = `⭐ Overall Status: <span class="text-white">REJECTED</span>`;
-                }
-
-                resultBox.innerHTML = `
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-black/40 p-3.5 rounded-xl border border-gray-700">
-                        <p><strong>Name:</strong> <span class="text-white font-semibold">${name}</span></p>
-                        <p><strong>SR No:</strong> <span class="text-white font-semibold">${srQuery}</span></p>
-                        <p><strong>Class:</strong> <span class="text-white">${classSec}</span></p>
-                        <p><strong>Category:</strong> <span class="text-yellow-400 font-bold">${category}</span></p>
-                        <p><strong>Scholarship Reg No:</strong> <span class="text-neoncyan">${regNo}</span></p>
-                        <p><strong>Last Exam Marks:</strong> <span class="text-white">${max > 0 ? marksPercent.toFixed(1) + '%' : 'Data pending'} (OBT: ${obt} / MAX: ${max})</span></p>
-                    </div>
-                `;
-            });
         }
 
         function checkAttendance() {
@@ -1240,218 +1204,262 @@
                 return;
             }
 
-            db.ref('Attendance').once('value').then((snapshot) => {
-                if (snapshot.exists()) {
-                    let foundStudent = null;
-                    Object.values(snapshot.val()).forEach(student => {
-                        let reg = String(getProp(student, ['Registration_No', 'RegistrationNo', 'RegNo', 'Reg_No'])).trim().toUpperCase();
-                        let sr = String(getProp(student, ['SR_No', 'SRNo', 'SR', 'SrNo'])).trim().toUpperCase();
-                        if (reg === query || sr === query || reg.includes(query) || sr.includes(query)) {
-                            foundStudent = student;
+            resBox.innerHTML = `<p class="text-cyan-400 text-sm animate-pulse">Searching attendance records...</p>`;
+            updateRobo('typing');
+
+            db.ref('Attendance').once('value')
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        let allStudents = snapshot.val();
+                        let foundStudent = null;
+
+                        Object.values(allStudents).forEach(student => {
+                            let reg = String(getProp(student, ['Registration_No', 'RegistrationNo', 'RegNo', 'Reg_No', 'Registration'])).trim().toUpperCase();
+                            let sr = String(getProp(student, ['SR_No', 'SRNo', 'SR', 'SrNo', 'Sr_No'])).trim().toUpperCase();
+                            
+                            if (reg === query || sr === query || reg.includes(query) || sr.includes(query)) {
+                                foundStudent = student;
+                            }
+                        });
+
+                        if (foundStudent) {
+                            updateRobo('success');
+                            let regVal = getProp(foundStudent, ['Registration_No', 'RegistrationNo', 'RegNo', 'Reg_No', 'Registration']) || query;
+                            let srVal = getProp(foundStudent, ['SR_No', 'SRNo', 'SR', 'SrNo']) || 'N/A';
+                            let nameVal = getProp(foundStudent, ['Student_Name', 'StudentName', 'Name', 'Student']) || 'N/A';
+                            
+                            let rawPct = getProp(foundStudent, ['Percentage', 'Attendance_Percent', 'AttendancePercent', 'Attendence', 'Attendance']);
+                            let percentVal = parseFloat(rawPct) || 0;
+                            if(percentVal > 0 && percentVal <= 1) percentVal = percentVal * 100;
+                            
+                            let isEligible = percentVal >= 75;
+                            let eligibilityHTML = percentVal > 0 
+                                ? (isEligible ? `<span class="text-neongreen font-bold">Eligible (${percentVal}%)</span>` : `<span class="text-red-400 font-bold">Not Eligible (${percentVal}%)</span>`)
+                                : `<span class="text-yellow-400">Record found successfully.</span>`;
+                            
+                            resBox.innerHTML = `
+                                <div class="space-y-2 text-xs sm:text-sm text-white">
+                                    <p class="flex justify-between items-center"><span><strong>Registration No:</strong> ${regVal}</span> <button onclick="copyToClipboard('${regVal}', this)" class="bg-gray-800 px-2 py-1 rounded text-[10px] border border-gray-700 hover:bg-gray-700"><i class="fa-regular fa-copy"></i> Copy</button></p>
+                                    <p class="flex justify-between items-center"><span><strong>SR No:</strong> ${srVal}</span> <button onclick="copyToClipboard('${srVal}', this)" class="bg-gray-800 px-2 py-1 rounded text-[10px] border border-gray-700 hover:bg-gray-700"><i class="fa-regular fa-copy"></i> Copy</button></p>
+                                    <p><strong>Name:</strong> ${nameVal}</p>
+                                    <p class="pt-1"><strong>Status:</strong> ${eligibilityHTML}</p>
+                                </div>
+                            `;
+                        } else {
+                            updateRobo('notfound');
+                            resBox.innerHTML = `<p class="text-red-400 text-sm">Yeh record 'Attendance' node mein nahi mila!</p>`;
                         }
-                    });
-
-                    if (foundStudent) {
-                        updateRobo('success');
-                        let regVal = getProp(foundStudent, ['Registration_No', 'RegistrationNo', 'RegNo']) || query;
-                        let srVal = getProp(foundStudent, ['SR_No', 'SRNo', 'SR']) || 'N/A';
-                        let nameVal = getProp(foundStudent, ['Student_Name', 'Name']) || 'N/A';
-                        let rawPct = getProp(foundStudent, ['Percentage', 'ATTENDENCE PERCENTAG', 'Attendance_Percent']);
-                        let percentVal = parseFloat(rawPct) || 0;
-                        if(percentVal > 0 && percentVal <= 1) percentVal = percentVal * 100;
-                        let isEligible = percentVal >= 75;
-
-                        resBox.innerHTML = `
-                            <div class="space-y-2 text-xs sm:text-sm text-white">
-                                <p class="flex justify-between items-center"><span><strong>Registration No:</strong> ${regVal}</span> <button onclick="copyToClipboard('${regVal}', this)" class="bg-gray-800 px-2 py-1 rounded text-[10px] border border-gray-700"><i class="fa-regular fa-copy"></i> Copy</button></p>
-                                <p class="flex justify-between items-center"><span><strong>SR No:</strong> ${srVal}</span> <button onclick="copyToClipboard('${srVal}', this)" class="bg-gray-800 px-2 py-1 rounded text-[10px] border border-gray-700"><i class="fa-regular fa-copy"></i> Copy</button></p>
-                                <p><strong>Name:</strong> ${nameVal}</p>
-                                <p class="pt-1"><strong>Status:</strong> ${percentVal > 0 ? (isEligible ? `<span class="text-neongreen font-bold">Eligible (${percentVal}%)</span>` : `<span class="text-red-400 font-bold">Not Eligible (${percentVal}%)</span>`) : `<span class="text-yellow-400">Record found successfully.</span>`}</p>
-                            </div>
-                        `;
                     } else {
                         updateRobo('notfound');
-                        resBox.innerHTML = `<p class="text-red-400 text-sm">Yeh record nahi mila!</p>`;
+                        resBox.innerHTML = `<p class="text-red-400 text-sm">Database mein 'Attendance' node khali hai.</p>`;
                     }
-                }
-            });
+                })
+                .catch((err) => {
+                    console.error("Attendance Search Error:", err);
+                    resBox.innerHTML = `<p class="text-red-400 text-sm">Connection Error!</p>`;
+                });
         }
 
+        // 4. Check Status
         function checkStatus() {
             let query = document.getElementById('status-input').value.trim().toUpperCase();
             let resBox = document.getElementById('status-result');
             let descBox = document.getElementById('status-desc-box');
 
-            if(!query) { alert("Kripya enter karein."); return; }
+            if(!query) {
+                alert("Kripya Registration ya SR No. enter karein.");
+                updateRobo('notfound');
+                return;
+            }
+
             resBox.classList.remove('hidden');
+            descBox.innerHTML = `<p class="text-purple-400 text-sm animate-pulse">Tracking form status...</p>`;
             updateRobo('typing');
 
-            db.ref('FormStatus').once('value').then((snapshot) => {
-                if (snapshot.exists()) {
-                    let foundStudent = null;
-                    Object.values(snapshot.val()).forEach(student => {
-                        let reg = String(getProp(student, ['Registration_No', 'RegNo'])).trim().toUpperCase();
-                        let sr = String(getProp(student, ['SR_No', 'SR'])).trim().toUpperCase();
-                        if (reg === query || sr === query) foundStudent = student;
-                    });
+            db.ref('FormStatus').once('value')
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        let allStudents = snapshot.val();
+                        let foundStudent = null;
 
-                    if (foundStudent) {
-                        updateRobo('success');
-                        document.getElementById('res-name').innerText = getProp(foundStudent, ['Student_Name', 'Name']) || 'N/A';
-                        document.getElementById('res-reg').innerText = getProp(foundStudent, ['Registration_No', 'RegNo']) || query;
-                        document.getElementById('res-sr').innerText = getProp(foundStudent, ['SR_No', 'SR']) || 'N/A';
-
-                        let currentStatus = getProp(foundStudent, ['Status', 'FormStatus']) || "Received";
-                        let currentStep = statusMap[currentStatus] || 1;
-
-                        for(let i=1; i<=6; i++) {
-                            let stepEl = document.getElementById(`step-${i}`);
-                            let circle = stepEl.querySelector('div');
-                            if(i <= currentStep) {
-                                stepEl.classList.remove('opacity-40');
-                                circle.className = "w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-neoncyan text-black flex items-center justify-center font-bold mb-1 shadow-lg shadow-cyan-500/50";
-                            } else {
-                                stepEl.classList.add('opacity-40');
-                                circle.className = "w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-800 text-gray-400 flex items-center justify-center font-bold mb-1";
+                        Object.values(allStudents).forEach(student => {
+                            let reg = String(getProp(student, ['Registration_No', 'RegistrationNo', 'RegNo', 'Reg_No', 'Registration'])).trim().toUpperCase();
+                            let sr = String(getProp(student, ['SR_No', 'SRNo', 'SR', 'SrNo', 'Sr_No'])).trim().toUpperCase();
+                            
+                            if (reg === query || sr === query || reg.includes(query) || sr.includes(query)) {
+                                foundStudent = student;
                             }
+                        });
+
+                        if (foundStudent) {
+                            updateRobo('success');
+                            let regVal = getProp(foundStudent, ['Registration_No', 'RegistrationNo', 'RegNo', 'Reg_No', 'Registration']) || query;
+                            let srVal = getProp(foundStudent, ['SR_No', 'SRNo', 'SR', 'SrNo']) || 'N/A';
+                            let nameVal = getProp(foundStudent, ['Student_Name', 'StudentName', 'Name', 'Student']) || 'N/A';
+
+                            document.getElementById('res-name').innerText = nameVal;
+                            document.getElementById('res-reg').innerText = regVal;
+                            document.getElementById('res-sr').innerText = srVal;
+
+                            let currentStatus = getProp(foundStudent, ['Status', 'FormStatus', 'Form_Status']) || "Received";
+                            let currentStep = statusMap[currentStatus] || 1;
+
+                            for(let i=1; i<=6; i++) {
+                                let stepEl = document.getElementById(`step-${i}`);
+                                let circle = stepEl.querySelector('div');
+                                if(i <= currentStep) {
+                                    stepEl.classList.remove('opacity-40');
+                                    circle.className = "w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-neoncyan text-black flex items-center justify-center font-bold mb-1 shadow-lg shadow-cyan-500/50";
+                                } else {
+                                    stepEl.classList.add('opacity-40');
+                                    circle.className = "w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-800 text-gray-400 flex items-center justify-center font-bold mb-1";
+                                }
+                            }
+
+                            let descText = statusDescriptions[currentStatus] || "Status update ho raha hai.";
+                            let remarksVal = getProp(foundStudent, ['Remarks', 'Remark']) || 'No remarks';
+                            let updatedVal = getProp(foundStudent, ['Last_Updated', 'LastUpdated', 'Date']) || 'Just now';
+
+                            descBox.innerHTML = `
+                                <div class="space-y-2 text-xs sm:text-sm text-white">
+                                    <p><strong>Current Status:</strong> <span class="text-neoncyan font-bold">${currentStatus}</span></p>
+                                    <p><strong>Description:</strong> ${descText}</p>
+                                    <p><strong>Remarks from Office:</strong> <span class="text-yellow-400">${remarksVal}</span></p>
+                                    <p class="text-[10px] text-gray-500 pt-1 border-t border-gray-800">Last Updated: ${updatedVal}</p>
+                                </div>
+                            `;
+                        } else {
+                            updateRobo('notfound');
+                            for(let i=1; i<=6; i++) { document.getElementById(`step-${i}`).classList.add('opacity-40'); }
+                            document.getElementById('res-name').innerText = "Not Found";
+                            document.getElementById('res-reg').innerText = query;
+                            document.getElementById('res-sr').innerText = "Not Found";
+                            descBox.innerHTML = `<p class="text-red-400 text-sm">Registration No. ya SR No. nahi mila!</p>`;
                         }
-
-                        let descText = statusDescriptions[currentStatus] || "Status update ho raha hai.";
-                        let remarksVal = getProp(foundStudent, ['Remarks', 'Remark']) || 'No remarks';
-                        let updatedVal = getProp(foundStudent, ['Last_Updated', 'Date']) || 'Just now';
-
-                        descBox.innerHTML = `
-                            <div class="space-y-2 text-xs sm:text-sm text-white">
-                                <p><strong>Current Status:</strong> <span class="text-neoncyan font-bold">${currentStatus}</span></p>
-                                <p><strong>Description:</strong> ${descText}</p>
-                                <p><strong>Remarks from Office:</strong> <span class="text-yellow-400">${remarksVal}</span></p>
-                                <p class="text-[10px] text-gray-500 pt-1 border-t border-gray-800">Last Updated: ${updatedVal}</p>
-                            </div>
-                        `;
                     } else {
                         updateRobo('notfound');
-                        descBox.innerHTML = `<p class="text-red-400 text-sm">Registration No. ya SR No. nahi mila!</p>`;
+                        descBox.innerHTML = `<p class="text-red-400 text-sm">Database khali hai.</p>`;
                     }
-                }
-            });
+                })
+                .catch((err) => {
+                    console.error("Status Error:", err);
+                    descBox.innerHTML = `<p class="text-red-400 text-sm">Status fetch karne mein error aayi.</p>`;
+                });
         }
 
+        // 5. Check Board Registration No. (REGISTRATION)
         function checkBoardRegNo() {
             let query = document.getElementById('reg-input').value.trim().toUpperCase();
             let resBox = document.getElementById('reg-result');
             resBox.classList.remove('hidden');
-            if(!query) { resBox.innerHTML = `<p class="text-red-400 text-sm">SR No. enter karein.</p>`; return; }
 
-            db.ref('REGISTRATION/' + query).once('value').then((snapshot) => {
-                if (snapshot.exists()) {
-                    updateRobo('success');
-                    let s = snapshot.val();
-                    let boardRegVal = s.BoardRegistrationNo || 'N/A';
-                    resBox.innerHTML = `
-                        <div class="space-y-2 text-xs sm:text-sm text-white">
-                            <p><strong>Name:</strong> ${s.Name || 'N/A'}</p>
-                            <p><strong>Class:</strong> ${s.Class || 'N/A'}</p>
-                            <p class="flex justify-between items-center pt-1">
-                                <span><strong>Board Registration No:</strong> <span class="text-yellow-400 font-bold">${boardRegVal}</span></span>
-                                <button onclick="copyToClipboard('${boardRegVal}', this)" class="bg-gray-800 px-2 py-1 rounded text-[10px] border border-gray-700"><i class="fa-regular fa-copy"></i> Copy</button>
-                            </p>
-                        </div>
-                    `;
-                } else {
-                    updateRobo('notfound');
-                    resBox.innerHTML = `<p class="text-red-400 text-sm">Record nahi mila!</p>`;
-                }
-            });
+            if(!query) {
+                resBox.innerHTML = `<p class="text-red-400 text-sm">Kripya Admission No. (SR No.) enter karein.</p>`;
+                updateRobo('notfound');
+                return;
+            }
+
+            resBox.innerHTML = `<p class="text-yellow-400 text-sm animate-pulse">Searching in database...</p>`;
+            updateRobo('typing');
+
+            db.ref('REGISTRATION/' + query).once('value')
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        updateRobo('success');
+                        let student = snapshot.val();
+                        let admVal = student.AdmNo || query;
+                        let nameVal = student.Name || 'N/A';
+                        let classVal = student.Class || 'N/A';
+                        let boardRegVal = student.BoardRegistrationNo || 'N/A';
+
+                        resBox.innerHTML = `
+                            <div class="space-y-2 text-xs sm:text-sm text-white bg-black/40 p-3.5 rounded-xl border border-gray-700">
+                                <p><strong>Name:</strong> ${nameVal}</p>
+                                <p><strong>Admission No (SR):</strong> ${admVal} | <strong>Class:</strong> ${classVal}</p>
+                                <p class="pt-1 flex justify-between items-center">
+                                    <span><strong>Board Registration No:</strong> <span class="text-yellow-400 font-bold text-sm sm:text-base">${boardRegVal}</span></span>
+                                    <button onclick="copyToClipboard('${boardRegVal}', this)" class="bg-gray-800 px-2.5 py-1 rounded text-xs border border-gray-700 hover:bg-gray-700"><i class="fa-regular fa-copy"></i> Copy</button>
+                                </p>
+                            </div>
+                        `;
+                    } else {
+                        updateRobo('notfound');
+                        resBox.innerHTML = `<p class="text-red-400 text-sm">Yeh Admission No. nahi mila! Sahi number daalein.</p>`;
+                    }
+                })
+                .catch((err) => {
+                    console.error("RegSearch Error:", err);
+                    resBox.innerHTML = `<p class="text-red-400 text-sm">Connection Error! Dobara koshish karein.</p>`;
+                });
         }
 
+        // 6. Check OTR & Last Year Registration No. (OTR Node)
         function checkOTRRecord() {
             let query = document.getElementById('otr-input').value.trim().toUpperCase();
             let resBox = document.getElementById('otr-result');
             resBox.classList.remove('hidden');
 
             if(!query) {
-                resBox.innerHTML = `<p class="text-red-400 text-sm">SR No. ya Name enter karein.</p>`;
+                resBox.innerHTML = `<p class="text-red-400 text-sm">Kripya SR No. ya Name enter karein.</p>`;
                 return;
             }
 
             resBox.innerHTML = `<p class="text-neongreen text-sm animate-pulse">Searching OTR records...</p>`;
 
-            db.ref('OTR').once('value').then((snapshot) => {
-                if (snapshot.exists()) {
-                    let foundRecords = [];
-                    Object.values(snapshot.val()).forEach(record => {
-                        let srNo = String(getProp(record, ['SR', 'SRNo', 'SR_No'])).trim().toUpperCase();
-                        let name = String(getProp(record, ['Name', 'StudentName', 'NAME'])).trim().toUpperCase();
-                        if (srNo === query || name === query || name.includes(query) || srNo.includes(query)) {
-                            foundRecords.push(record);
-                        }
-                    });
+            db.ref('OTR').once('value')
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        let allRecords = snapshot.val();
+                        let foundRecords = [];
 
-                    if (foundRecords.length > 0) {
-                        updateRobo('success');
-                        let htmlContent = `<div class="space-y-3">`;
-                        foundRecords.forEach(student => {
-                            let srVal = getProp(student, ['SR', 'SRNo', 'SR_No']) || 'N/A';
-                            let nameVal = getProp(student, ['Name', 'StudentName', 'NAME']) || 'N/A';
-                            let lastRegVal = getProp(student, ['LastYearScholarshipRegistrationNo', 'LastYearRegNo', 'LastRegNo']) || 'N/A';
-                            let otrVal = getProp(student, ['OTRNo', 'OTR', 'OTR NO']) || 'N/A';
+                        Object.values(allRecords).forEach(record => {
+                            let srNo = String(getProp(record, ['SR', 'SRNo', 'SR_No', 'AdmNo', 'AdmissionNo'])).trim().toUpperCase();
+                            let name = String(getProp(record, ['Name', 'StudentName', 'Student_Name'])).trim().toUpperCase();
+                            
+                            if (srNo === query || name === query || name.includes(query) || srNo.includes(query)) {
+                                foundRecords.push(record);
+                            }
+                        });
 
-                            htmlContent += `
-                                <div class="bg-black/40 p-3.5 rounded-xl border border-gray-700 space-y-2 text-white">
-                                    <p><strong>Name:</strong> ${nameVal} | <strong>SR No:</strong> ${srVal}</p>
-                                    <div class="pt-1 border-t border-gray-800 space-y-1.5">
-                                        <div class="flex justify-between items-center">
-                                            <span><strong>Last Year Reg No:</strong> <span class="text-neoncyan">${lastRegVal}</span></span>
-                                            <button onclick="copyToClipboard('${lastRegVal}', this)" class="bg-gray-800 px-2.5 py-1 rounded text-xs border border-gray-700"><i class="fa-regular fa-copy"></i> Copy</button>
-                                        </div>
-                                        <div class="flex justify-between items-center">
-                                            <span><strong>OTR No:</strong> <span class="text-neongreen font-bold">${otrVal}</span></span>
-                                            <button onclick="copyToClipboard('${otrVal}', this)" class="bg-gray-800 px-2.5 py-1 rounded text-xs border border-gray-700"><i class="fa-regular fa-copy"></i> Copy</button>
+                        if (foundRecords.length > 0) {
+                            updateRobo('success');
+                            let htmlContent = `<div class="space-y-3">`;
+                            foundRecords.forEach(student => {
+                                let srVal = getProp(student, ['SR', 'SRNo', 'SR_No', 'AdmNo']) || 'N/A';
+                                let nameVal = getProp(student, ['Name', 'StudentName']) || 'N/A';
+                                let lastRegVal = getProp(student, ['LastYearScholarshipRegistrationNo', 'LastYearRegNo', 'LastYearRegistrationNo']) || 'N/A';
+                                let otrVal = getProp(student, ['OTRNo', 'OTR', 'OtrNo']) || 'N/A';
+
+                                htmlContent += `
+                                    <div class="bg-black/40 p-3.5 rounded-xl border border-gray-700 space-y-2 text-white">
+                                        <p><strong>Name:</strong> ${nameVal} | <strong>SR No:</strong> ${srVal}</p>
+                                        <div class="pt-1 border-t border-gray-800 space-y-1.5">
+                                            <div class="flex justify-between items-center">
+                                                <span><strong>Last Year Reg No:</strong> <span class="text-neoncyan">${lastRegVal}</span></span>
+                                                <button onclick="copyToClipboard('${lastRegVal}', this)" class="bg-gray-800 px-2.5 py-1 rounded text-xs border border-gray-700 hover:bg-gray-700"><i class="fa-regular fa-copy"></i> Copy</button>
+                                            </div>
+                                            <div class="flex justify-between items-center">
+                                                <span><strong>OTR No:</strong> <span class="text-neongreen font-bold">${otrVal}</span></span>
+                                                <button onclick="copyToClipboard('${otrVal}', this)" class="bg-gray-800 px-2.5 py-1 rounded text-xs border border-gray-700 hover:bg-gray-700"><i class="fa-regular fa-copy"></i> Copy</button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            `;
-                        });
-                        htmlContent += `</div>`;
-                        resBox.innerHTML = htmlContent;
+                                `;
+                            });
+                            htmlContent += `</div>`;
+                            resBox.innerHTML = htmlContent;
+                        } else {
+                            updateRobo('notfound');
+                            resBox.innerHTML = `<p class="text-red-400 text-sm">Koi OTR record nahi mila! Sahi SR No. ya Name daalein.</p>`;
+                        }
                     } else {
-                        updateRobo('notfound');
-                        resBox.innerHTML = `<p class="text-red-400 text-sm">Koi OTR record nahi mila!</p>`;
+                        resBox.innerHTML = `<p class="text-red-400 text-sm">Database mein 'OTR' node khali hai.</p>`;
                     }
-                } else {
-                    resBox.innerHTML = `<p class="text-red-400 text-sm">OTR database empty hai.</p>`;
-                }
-            });
-        }
-
-        function loadAdminSuggestions() {
-            let listContainer = document.getElementById('admin-suggestions-list');
-            db.ref('Suggestions').once('value').then((snapshot) => {
-                if (snapshot.exists()) {
-                    listContainer.innerHTML = Object.values(snapshot.val()).reverse().map(s => `
-                        <div class="bg-black/40 p-2.5 rounded-xl border border-gray-800 space-y-1">
-                            <p class="font-bold text-neongreen"><i class="fa-solid fa-user"></i> ${getProp(s, ['Name']) || 'Anonymous'}</p>
-                            <p class="text-gray-300">"${getProp(s, ['Message', 'Suggestion'])}"</p>
-                        </div>
-                    `).join('');
-                } else {
-                    listContainer.innerHTML = `<p class="text-gray-500">Koi suggestion nahi hai.</p>`;
-                }
-            });
-        }
-
-        function submitSuggestion(e) {
-            e.preventDefault();
-            let name = document.getElementById('sug-name').value || "Anonymous";
-            let message = document.getElementById('sug-msg').value;
-            db.ref('Suggestions').push({ Name: name, Message: message, Last_Updated: new Date().toLocaleString() }).then(() => {
-                document.getElementById('sug-success').classList.remove('hidden');
-                loadAdminSuggestions();
-                setTimeout(() => {
-                    document.getElementById('sug-success').classList.add('hidden');
-                    e.target.reset();
-                }, 3000);
-            });
+                })
+                .catch((err) => {
+                    console.error("OTR Search Error:", err);
+                    resBox.innerHTML = `<p class="text-red-400 text-sm">Connection Error!</p>`;
+                });
         }
     </script>
 </body>
