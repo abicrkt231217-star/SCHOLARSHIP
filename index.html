@@ -33,6 +33,15 @@
 
     <style>
         body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        
+        /* Waterdrop / iOS Glassmorphism Effect */
+        .waterdrop { 
+            background: rgba(255, 255, 255, 0.06); 
+            backdrop-filter: blur(16px); 
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
         .glass { background: rgba(19, 19, 26, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .glow-effect:hover { box-shadow: 0 0 20px rgba(6, 182, 212, 0.4); }
         
@@ -69,7 +78,6 @@
             display: flex; flex-direction: column; gap: 10px; align-items: flex-start;
         }
 
-        /* 🛠️ Mobile Drop-Up Layout */
         @media (max-width: 640px) {
             .left-gadgets-container { flex-direction: column-reverse; justify-content: flex-end; }
             #left-menu-drawer { margin-bottom: 8px; }
@@ -94,36 +102,45 @@
         }
         .left-side-btn:hover { border-color: #06b6d4; transform: translateY(-2px); }
 
-        /* Professional 3D ID Card */
+        /* 🌟 ALEXA-LIKE ANIMATED BORDER GLOW */
+        @keyframes alexaGlow {
+            0% { border-color: #06b6d4; box-shadow: 0 0 15px rgba(6, 182, 212, 0.5), inset 0 0 10px rgba(6, 182, 212, 0.2); }
+            33% { border-color: #8b5cf6; box-shadow: 0 0 25px rgba(139, 92, 246, 0.7), inset 0 0 15px rgba(139, 92, 246, 0.3); }
+            66% { border-color: #ec4899; box-shadow: 0 0 20px rgba(236, 72, 153, 0.6), inset 0 0 12px rgba(236, 72, 153, 0.2); }
+            100% { border-color: #06b6d4; box-shadow: 0 0 15px rgba(6, 182, 212, 0.5), inset 0 0 10px rgba(6, 182, 212, 0.2); }
+        }
+
         .id-card-panel {
-            background: linear-gradient(145deg, #13131a, #1a1a24);
-            border: 2px solid rgba(6, 182, 212, 0.4);
-            border-radius: 20px; padding: 14px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 25px rgba(6, 182, 212, 0.3);
+            background: linear-gradient(145deg, rgba(19, 19, 26, 0.9), rgba(26, 26, 36, 0.9));
+            backdrop-filter: blur(16px);
+            border: 2px solid #06b6d4;
+            border-radius: 22px; padding: 14px;
+            animation: alexaGlow 6s infinite ease-in-out;
             transform-style: preserve-3d; transition: all 0.4s ease;
         }
         .id-card-panel.vip-glow {
+            animation: none;
             border-color: #f59e0b;
-            box-shadow: 0 10px 35px rgba(245, 158, 11, 0.6), 0 0 30px rgba(245, 158, 11, 0.4);
-            background: linear-gradient(145deg, #181510, #261f10);
+            box-shadow: 0 10px 35px rgba(245, 158, 11, 0.8), 0 0 30px rgba(245, 158, 11, 0.5);
+            background: linear-gradient(145deg, rgba(24, 21, 16, 0.9), rgba(38, 31, 16, 0.9));
         }
         .profile-3d-img {
-            width: 70px; height: 70px; border-radius: 50%; object-fit: cover;
-            border: 3px solid #06b6d4; box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+            width: 50px; height: 50px; border-radius: 50%; object-fit: cover;
+            border: 2px solid #06b6d4; box-shadow: 0 4px 15px rgba(0,0,0,0.6);
         }
 
-        /* Sticky AI Robo & MeChat */
+        /* Sticky AI Robo & Waterdrop Avatar */
         @keyframes floatBounce { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
         .robo-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; pointer-events: none; }
         .robo-bubble {
-            background: rgba(139, 92, 246, 0.95); backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 10px 14px;
+            background: rgba(139, 92, 246, 0.9); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25); color: #fff; padding: 10px 14px;
             border-radius: 18px 18px 0 18px; font-size: 11px; font-weight: 500; max-width: 190px;
-            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5); pointer-events: auto;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5); pointer-events: auto; position: relative;
         }
         .robo-profile { display: flex; flex-direction: column; align-items: center; pointer-events: auto; }
-        .robo-avatar { width: 70px; height: 70px; border-radius: 50%; border: 3px solid #06b6d4; background: #13131a; object-fit: cover; box-shadow: 0 0 20px rgba(6, 182, 212, 0.6); cursor: pointer; }
-        .robo-name { background: #06b6d4; color: #000; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-top: -8px; z-index: 10; }
+        .robo-avatar { width: 52px; height: 52px; border-radius: 50%; border: 2px solid #06b6d4; background: #13131a; object-fit: cover; box-shadow: 0 0 15px rgba(6, 182, 212, 0.6); cursor: pointer; }
+        .robo-name { background: rgba(6, 182, 212, 0.85); backdrop-filter: blur(4px); color: #000; font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 10px; margin-top: -6px; z-index: 10; }
 
         .yt-banner { width: 100%; max-height: 220px; object-fit: contain; background: #13131a; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); }
         .birthday-card { background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(139, 92, 246, 0.15)); border: 1px solid rgba(6, 182, 212, 0.3); }
@@ -139,47 +156,48 @@
 
     <!-- Left Side Gadgets Container -->
     <div class="left-gadgets-container">
-        <button onclick="toggleMobileLeftMenu()" class="sm:hidden bg-emerald-600 text-black px-3 py-2 rounded-full font-bold text-xs shadow-xl pointer-events-auto flex items-center gap-1.5 border border-emerald-400">
-            <i class="fa-solid fa-bars"></i> <span>Tools & Apps</span>
+        <button onclick="toggleMobileLeftMenu()" class="sm:hidden waterdrop text-white px-3.5 py-2 rounded-full font-bold text-xs shadow-xl pointer-events-auto flex items-center gap-1.5">
+            <i class="fa-solid fa-bars text-neoncyan"></i> <span>Tools & Apps</span>
         </button>
 
         <div id="left-menu-drawer" class="hidden sm:flex flex-col gap-2.5 items-start pointer-events-auto">
-            <div id="retro-widget" class="retro-clock-box">
-                <div class="flex justify-between items-center mb-1 border-b border-gray-800 pb-1">
-                    <span class="text-[9px] uppercase tracking-wider text-gray-400 font-bold"><i class="fa-solid fa-clock"></i> Retro Station</span>
+            <div id="retro-widget" class="retro-clock-box waterdrop">
+                <div class="flex justify-between items-center mb-1 border-b border-gray-700/50 pb-1">
+                    <span class="text-[9px] uppercase tracking-wider text-gray-300 font-bold"><i class="fa-solid fa-clock"></i> Retro Station</span>
                     <button onclick="lightUpRetroWidget()" class="w-3 h-3 rounded-full bg-red-600 border border-red-400" title="Light Up"></button>
                 </div>
                 <div class="retro-screen text-center py-0.5 space-y-0.5">
-                    <div id="retro-time" class="text-xs font-extrabold tracking-widest">12:00:00 PM</div>
-                    <div id="retro-date" class="text-[9px] text-gray-400">SUN, 06 SEP</div>
-                    <div class="pt-1 border-t border-gray-800 flex justify-around items-center text-[9px] text-gray-400">
-                        <span><i class="fa-solid fa-temperature-three-quarters text-amber-500"></i> <span id="retro-temp">32°C</span></span>
+                    <div id="retro-time" class="text-xs font-extrabold tracking-widest text-white">12:00:00 PM</div>
+                    <div id="retro-date" class="text-[9px] text-gray-300">SUN, 06 SEP</div>
+                    <div class="pt-1 border-t border-gray-700/50 flex justify-around items-center text-[9px] text-gray-300">
+                        <span><i class="fa-solid fa-temperature-three-quarters text-amber-400"></i> <span id="retro-temp">32°C</span></span>
                         <span><i class="fa-solid fa-cloud text-cyan-400"></i> Renukoot</span>
                     </div>
                 </div>
             </div>
 
-            <button onclick="switchTab('learn'); updateRobo('learn')" class="left-side-btn">
+            <button onclick="switchTab('learn'); updateRobo('learn')" class="left-side-btn waterdrop">
                 <i class="fa-solid fa-graduation-cap text-yellow-400"></i> Let's Learn Coding
             </button>
 
-            <button onclick="switchTab('gapps'); updateRobo('gapps')" class="left-side-btn">
+            <button onclick="switchTab('gapps'); updateRobo('gapps')" class="left-side-btn waterdrop">
                 <i class="fa-solid fa-cubes text-purple-400"></i> G Apps
             </button>
 
-            <a href="https://gurv1432.github.io/ME-CHAT/" target="_blank" class="left-side-btn border-emerald-500/50">
+            <a href="https://gurv1432.github.io/ME-CHAT/" target="_blank" class="left-side-btn waterdrop border-emerald-500/50">
                 <img src="https://i.ibb.co/YBHz9sRr/Whats-App-Image-2026-09-03-at-2-34-12-PM.jpg" alt="MeChat" class="w-5 h-5 rounded-full object-cover"> MeChat
             </a>
         </div>
     </div>
 
-    <!-- Sticky AI Robo Assistant & Professional 3D ID Card (Right Side) -->
+    <!-- Sticky AI Robo Assistant & Professional Waterdrop ID Card (Right Side) -->
     <div class="robo-container">
+        <!-- Professional 3D ID Card Panel (Minimizable to ONLY Profile Photo Capsule) -->
         <div id="user-id-card-panel" class="id-card-panel hidden w-72 text-xs pointer-events-auto space-y-2.5">
             <div class="flex justify-between items-center border-b border-gray-700/80 pb-2">
-                <div class="flex items-center gap-2.5 overflow-hidden">
+                <div id="id-card-header-info" class="flex items-center gap-2 overflow-hidden">
                     <img id="id-card-photo" src="" alt="Profile" class="profile-3d-img">
-                    <div class="overflow-hidden">
+                    <div id="id-card-title-group" class="overflow-hidden">
                         <h4 id="id-card-name" class="font-extrabold text-xs text-white truncate">Student Name</h4>
                         <div class="flex items-center gap-1 mt-0.5">
                             <span id="id-card-tag" class="px-1.5 py-0.5 rounded text-[8px] font-bold">Standard</span>
@@ -187,11 +205,13 @@
                         </div>
                     </div>
                 </div>
-                <button onclick="toggleIdCardMinimize()" class="text-gray-400 hover:text-white p-1" title="Minimize ID Card">
-                    <i class="fa-solid fa-chevron-down text-sm" id="minimize-icon"></i>
+                <!-- Minimize / Maximize Button -->
+                <button onclick="toggleIdCardMinimize()" class="text-gray-300 hover:text-white p-1 rounded-full bg-white/10 w-7 h-7 flex items-center justify-center transition shrink-0 ml-2" title="Minimize / Maximize">
+                    <i class="fa-solid fa-chevron-down text-xs" id="minimize-icon"></i>
                 </button>
             </div>
 
+            <!-- Collapsible Body Content -->
             <div id="id-card-body" class="space-y-1 text-[11px] text-gray-300">
                 <p><strong>SR No:</strong> <span id="id-sr" class="text-white">--</span></p>
                 <p><strong>Class/Sec:</strong> <span id="id-class" class="text-white">--</span></p>
@@ -201,14 +221,15 @@
                 <p><strong>Last Year Reg:</strong> <span id="id-last-reg" class="text-yellow-400 truncate block">--</span></p>
                 <p><strong>Last Year Passing %:</strong> <span id="id-last-pct" class="text-amber-400 font-bold">--</span></p>
 
+                <!-- Theme Selector inside ID Card -->
                 <div class="pt-2 border-t border-gray-700/80 space-y-1">
                     <label class="text-[10px] text-gray-400 block font-semibold"><i class="fa-solid fa-palette"></i> Aesthetic Color Theme:</label>
-                    <select id="theme-selector" onchange="changeUserTheme(this.value)" class="w-full bg-black/60 border border-gray-700 rounded-lg px-2 py-1 text-[11px] text-white focus:outline-none">
-                        <option value="default">Default Dark Vibe</option>
-                        <option value="cyan">Neon Cyan Glow</option>
-                        <option value="emerald">Emerald Green</option>
-                        <option value="purple">Royal Purple</option>
-                        <option value="sunset">Sunset Gold</option>
+                    <select id="theme-selector" onchange="changeUserTheme(this.value)" class="w-full waterdrop border border-gray-700 rounded-lg px-2 py-1 text-[11px] text-white focus:outline-none">
+                        <option value="default" class="bg-darkbg">Default Dark Vibe</option>
+                        <option value="cyan" class="bg-[#020817]">Neon Cyan Glow</option>
+                        <option value="emerald" class="bg-[#022c22]">Emerald Green</option>
+                        <option value="purple" class="bg-[#1e1b4b]">Royal Purple</option>
+                        <option value="sunset" class="bg-[#29170b]">Sunset Gold</option>
                     </select>
                 </div>
 
@@ -219,13 +240,19 @@
             </div>
         </div>
 
+        <!-- Waterdrop Student Login Button -->
         <div id="login-floating-btn-container">
-            <button onclick="openLoginModal()" id="login-floating-btn" class="glass px-4 py-2.5 rounded-2xl text-xs font-bold text-neoncyan border border-neoncyan/40 shadow-xl hover:bg-neoncyan/20 transition pointer-events-auto flex items-center gap-2">
+            <button onclick="openLoginModal()" id="login-floating-btn" class="waterdrop px-4 py-2.5 rounded-2xl text-xs font-bold text-neoncyan border border-neoncyan/40 shadow-xl hover:bg-neoncyan/20 transition pointer-events-auto flex items-center gap-2">
                 <i class="fa-solid fa-user-circle text-base"></i> <span id="login-btn-text">Student Login</span>
             </button>
         </div>
 
-        <div id="robo-bubble" class="robo-bubble">🤖 Namaste bacchon! Login karke apna 3D ID Card dekho!</div>
+        <!-- Dismissible & Auto-Hide Speech Bubble -->
+        <div id="robo-bubble" class="robo-bubble flex items-start gap-2">
+            <span>🤖 Namaste bacchon! Login karke apna 3D ID Card dekho!</span>
+            <button onclick="dismissBubble()" class="text-gray-300 hover:text-white text-xs font-bold ml-1 px-1">&times;</button>
+        </div>
+        
         <div class="robo-profile" onclick="roboDanceAction()" title="Click me for fun!">
             <img id="robo-img" src="https://i.ibb.co/TxnNXPrj/ezgif-53f8104525509036.gif" alt="Gaurav Avatar" class="robo-avatar glow-effect">
             <span class="robo-name">Gaurav</span>
@@ -238,8 +265,8 @@
         <a href="https://whatsapp.com/channel/0029VbE9nzJIHphK2l9p7s0f" target="_blank" class="bg-white text-black px-3 py-0.5 rounded-full font-bold text-xs hover:bg-opacity-90 transition shadow-md">Join Now</a>
     </div>
 
-    <!-- Main Container -->
-    <div class="max-w-4xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
+    <!-- Main Container with Bottom Padding for Safe Viewing (approx 15% space) -->
+    <div class="max-w-4xl mx-auto px-3 sm:px-4 py-6 sm:py-8 pb-32">
 
         <!-- Top Header Style -->
         <header class="text-center mb-6">
@@ -301,7 +328,7 @@
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-2">
-                    <input type="text" id="elig-sr-input" placeholder="Enter SR No. (Admission No.)..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neoncyan text-white">
+                    <input type="text" id="elig-sr-input" placeholder="Enter SR No. (Admission No.)..." class="w-full sm:flex-1 waterdrop border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neoncyan text-white">
                     <button onclick="checkScholarshipEligibility()" class="bg-gradient-to-r from-neoncyan to-neongreen text-black font-bold px-6 py-3 rounded-xl text-sm hover:opacity-90 transition shadow-lg">Check Status</button>
                 </div>
                 <div id="elig-result-box" class="hidden p-4 rounded-xl bg-black/60 border border-gray-800 space-y-3 text-xs sm:text-sm"></div>
@@ -418,7 +445,7 @@
             </h3>
             <p class="text-xs text-gray-400 mb-3">Search by Registration No. or SR No.</p>
             <div class="flex flex-col sm:flex-row gap-2 mb-4 sm:mb-6">
-                <input type="text" id="att-input" oninput="updateRobo('typing')" placeholder="Enter Registration No. or SR No..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neoncyan text-white">
+                <input type="text" id="att-input" oninput="updateRobo('typing')" placeholder="Enter Registration No. or SR No..." class="w-full sm:flex-1 waterdrop border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neoncyan text-white">
                 <button onclick="checkAttendance()" class="w-full sm:w-auto bg-neoncyan text-black font-semibold px-6 py-3 rounded-xl text-sm hover:bg-opacity-90 transition">Search</button>
             </div>
             <div id="att-result" class="hidden p-4 rounded-xl bg-black/50 border border-gray-800 text-xs sm:text-sm"></div>
@@ -431,7 +458,7 @@
             </h3>
             <p class="text-xs text-gray-400 mb-3">Search by Registration No. or SR No.</p>
             <div class="flex flex-col sm:flex-row gap-2 mb-4 sm:mb-6">
-                <input type="text" id="status-input" oninput="updateRobo('typing')" placeholder="Enter Registration No. or SR No..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-purple-500 text-white">
+                <input type="text" id="status-input" oninput="updateRobo('typing')" placeholder="Enter Registration No. or SR No..." class="w-full sm:flex-1 waterdrop border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-purple-500 text-white">
                 <button onclick="checkStatus()" class="w-full sm:w-auto bg-purple-600 text-white font-semibold px-6 py-3 rounded-xl text-sm hover:bg-opacity-90 transition">Track</button>
             </div>
             
@@ -460,14 +487,14 @@
             </div>
         </div>
 
-        <!-- 3. Find Board Registration No. Panel (BREGI Search) -->
+        <!-- 3. Find Board Registration No. Panel -->
         <div id="panel-regsearch" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden">
             <h3 class="text-lg sm:text-xl font-bold mb-3 flex items-center gap-2 text-yellow-400">
                 <i class="fa-solid fa-id-card"></i> Board Registration No. Finder
             </h3>
             <p class="text-xs text-gray-400 mb-3">Search by Admission No. (SR No.)</p>
             <div class="flex flex-col sm:flex-row gap-2 mb-4 sm:mb-6">
-                <input type="text" id="reg-input" oninput="updateRobo('typing')" placeholder="Enter Admission No. (SR No.)..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 text-white">
+                <input type="text" id="reg-input" oninput="updateRobo('typing')" placeholder="Enter Admission No. (SR No.)..." class="w-full sm:flex-1 waterdrop border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 text-white">
                 <button onclick="checkBoardRegNo()" class="w-full sm:w-auto bg-yellow-500 text-black font-semibold px-6 py-3 rounded-xl text-sm hover:bg-opacity-90 transition shadow-lg shadow-yellow-500/20">Find No.</button>
             </div>
             <div id="reg-result" class="hidden p-4 rounded-xl bg-black/50 border border-gray-800 text-xs sm:text-sm space-y-2"></div>
@@ -480,7 +507,7 @@
             </h3>
             <p class="text-xs text-gray-400 mb-3">Search by SR No. (Admission No.) or Name.</p>
             <div class="flex flex-col sm:flex-row gap-2 mb-4 sm:mb-6">
-                <input type="text" id="otr-input" oninput="updateRobo('typing')" placeholder="Enter SR No. or Name..." class="w-full sm:flex-1 bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neongreen text-white">
+                <input type="text" id="otr-input" oninput="updateRobo('typing')" placeholder="Enter SR No. or Name..." class="w-full sm:flex-1 waterdrop border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neongreen text-white">
                 <button onclick="checkOTRRecord()" class="w-full sm:w-auto bg-neongreen text-black font-semibold px-6 py-3 rounded-xl text-sm hover:bg-opacity-90 transition shadow-lg shadow-neongreen/20">Find Details</button>
             </div>
             <div id="otr-result" class="hidden p-4 rounded-xl bg-black/50 border border-gray-800 text-xs sm:text-sm space-y-2"></div>
@@ -496,11 +523,11 @@
                 <form onsubmit="submitSuggestion(event)" class="space-y-3 sm:space-y-4">
                     <div>
                         <label class="block text-xs text-gray-400 mb-1">Aapka Naam (Optional)</label>
-                        <input type="text" id="sug-name" placeholder="Enter your name" class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neongreen text-white">
+                        <input type="text" id="sug-name" placeholder="Enter your name" class="w-full waterdrop border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neongreen text-white">
                     </div>
                     <div>
                         <label class="block text-xs text-gray-400 mb-1">Aapka Sujhav / Message</label>
-                        <textarea id="sug-msg" rows="3" placeholder="Apna message yahan likhein..." required class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neongreen text-white"></textarea>
+                        <textarea id="sug-msg" rows="3" placeholder="Apna message yahan likhein..." required class="w-full waterdrop border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neongreen text-white"></textarea>
                     </div>
                     <button type="submit" class="w-full bg-neongreen text-black font-semibold py-3 rounded-xl text-sm hover:bg-opacity-90 transition">Submit Suggestion</button>
                 </form>
@@ -524,10 +551,10 @@
             <h3 class="text-lg sm:text-xl font-bold text-yellow-400 flex items-center gap-2"><i class="fa-solid fa-gift"></i> Birthday Wish Request Form</h3>
             <p class="text-xs text-gray-400">Apni detail submit karein. Admin approve hone ke baad live 3D slider par dikhega.</p>
             <form onsubmit="submitBirthdayRequest(event)" class="space-y-3">
-                <input type="text" id="b-name" placeholder="Full Name" required class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
-                <input type="text" id="b-class" placeholder="Class & Section (e.g. 10th A)" required class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
-                <input type="file" id="b-photo" accept="image/*" required class="w-full bg-black/40 border border-gray-700 rounded-xl px-3 py-2 text-xs text-gray-300">
-                <textarea id="b-msg" rows="2" placeholder="Birthday Message..." class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white"></textarea>
+                <input type="text" id="b-name" placeholder="Full Name" required class="w-full waterdrop border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
+                <input type="text" id="b-class" placeholder="Class & Section (e.g. 10th A)" required class="w-full waterdrop border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
+                <input type="file" id="b-photo" accept="image/*" required class="w-full waterdrop border border-gray-700 rounded-xl px-3 py-2 text-xs text-gray-300">
+                <textarea id="b-msg" rows="2" placeholder="Birthday Message..." class="w-full waterdrop border border-gray-700 rounded-xl px-4 py-3 text-sm text-white"></textarea>
                 <button type="submit" class="w-full bg-yellow-500 text-black font-bold py-3 rounded-xl text-sm">Submit Request</button>
             </form>
         </div>
@@ -565,9 +592,9 @@
         <div id="panel-profile-edit" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden space-y-4">
             <h3 class="text-lg font-bold text-yellow-400">Edit My Profile / Fix SR No.</h3>
             <form onsubmit="updateUserProfile(event)" class="space-y-3">
-                <input type="text" id="edit-sr" placeholder="Correct SR No." required class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
-                <input type="text" id="edit-phone" placeholder="Phone Number" required class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
-                <input type="password" id="edit-pass" placeholder="New Passcode" required class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
+                <input type="text" id="edit-sr" placeholder="Correct SR No." required class="w-full waterdrop border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
+                <input type="text" id="edit-phone" placeholder="Phone Number" required class="w-full waterdrop border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
+                <input type="password" id="edit-pass" placeholder="New Passcode" required class="w-full waterdrop border border-gray-700 rounded-xl px-4 py-3 text-sm text-white">
                 <button type="submit" class="w-full bg-neoncyan text-black font-bold py-3 rounded-xl text-sm">Update Profile</button>
             </form>
         </div>
@@ -577,7 +604,7 @@
             <div id="admin-auth-box" class="space-y-3">
                 <h3 class="text-base sm:text-lg font-bold text-red-400"><i class="fa-solid fa-shield-halved"></i> Secret Admin Access</h3>
                 <p class="text-xs text-gray-400">Enter Admin Password:</p>
-                <input type="password" id="admin-pass-input" placeholder="Password..." class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none">
+                <input type="password" id="admin-pass-input" placeholder="Password..." class="w-full waterdrop border border-gray-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none">
                 <button onclick="verifyAdminLogin()" class="w-full bg-red-600 text-white font-bold py-3 rounded-xl text-sm">Login</button>
             </div>
             <div id="admin-dashboard" class="hidden space-y-4">
@@ -589,8 +616,8 @@
                 <div id="admin-bday-list" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
                 <h4 class="text-xs font-bold text-neoncyan pt-3 border-t border-gray-800">Password Reset & VIP Manager</h4>
                 <div class="space-y-2">
-                    <input type="text" id="admin-target-sr" placeholder="Target User SR No." class="w-full bg-black/40 border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
-                    <input type="password" id="admin-new-pass" placeholder="New Passcode" class="w-full bg-black/40 border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
+                    <input type="text" id="admin-target-sr" placeholder="Target User SR No." class="w-full waterdrop border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
+                    <input type="password" id="admin-new-pass" placeholder="New Passcode" class="w-full waterdrop border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
                     <div class="flex gap-2">
                         <button onclick="adminResetPassword()" class="flex-1 bg-yellow-500 text-black text-xs font-bold py-2 rounded-xl">Reset Pass</button>
                         <button onclick="adminToggleVIP(true)" class="bg-green-600 text-black text-xs font-bold px-3 py-2 rounded-xl">Make VIP</button>
@@ -609,18 +636,18 @@
 
     <!-- 👤 USER LOGIN MODAL -->
     <div id="login-modal" class="fixed inset-0 z-[99999] bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-3">
-        <div class="glass p-5 rounded-2xl w-full max-w-sm space-y-4 border border-cyan-500/30">
+        <div class="waterdrop p-5 rounded-2xl w-full max-w-sm space-y-4 border border-cyan-500/30">
             <div class="flex justify-between items-center">
                 <h3 class="text-base font-bold text-neoncyan"><i class="fa-solid fa-user-lock"></i> Student Portal Login</h3>
                 <button onclick="closeLoginModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <form onsubmit="handleUserLogin(event)" class="space-y-3">
-                <input type="text" id="login-sr" placeholder="Admission / SR No." required class="w-full bg-black/40 border border-gray-700 rounded-xl px-3 py-2.5 text-xs text-white">
-                <input type="tel" id="login-phone" placeholder="Phone Number" required class="w-full bg-black/40 border border-gray-700 rounded-xl px-3 py-2.5 text-xs text-white">
-                <input type="password" id="login-pass" placeholder="Passcode (4-digit)" required class="w-full bg-black/40 border border-gray-700 rounded-xl px-3 py-2.5 text-xs text-white">
+                <input type="text" id="login-sr" placeholder="Admission / SR No." required class="w-full waterdrop border border-gray-700 rounded-xl px-3 py-2.5 text-xs text-white">
+                <input type="tel" id="login-phone" placeholder="Phone Number" required class="w-full waterdrop border border-gray-700 rounded-xl px-3 py-2.5 text-xs text-white">
+                <input type="password" id="login-pass" placeholder="Passcode (4-digit)" required class="w-full waterdrop border border-gray-700 rounded-xl px-3 py-2.5 text-xs text-white">
                 <div class="space-y-1">
                     <label class="text-[10px] text-gray-400">Profile Photo (3D ID Card)</label>
-                    <input type="file" id="login-photo" accept="image/*" required class="w-full bg-black/40 border border-gray-700 rounded-xl px-3 py-1.5 text-[10px] text-gray-300">
+                    <input type="file" id="login-photo" accept="image/*" required class="w-full waterdrop border border-gray-700 rounded-xl px-3 py-1.5 text-[10px] text-gray-300">
                 </div>
                 <button type="submit" class="w-full bg-neoncyan text-black font-bold py-2.5 rounded-xl text-xs">Login / Register</button>
             </form>
@@ -638,7 +665,18 @@
             checkUrlHashRoute();
             startRetroClock();
             checkActiveUserSession();
+            
+            // Auto-hide speech bubble after 6 seconds
+            setTimeout(() => {
+                let bubble = document.getElementById('robo-bubble');
+                if(bubble) bubble.style.display = 'none';
+            }, 6000);
         });
+
+        function dismissBubble() {
+            let bubble = document.getElementById('robo-bubble');
+            if(bubble) bubble.style.display = 'none';
+        }
 
         window.addEventListener('hashchange', checkUrlHashRoute);
 
@@ -722,62 +760,59 @@
             let bubble = document.getElementById('robo-bubble');
             if(['BUTTON', 'INPUT', 'TEXTAREA', 'A', 'IMG'].indexOf(e.target.tagName) === -1) {
                 let randomPhrase = funnyPhrases[Math.floor(Math.random() * funnyPhrases.length)];
-                bubble.innerText = randomPhrase;
+                bubble.style.display = 'flex';
+                bubble.querySelector('span').innerText = randomPhrase;
             }
         }
 
         function roboDanceAction() {
             let avatarImg = document.getElementById('robo-img');
             let bubble = document.getElementById('robo-bubble');
+            bubble.style.display = 'flex';
             avatarImg.src = avatarGifs.dance;
             avatarImg.classList.add('dancing');
-            bubble.innerText = "🕺 Prabhu Deva style dance! Mazaa aa gaya na?";
+            bubble.querySelector('span').innerText = "🕺 Prabhu Deva style dance! Mazaa aa gaya na?";
             setTimeout(() => {
                 avatarImg.classList.remove('dancing');
                 avatarImg.src = avatarGifs.welcome;
-                bubble.innerText = "🤖 Aur batao, kya check karna hai?";
+                bubble.querySelector('span').innerText = "🤖 Aur batao, kya check karna hai?";
             }, 4000);
         }
 
         function updateRobo(action) {
             let bubble = document.getElementById('robo-bubble');
             let avatarImg = document.getElementById('robo-img');
+            bubble.style.display = 'flex';
             avatarImg.classList.remove('dancing');
 
             if (action === 'attendance') {
                 avatarImg.src = avatarGifs.welcome;
-                bubble.innerText = "🔍 75% attendance mandatory hai, check kar lo!";
+                bubble.querySelector('span').innerText = "🔍 75% attendance mandatory hai, check kar lo!";
             } else if (action === 'status') {
                 avatarImg.src = avatarGifs.welcome;
-                bubble.innerText = "🚀 Dekho form kahan tak pahuncha government office mein!";
+                bubble.querySelector('span').innerText = "🚀 Dekho form kahan tak pahuncha government office mein!";
             } else if (action === 'regsearch') {
                 avatarImg.src = avatarGifs.welcome;
-                bubble.innerText = "🆔 Yahan apna Board Registration number nikal lo!";
+                bubble.querySelector('span').innerText = "🆔 Yahan apna Board Registration number nikal lo!";
             } else if (action === 'otrsearch') {
                 avatarImg.src = avatarGifs.welcome;
-                bubble.innerText = "🔑 OTR aur Last Year ka Registration No. yahan milega!";
+                bubble.querySelector('span').innerText = "🔑 OTR aur Last Year ka Registration No. yahan milega!";
             } else if (action === 'suggestion') {
                 avatarImg.src = avatarGifs.welcome;
-                bubble.innerText = "💡 Seedha office message bhejo, koi dikkat ho toh!";
+                bubble.querySelector('span').innerText = "💡 Seedha office message bhejo, koi dikkat ho toh!";
             } else if (action === 'contact') {
                 avatarImg.src = avatarGifs.welcome;
-                bubble.innerText = "📞 Incharge: Gaurav Shyam Shukla ji se sampark karein!";
-            } else if (action === 'learn') {
-                avatarImg.src = avatarGifs.welcome;
-                bubble.innerText = "💻 HTML aur CSS seekho, zero se hero bano!";
-            } else if (action === 'gapps') {
-                avatarImg.src = avatarGifs.welcome;
-                bubble.innerText = "📱 Gaurav sir ke banaye gaye smart apps use karo!";
+                bubble.querySelector('span').innerText = "📞 Incharge: Gaurav Shyam Shukla ji se sampark karein!";
             } else if (action === 'typing') {
                 avatarImg.src = avatarGifs.typing;
-                bubble.innerText = "👀 Dhyan se number type kar rahe ho na?";
+                bubble.querySelector('span').innerText = "👀 Dhyan se number type kar rahe ho na?";
             } else if (action === 'success') {
                 avatarImg.src = avatarGifs.dance;
-                bubble.innerText = "🎉 Mil gaya data! Dance time! 🕺💃";
+                bubble.querySelector('span').innerText = "🎉 Mil gaya data! Dance time! 🕺💃";
                 avatarImg.classList.add('dancing');
             } else if (action === 'notfound') {
                 avatarImg.src = avatarGifs.notfound;
-                bubble.innerText = "❌ Record nahi mila, spelling ya number check karo!";
+                bubble.querySelector('span').innerText = "❌ Record nahi mila, spelling ya number check karo!";
             }
         }
 
@@ -844,15 +879,25 @@
             });
         }
 
+        // 🌟 ID CARD MINIMIZE / MAXIMIZE FEATURE (Compact Photo Capsule Style)
         function toggleIdCardMinimize() {
             let cardBody = document.getElementById('id-card-body');
+            let titleGroup = document.getElementById('id-card-title-group');
             let icon = document.getElementById('minimize-icon');
+            let panel = document.getElementById('user-id-card-panel');
+            
             if(cardBody.classList.contains('hidden')) {
+                // Maximize: Show details & title group
                 cardBody.classList.remove('hidden');
-                icon.className = "fa-solid fa-chevron-down text-sm";
+                titleGroup.classList.remove('hidden');
+                icon.className = "fa-solid fa-chevron-down text-xs";
+                panel.style.width = "18rem"; // w-72
             } else {
+                // Minimize: Hide details & title group, show ONLY profile photo capsule
                 cardBody.classList.add('hidden');
-                icon.className = "fa-solid fa-chevron-up text-sm";
+                titleGroup.classList.add('hidden');
+                icon.className = "fa-solid fa-chevron-up text-xs";
+                panel.style.width = "auto"; // Compact pill size
             }
         }
 
@@ -1164,7 +1209,7 @@
                         let title = getProp(n, ['Notice_Title', 'Title']) || 'Aavashyak Suchna';
                         let content = getProp(n, ['Notice_Content', 'Content', 'Message']) || '';
                         let date = getProp(n, ['Last_Updated', 'Date']) || '';
-                        container.innerHTML += `<div class="bg-black/30 p-2.5 rounded-lg border border-gray-800"><p class="font-bold text-neoncyan"><i class="fa-solid fa-circle-dot text-[10px] mr-1"></i> ${title}</p><p class="text-gray-300 mt-0.5">${content}</p>${date ? `<p class="text-[9px] text-gray-500 mt-1">${date}</p>` : ''}</div>`;
+                        container.innerHTML += `<div class="waterdrop p-2.5 rounded-lg border border-gray-700/50"><p class="font-bold text-neoncyan"><i class="fa-solid fa-circle-dot text-[10px] mr-1"></i> ${title}</p><p class="text-gray-300 mt-0.5">${content}</p>${date ? `<p class="text-[9px] text-gray-400 mt-1">${date}</p>` : ''}</div>`;
                     });
                 }
             });
@@ -1204,6 +1249,9 @@
                 return;
             }
 
+            resBox.innerHTML = `<p class="text-cyan-400 text-sm animate-pulse"><i class="fa-solid fa-spinner fa-spin"></i> Searching attendance records...</p>`;
+            updateRobo('typing');
+
             db.ref('Attendance').once('value').then((snapshot) => {
                 if (snapshot.exists()) {
                     let foundStudent = null;
@@ -1227,8 +1275,8 @@
 
                         resBox.innerHTML = `
                             <div class="space-y-2 text-xs sm:text-sm text-white">
-                                <p class="flex justify-between items-center"><span><strong>Registration No:</strong> ${regVal}</span> <button onclick="copyToClipboard('${regVal}', this)" class="bg-gray-800 px-2 py-1 rounded text-[10px] border border-gray-700"><i class="fa-regular fa-copy"></i> Copy</button></p>
-                                <p class="flex justify-between items-center"><span><strong>SR No:</strong> ${srVal}</span> <button onclick="copyToClipboard('${srVal}', this)" class="bg-gray-800 px-2 py-1 rounded text-[10px] border border-gray-700"><i class="fa-regular fa-copy"></i> Copy</button></p>
+                                <p class="flex justify-between items-center"><span><strong>Registration No:</strong> ${regVal}</span> <button onclick="copyToClipboard('${regVal}', this)" class="waterdrop px-2 py-1 rounded text-[10px] border border-gray-700 hover:bg-gray-700"><i class="fa-regular fa-copy"></i> Copy</button></p>
+                                <p class="flex justify-between items-center"><span><strong>SR No:</strong> ${srVal}</span> <button onclick="copyToClipboard('${srVal}', this)" class="waterdrop px-2 py-1 rounded text-[10px] border border-gray-700 hover:bg-gray-700"><i class="fa-regular fa-copy"></i> Copy</button></p>
                                 <p><strong>Name:</strong> ${nameVal}</p>
                                 <p class="pt-1"><strong>Status:</strong> ${percentVal > 0 ? (isEligible ? `<span class="text-neongreen font-bold">Eligible (${percentVal}%)</span>` : `<span class="text-red-400 font-bold">Not Eligible (${percentVal}%)</span>`) : `<span class="text-yellow-400">Record found successfully.</span>`}</p>
                             </div>
@@ -1248,6 +1296,7 @@
 
             if(!query) { alert("Kripya enter karein."); return; }
             resBox.classList.remove('hidden');
+            descBox.innerHTML = `<p class="text-purple-400 text-sm animate-pulse"><i class="fa-solid fa-spinner fa-spin"></i> Tracking form status...</p>`;
             updateRobo('typing');
 
             db.ref('FormStatus').once('value').then((snapshot) => {
@@ -1289,7 +1338,7 @@
                                 <p><strong>Current Status:</strong> <span class="text-neoncyan font-bold">${currentStatus}</span></p>
                                 <p><strong>Description:</strong> ${descText}</p>
                                 <p><strong>Remarks from Office:</strong> <span class="text-yellow-400">${remarksVal}</span></p>
-                                <p class="text-[10px] text-gray-500 pt-1 border-t border-gray-800">Last Updated: ${updatedVal}</p>
+                                <p class="text-[10px] text-gray-400 pt-1 border-t border-gray-700/50">Last Updated: ${updatedVal}</p>
                             </div>
                         `;
                     } else {
@@ -1300,7 +1349,6 @@
             });
         }
 
-        // 🌟 🌟 FIXED BREGI SEARCH FUNCTION (Scans all entries for AdmNo matching query)
         function checkBoardRegNo() {
             let query = document.getElementById('reg-input').value.trim();
             let resBox = document.getElementById('reg-result');
@@ -1312,7 +1360,7 @@
                 return;
             }
 
-            resBox.innerHTML = `<p class="text-yellow-400 text-sm animate-pulse">Searching in BREGI database...</p>`;
+            resBox.innerHTML = `<p class="text-yellow-400 text-sm animate-pulse"><i class="fa-solid fa-spinner fa-spin"></i> Searching in BREGI database...</p>`;
             updateRobo('typing');
 
             db.ref('BREGI').once('value').then((snapshot) => {
@@ -1337,12 +1385,12 @@
                         let boardRegVal = foundStudent.BoardRegistrationNo || foundStudent.BOARDREGISTRATIONNO || 'N/A';
 
                         resBox.innerHTML = `
-                            <div class="space-y-2 text-xs sm:text-sm text-white bg-black/40 p-3.5 rounded-xl border border-gray-700">
+                            <div class="space-y-2 text-xs sm:text-sm text-white waterdrop p-3.5 rounded-xl border border-gray-700">
                                 <p><strong>Name:</strong> ${nameVal}</p>
                                 <p><strong>Admission No (SR):</strong> ${admVal} | <strong>Class:</strong> ${classVal}</p>
                                 <p class="pt-1 flex justify-between items-center">
                                     <span><strong>Board Registration No:</strong> <span class="text-yellow-400 font-bold text-sm sm:text-base">${boardRegVal}</span></span>
-                                    <button onclick="copyToClipboard('${boardRegVal}', this)" class="bg-gray-800 px-2.5 py-1 rounded text-xs border border-gray-700 hover:bg-gray-700"><i class="fa-regular fa-copy"></i> Copy</button>
+                                    <button onclick="copyToClipboard('${boardRegVal}', this)" class="waterdrop px-2.5 py-1 rounded text-xs border border-gray-700 hover:bg-gray-700"><i class="fa-regular fa-copy"></i> Copy</button>
                                 </p>
                             </div>
                         `;
@@ -1370,7 +1418,7 @@
                 return;
             }
 
-            resBox.innerHTML = `<p class="text-neongreen text-sm animate-pulse">Searching OTR records...</p>`;
+            resBox.innerHTML = `<p class="text-neongreen text-sm animate-pulse"><i class="fa-solid fa-spinner fa-spin"></i> Searching OTR records...</p>`;
 
             db.ref('OTR').once('value').then((snapshot) => {
                 if (snapshot.exists()) {
@@ -1393,16 +1441,16 @@
                             let otrVal = getProp(student, ['OTRNo', 'OTR', 'OTR NO']) || 'N/A';
 
                             htmlContent += `
-                                <div class="bg-black/40 p-3.5 rounded-xl border border-gray-700 space-y-2 text-white">
+                                <div class="waterdrop p-3.5 rounded-xl border border-gray-700 space-y-2 text-white">
                                     <p><strong>Name:</strong> ${nameVal} | <strong>SR No:</strong> ${srVal}</p>
-                                    <div class="pt-1 border-t border-gray-800 space-y-1.5">
+                                    <div class="pt-1 border-t border-gray-700/50 space-y-1.5">
                                         <div class="flex justify-between items-center">
                                             <span><strong>Last Year Reg No:</strong> <span class="text-neoncyan">${lastRegVal}</span></span>
-                                            <button onclick="copyToClipboard('${lastRegVal}', this)" class="bg-gray-800 px-2.5 py-1 rounded text-xs border border-gray-700 hover:bg-gray-700"><i class="fa-regular fa-copy"></i> Copy</button>
+                                            <button onclick="copyToClipboard('${lastRegVal}', this)" class="waterdrop px-2.5 py-1 rounded text-xs border border-gray-700 hover:bg-gray-700"><i class="fa-regular fa-copy"></i> Copy</button>
                                         </div>
                                         <div class="flex justify-between items-center">
                                             <span><strong>OTR No:</strong> <span class="text-neongreen font-bold">${otrVal}</span></span>
-                                            <button onclick="copyToClipboard('${otrVal}', this)" class="bg-gray-800 px-2.5 py-1 rounded text-xs border border-gray-700 hover:bg-gray-700"><i class="fa-regular fa-copy"></i> Copy</button>
+                                            <button onclick="copyToClipboard('${otrVal}', this)" class="waterdrop px-2.5 py-1 rounded text-xs border border-gray-700 hover:bg-gray-700"><i class="fa-regular fa-copy"></i> Copy</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1425,7 +1473,7 @@
             db.ref('Suggestions').once('value').then((snapshot) => {
                 if (snapshot.exists()) {
                     listContainer.innerHTML = Object.values(snapshot.val()).reverse().map(s => `
-                        <div class="bg-black/40 p-2.5 rounded-xl border border-gray-800 space-y-1">
+                        <div class="waterdrop p-2.5 rounded-xl border border-gray-700/50 space-y-1">
                             <p class="font-bold text-neongreen"><i class="fa-solid fa-user"></i> ${getProp(s, ['Name']) || 'Anonymous'}</p>
                             <p class="text-gray-300">"${getProp(s, ['Message', 'Suggestion'])}"</p>
                         </div>
