@@ -131,6 +131,15 @@
 
         /* Sticky AI Robo & Waterdrop Avatar */
         @keyframes floatBounce { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+        @keyframes prabhuDevaDance {
+            0% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-12px) rotate(-8deg) scale(1.08); }
+            50% { transform: translateY(0) rotate(0deg) scale(1); }
+            75% { transform: translateY(-12px) rotate(8deg) scale(1.08); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        .dancing { animation: prabhuDevaDance 0.6s ease-in-out infinite !important; }
+
         .robo-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; pointer-events: none; }
         .robo-bubble {
             background: rgba(139, 92, 246, 0.9); backdrop-filter: blur(12px);
@@ -666,7 +675,6 @@
             startRetroClock();
             checkActiveUserSession();
             
-            // Auto-hide speech bubble after 6 seconds
             setTimeout(() => {
                 let bubble = document.getElementById('robo-bubble');
                 if(bubble) bubble.style.display = 'none';
@@ -879,7 +887,7 @@
             });
         }
 
-        // 🌟 ID CARD MINIMIZE / MAXIMIZE FEATURE (Compact Photo Capsule Style)
+        // 🌟 ID CARD MINIMIZE / MAXIMIZE FEATURE
         function toggleIdCardMinimize() {
             let cardBody = document.getElementById('id-card-body');
             let titleGroup = document.getElementById('id-card-title-group');
@@ -887,17 +895,15 @@
             let panel = document.getElementById('user-id-card-panel');
             
             if(cardBody.classList.contains('hidden')) {
-                // Maximize: Show details & title group
                 cardBody.classList.remove('hidden');
                 titleGroup.classList.remove('hidden');
                 icon.className = "fa-solid fa-chevron-down text-xs";
-                panel.style.width = "18rem"; // w-72
+                panel.style.width = "18rem";
             } else {
-                // Minimize: Hide details & title group, show ONLY profile photo capsule
                 cardBody.classList.add('hidden');
                 titleGroup.classList.add('hidden');
                 icon.className = "fa-solid fa-chevron-up text-xs";
-                panel.style.width = "auto"; // Compact pill size
+                panel.style.width = "auto";
             }
         }
 
@@ -995,7 +1001,6 @@
                                 document.getElementById('id-last-pct').innerText = "N/A";
                             }
 
-                            // Board Reg Lookup in BREGI
                             let boardReg = 'Not Assigned';
                             if (bregiSnap.exists()) {
                                 Object.values(bregiSnap.val()).forEach(s => {
@@ -1289,6 +1294,112 @@
             });
         }
 
+        // 🔍 ADVANCED SCHOLARSHIP ELIGIBILITY CHECKER (MERGED)
+        function checkScholarshipEligibility() {
+            let srQuery = document.getElementById('elig-sr-input').value.trim();
+            let resultBox = document.getElementById('elig-result-box');
+            let quickStatus = document.getElementById('quick-overall-status');
+            let bubble = document.getElementById('robo-bubble');
+            let avatarImg = document.getElementById('robo-img');
+
+            resultBox.classList.remove('hidden');
+            if (!srQuery) {
+                resultBox.innerHTML = `<p class="text-red-400">Kripya apna SR No. enter karein.</p>`;
+                quickStatus.classList.add('hidden');
+                return;
+            }
+
+            resultBox.innerHTML = `<p class="text-cyan-400 animate-pulse">Checking eligibility from Attendance database...</p>`;
+            updateRobo('typing');
+
+            db.ref('Attendance').once('value').then((snapshot) => {
+                if (!snapshot.exists()) {
+                    resultBox.innerHTML = `<p class="text-red-400">Attendance database khali hai!</p>`;
+                    quickStatus.classList.add('hidden');
+                    return;
+                }
+
+                let allStudents = snapshot.val();
+                let student = null;
+
+                Object.values(allStudents).forEach(s => {
+                    let sSR = String(getProp(s, ['SR_No', 'SRNo', 'SR', 'SR.NO.'])).trim();
+                    if (sSR === srQuery) {
+                        student = s;
+                    }
+                });
+
+                if (!student) {
+                    resultBox.innerHTML = `<p class="text-red-400">Yeh SR No. Attendance database mein nahi mila!</p>`;
+                    quickStatus.classList.add('hidden');
+                    updateRobo('notfound');
+                    return;
+                }
+
+                let name = getProp(student, ['Student_Name', 'Name', 'NAME']) || 'N/A';
+                let regNo = getProp(student, ['Registration_No', 'REGISTRATION NO.', 'RegNo']) || 'N/A';
+                let category = String(getProp(student, ['CATEGORY', 'GEN', 'Category']) || 'GEN').toUpperCase();
+                let classSec = getProp(student, ['CLASS/SEC', 'Class', 'CLASS']) || 'N/A';
+                if (typeof classSec === 'object') classSec = classSec.SEC || 'N/A';
+
+                let rawPct = getProp(student, ['Percentage', 'ATTENDENCE PERCENTAG', 'Attendance_Percent']);
+                let attPercent = parseFloat(rawPct) || 0;
+                if (attPercent > 0 && attPercent <= 1) attPercent = attPercent * 100;
+                let isAttEligible = attPercent >= 75;
+
+                let obt = parseFloat(getProp(student, ['OBT', 'ObtainedMarks'])) || 0;
+                let max = parseFloat(getProp(student, ['MAX', 'MaxMarks'])) || 0;
+                let marksPercent = max > 0 ? (obt * 100) / max : 0;
+                
+                let minRequiredMarks = (category === 'GEN' || category === 'OBC') ? 50 : 33;
+                let isMarksEligible = max > 0 ? (marksPercent >= minRequiredMarks) : true;
+
+                let overallEligible = isAttEligible && isMarksEligible;
+
+                quickStatus.classList.remove('hidden');
+                if (overallEligible) {
+                    quickStatus.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-green-950/80 border border-green-500 text-green-300";
+                    quickStatus.innerHTML = `⭐ Overall Status: <span class="text-white">ELIGIBLE</span>`;
+                    updateRobo('success');
+                } else {
+                    quickStatus.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-red-950/80 border border-red-500 text-red-300";
+                    quickStatus.innerHTML = `⭐ Overall Status: <span class="text-white">REJECTED</span>`;
+                    updateRobo('notfound');
+                }
+
+                resultBox.innerHTML = `
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-black/40 p-3.5 rounded-xl border border-gray-700 text-white">
+                        <p><strong>Name:</strong> <span class="text-white font-semibold">${name}</span></p>
+                        <p><strong>SR No:</strong> <span class="text-white font-semibold">${srQuery}</span></p>
+                        <p><strong>Class:</strong> <span class="text-white">${classSec}</span></p>
+                        <p><strong>Category:</strong> <span class="text-yellow-400 font-bold">${category}</span></p>
+                        <p><strong>Scholarship Reg No:</strong> <span class="text-neoncyan">${regNo}</span></p>
+                        <p><strong>Last Exam Marks:</strong> <span class="text-white">${max > 0 ? marksPercent.toFixed(1) + '%' : 'Data pending'} (OBT: ${obt} / MAX: ${max})</span></p>
+                    </div>
+                    <div class="space-y-2 pt-2">
+                        <div class="flex justify-between items-center bg-black/30 p-2.5 rounded-lg border border-gray-800">
+                            <div class="flex items-center gap-2">
+                                <span class="text-gray-300">1. Marks Criteria (${minRequiredMarks}% required for ${category}):</span>
+                                ${isMarksEligible ? '<i class="fa-solid fa-circle-check text-green-400 text-base"></i>' : '<i class="fa-solid fa-circle-xmark text-red-500 text-base"></i>'}
+                            </div>
+                            <span class="cursor-pointer text-cyan-400 text-xs hover:underline" onclick="alert('Rule: General aur OBC ke liye 50% ya usse jyada aur baaki categories ke liye 33% marks anivarya hain.')"><i class="fa-solid fa-circle-info"></i> Remarks</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-black/30 p-2.5 rounded-lg border border-gray-800">
+                            <div class="flex items-center gap-2">
+                                <span class="text-gray-300">2. Attendance Criteria (75% Minimum):</span>
+                                <span class="text-white font-bold">${attPercent}%</span>
+                                ${isAttEligible ? '<i class="fa-solid fa-circle-check text-green-400 text-base"></i>' : '<i class="fa-solid fa-circle-xmark text-red-500 text-base"></i>'}
+                            </div>
+                            <span class="cursor-pointer text-cyan-400 text-xs hover:underline" onclick="alert('Rule: Attendance kam se kam 75% honi chahiye.')"><i class="fa-solid fa-circle-info"></i> Remarks</span>
+                        </div>
+                    </div>
+                `;
+            }).catch(err => {
+                console.error("Eligibility Check Error:", err);
+                resultBox.innerHTML = `<p class="text-red-400">Data fetch karne mein error aayi.</p>`;
+            });
+        }
+
         function checkStatus() {
             let query = document.getElementById('status-input').value.trim().toUpperCase();
             let resBox = document.getElementById('status-result');
@@ -1315,7 +1426,6 @@
                         document.getElementById('res-sr').innerText = getProp(foundStudent, ['SR_No', 'SR']) || 'N/A';
 
                         let currentStatus = getProp(foundStudent, ['Status', 'FormStatus']) || "Received";
-                        // Agar sheet ya database mein purana 'final' likha ho toh use 'Rejected' treat karein
                         if (String(currentStatus).toLowerCase() === 'final') currentStatus = 'Rejected';
                         
                         let currentStep = statusMap[currentStatus] || 1;
