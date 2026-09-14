@@ -34,7 +34,6 @@
     <style>
         body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
         
-        /* Waterdrop / iOS Glassmorphism Effect */
         .waterdrop { 
             background: rgba(255, 255, 255, 0.06); 
             backdrop-filter: blur(16px); 
@@ -44,20 +43,6 @@
         }
         .glass { background: rgba(19, 19, 26, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .glow-effect:hover { box-shadow: 0 0 20px rgba(6, 182, 212, 0.4); }
-        
-        #preloader {
-            position: fixed; inset: 0; background: #0a0a0f; z-index: 99999;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: opacity 0.8s ease;
-        }
-        .handwriting-main {
-            font-family: 'Caveat', cursive; font-size: 4.5rem; font-weight: 700;
-            background: linear-gradient(to right, #06b6d4, #8b5cf6, #10b981);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            letter-spacing: 2px; white-space: nowrap; overflow: hidden;
-            animation: typing 2s steps(20, end);
-        }
-        @keyframes typing { from { width: 0 } to { width: 100% } }
 
         /* Club LED Screen Marquee */
         .led-panel {
@@ -71,6 +56,22 @@
             animation: marquee 18s linear infinite;
         }
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        /* 🎯 Classic Mechanical Odometer Visitor Meter (Screenshot Matching Style) */
+        .classic-odometer-box {
+            background: #1e293b; border: 2px solid #475569; border-radius: 10px;
+            padding: 6px 12px; display: inline-flex; align-items: center; gap: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+        .odometer-digits {
+            display: flex; gap: 2px; font-family: 'Share Tech Mono', monospace;
+        }
+        .odometer-digit {
+            background: #ffffff; border: 1px solid #94a3b8; color: #000000;
+            font-size: 1.35rem; font-weight: 700; width: 26px; height: 34px;
+            display: flex; align-items: center; justify-content: center; border-radius: 3px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+        }
 
         /* Left Side Gadgets Container */
         .left-gadgets-container {
@@ -102,7 +103,6 @@
         }
         .left-side-btn:hover { border-color: #06b6d4; transform: translateY(-2px); }
 
-        /* 🌟 ALEXA-LIKE ANIMATED BORDER GLOW */
         @keyframes alexaGlow {
             0% { border-color: #06b6d4; box-shadow: 0 0 15px rgba(6, 182, 212, 0.5), inset 0 0 10px rgba(6, 182, 212, 0.2); }
             33% { border-color: #8b5cf6; box-shadow: 0 0 25px rgba(139, 92, 246, 0.7), inset 0 0 15px rgba(139, 92, 246, 0.3); }
@@ -129,8 +129,6 @@
             border: 2px solid #06b6d4; box-shadow: 0 4px 15px rgba(0,0,0,0.6);
         }
 
-        /* Sticky AI Robo & Waterdrop Avatar */
-        @keyframes floatBounce { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
         @keyframes prabhuDevaDance {
             0% { transform: translateY(0) rotate(0deg); }
             25% { transform: translateY(-12px) rotate(-8deg) scale(1.08); }
@@ -153,14 +151,31 @@
 
         .yt-banner { width: 100%; max-height: 220px; object-fit: contain; background: #13131a; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); }
         .birthday-card { background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(139, 92, 246, 0.15)); border: 1px solid rgba(6, 182, 212, 0.3); }
+
+        /* Retro Sound Box Player */
+        .retro-soundbox {
+            background: #18181b; border: 4px solid #3f3f46; border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.6);
+            padding: 16px; position: relative; color: #f4f4f5;
+        }
+        .retro-speaker-grille {
+            background: repeating-linear-gradient(0deg, #111, #111 2px, #27272a 2px, #27272a 4px);
+            border-radius: 8px; border: 2px inset #000;
+        }
     </style>
 </head>
 <body id="main-body" class="bg-darkbg text-gray-100 min-h-screen selection:bg-neoncyan selection:text-black" onclick="triggerFunnyTalk(event)">
 
-    <!-- Preloader -->
-    <div id="preloader">
-        <div class="handwriting-main">HELLO BACCHO</div>
-        <div class="text-gray-400 text-sm mt-2">Loading Portal...</div>
+    <!-- Notification Modal for Users -->
+    <div id="global-notification-modal" class="fixed inset-0 z-[999999] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="waterdrop p-6 rounded-2xl w-full max-w-md space-y-4 border border-pink-500/50 text-center shadow-2xl">
+            <div class="w-12 h-12 bg-pink-500/20 border border-pink-500 rounded-full flex items-center justify-center mx-auto text-pink-400 text-xl">
+                <i class="fa-solid fa-bell animate-bounce"></i>
+            </div>
+            <h3 id="notif-modal-title" class="text-lg font-bold text-pink-400">WEBSITE UPDATED</h3>
+            <p id="notif-modal-desc" class="text-xs sm:text-sm text-gray-200">Loading notification description...</p>
+            <button onclick="closeGlobalNotification()" class="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-2.5 rounded-xl text-xs shadow-lg">Got It! ✨</button>
+        </div>
     </div>
 
     <!-- Left Side Gadgets Container -->
@@ -193,6 +208,10 @@
                 <i class="fa-solid fa-cubes text-purple-400"></i> G Apps
             </button>
 
+            <button onclick="switchTab('musicplayer'); updateRobo('suggestion')" class="left-side-btn waterdrop border-cyan-500/50">
+                <i class="fa-solid fa-music text-cyan-400"></i> Retro Music Player
+            </button>
+
             <a href="https://gurv1432.github.io/ME-CHAT/" target="_blank" class="left-side-btn waterdrop border-emerald-500/50">
                 <img src="https://i.ibb.co/YBHz9sRr/Whats-App-Image-2026-09-03-at-2-34-12-PM.jpg" alt="MeChat" class="w-5 h-5 rounded-full object-cover"> MeChat
             </a>
@@ -201,7 +220,6 @@
 
     <!-- Sticky AI Robo Assistant & Professional Waterdrop ID Card (Right Side) -->
     <div class="robo-container">
-        <!-- Professional 3D ID Card Panel (Minimizable to ONLY Profile Photo Capsule) -->
         <div id="user-id-card-panel" class="id-card-panel hidden w-72 text-xs pointer-events-auto space-y-2.5">
             <div class="flex justify-between items-center border-b border-gray-700/80 pb-2">
                 <div id="id-card-header-info" class="flex items-center gap-2 overflow-hidden">
@@ -214,13 +232,11 @@
                         </div>
                     </div>
                 </div>
-                <!-- Minimize / Maximize Button -->
                 <button onclick="toggleIdCardMinimize()" class="text-gray-300 hover:text-white p-1 rounded-full bg-white/10 w-7 h-7 flex items-center justify-center transition shrink-0 ml-2" title="Minimize / Maximize">
                     <i class="fa-solid fa-chevron-down text-xs" id="minimize-icon"></i>
                 </button>
             </div>
 
-            <!-- Collapsible Body Content -->
             <div id="id-card-body" class="space-y-1 text-[11px] text-gray-300">
                 <p><strong>SR No:</strong> <span id="id-sr" class="text-white">--</span></p>
                 <p><strong>Class/Sec:</strong> <span id="id-class" class="text-white">--</span></p>
@@ -230,7 +246,6 @@
                 <p><strong>Last Year Reg:</strong> <span id="id-last-reg" class="text-yellow-400 truncate block">--</span></p>
                 <p><strong>Last Year Passing %:</strong> <span id="id-last-pct" class="text-amber-400 font-bold">--</span></p>
 
-                <!-- Theme Selector inside ID Card -->
                 <div class="pt-2 border-t border-gray-700/80 space-y-1">
                     <label class="text-[10px] text-gray-400 block font-semibold"><i class="fa-solid fa-palette"></i> Aesthetic Color Theme:</label>
                     <select id="theme-selector" onchange="changeUserTheme(this.value)" class="w-full waterdrop border border-gray-700 rounded-lg px-2 py-1 text-[11px] text-white focus:outline-none">
@@ -249,14 +264,12 @@
             </div>
         </div>
 
-        <!-- Waterdrop Student Login Button -->
         <div id="login-floating-btn-container">
             <button onclick="openLoginModal()" id="login-floating-btn" class="waterdrop px-4 py-2.5 rounded-2xl text-xs font-bold text-neoncyan border border-neoncyan/40 shadow-xl hover:bg-neoncyan/20 transition pointer-events-auto flex items-center gap-2">
                 <i class="fa-solid fa-user-circle text-base"></i> <span id="login-btn-text">Student Login</span>
             </button>
         </div>
 
-        <!-- Dismissible & Auto-Hide Speech Bubble -->
         <div id="robo-bubble" class="robo-bubble flex items-start gap-2">
             <span>🤖 Namaste bacchon! Login karke apna 3D ID Card dekho!</span>
             <button onclick="dismissBubble()" class="text-gray-300 hover:text-white text-xs font-bold ml-1 px-1">&times;</button>
@@ -274,16 +287,32 @@
         <a href="https://whatsapp.com/channel/0029VbE9nzJIHphK2l9p7s0f" target="_blank" class="bg-white text-black px-3 py-0.5 rounded-full font-bold text-xs hover:bg-opacity-90 transition shadow-md">Join Now</a>
     </div>
 
-    <!-- Main Container with Bottom Padding for Safe Viewing (approx 15% space) -->
+    <!-- Main Container -->
     <div class="max-w-4xl mx-auto px-3 sm:px-4 py-6 sm:py-8 pb-32">
 
-        <!-- Top Header Style -->
         <header class="text-center mb-6">
             <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-neoncyan via-neonpurple to-neongreen bg-clip-text text-transparent">
                 Hello Bacchon 🚀
             </h1>
             <p class="text-gray-400 text-xs sm:text-base mt-2">Fast & Smart Scholarship Portal • Aditya Birla Intermediate College, Renukoot</p>
         </header>
+
+        <!-- Classic Odometer Visitor Meter (Matching Screenshot Style) -->
+        <div class="text-center mb-4">
+            <div class="classic-odometer-box">
+                <span class="text-xs text-gray-300 font-bold uppercase tracking-wider"><i class="fa-solid fa-users text-blue-400"></i> Visited :</span>
+                <div id="visitor-odometer" class="odometer-digits">
+                    <div class="odometer-digit">0</div>
+                    <div class="odometer-digit">0</div>
+                    <div class="odometer-digit">0</div>
+                    <div class="odometer-digit">0</div>
+                    <div class="odometer-digit">0</div>
+                    <div class="odometer-digit">9</div>
+                    <div class="odometer-digit">1</div>
+                    <div class="odometer-digit">1</div>
+                </div>
+            </div>
+        </div>
 
         <!-- LED Marquee Bar -->
         <section class="mb-5 led-panel py-2 px-4 flex items-center">
@@ -413,9 +442,6 @@
 
         <!-- 📦 PANELS -->
 
-        <!-- HOME -->
-        <div id="panel-home" class="space-y-6"></div>
-
         <!-- LET'S LEARN CODING -->
         <div id="panel-learn" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden space-y-4">
             <h3 class="text-lg sm:text-xl font-bold text-yellow-400 flex items-center gap-2"><i class="fa-solid fa-graduation-cap"></i> Let's Learn Coding • HTML & CSS Course</h3>
@@ -434,6 +460,11 @@
             <h3 class="text-lg sm:text-xl font-bold text-purple-400 flex items-center gap-2"><i class="fa-solid fa-cubes"></i> G Apps & Web Tools</h3>
             <p class="text-xs text-gray-400">Gaurav Shukla dwara banaye gaye smart applications:</p>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <a href="https://abicrkt231217-star.github.io/my-music-player/" target="_blank" class="bg-black/40 p-4 rounded-xl border border-gray-800 text-center hover:border-neoncyan transition group">
+                    <img src="https://i.ibb.co/xqddr8JD/Gemini-Generated-Image-mc8wg4mc8wg4mc8w.png" alt="G Player" class="w-12 h-12 mx-auto rounded-xl mb-2 object-cover group-hover:scale-110 transition">
+                    <h4 class="font-bold text-xs text-white">G Player</h4>
+                    <span class="text-[10px] text-neoncyan">Open App ↗</span>
+                </a>
                 <a href="https://gurv1432.github.io/ME-CHAT/" target="_blank" class="bg-black/40 p-4 rounded-xl border border-gray-800 text-center hover:border-neoncyan transition group">
                     <img src="https://i.ibb.co/HLzZTk8M/Chat-GPT-Image-Sep-6-2026-02-38-08-PM.png" alt="App" class="w-12 h-12 mx-auto rounded-xl mb-2 object-cover group-hover:scale-110 transition">
                     <h4 class="font-bold text-xs text-white">MeChat</h4>
@@ -444,6 +475,28 @@
                     <h4 class="font-bold text-xs text-white">Apsi Talk</h4>
                     <span class="text-[10px] text-neoncyan">Open App ↗</span>
                 </a>
+            </div>
+        </div>
+
+        <!-- 🎵 RETRO MUSIC PLAYER PANEL -->
+        <div id="panel-musicplayer" class="glass p-4 sm:p-6 rounded-2xl mb-6 sm:mb-8 hidden space-y-4">
+            <h3 class="text-lg sm:text-xl font-bold text-cyan-400 flex items-center gap-2"><i class="fa-solid fa-compact-disc fa-spin"></i> Retro Sound Box Music Player</h3>
+            <p class="text-xs text-gray-400">Admin dwara add kiye gaye songs yahan play honge.</p>
+            
+            <div class="retro-soundbox max-w-lg mx-auto space-y-4">
+                <div class="flex justify-between items-center border-b border-zinc-700 pb-2">
+                    <span class="text-xs font-bold text-amber-400 tracking-wider"><i class="fa-solid fa-radio"></i> RETRO SOUNDBOX HIFI</span>
+                    <span id="player-status-badge" class="text-[10px] bg-cyan-950 text-cyan-400 px-2 py-0.5 rounded border border-cyan-800">Ready</span>
+                </div>
+                
+                <div class="retro-speaker-grille p-4 text-center space-y-2">
+                    <div id="current-playing-title" class="font-mono text-xs sm:text-sm text-amber-300 font-bold truncate">No track selected</div>
+                    <audio id="retro-audio-element" class="w-full mt-2" controls></audio>
+                </div>
+
+                <div class="space-y-2 max-h-48 overflow-y-auto pr-1" id="playlist-songs-container">
+                    <p class="text-xs text-zinc-500 text-center py-2">Loading admin songs...</p>
+                </div>
             </div>
         </div>
 
@@ -543,7 +596,6 @@
                 <div id="sug-success" class="hidden mt-3 text-center text-neongreen text-xs sm:text-sm font-medium">✨ Aapka sujhav safalpurvak bhej diya gaya hai!</div>
             </div>
 
-            <!-- Admin View: Recent Suggestions from Firebase -->
             <div class="border-t border-gray-800 pt-6">
                 <h3 class="text-base sm:text-lg font-bold mb-2 flex items-center gap-2 text-neoncyan">
                     <i class="fa-solid fa-list-check"></i> Admin View: Recent Suggestions
@@ -621,8 +673,32 @@
                     <h3 class="text-sm font-bold text-neongreen">Admin Control Panel (Gaurav)</h3>
                     <button onclick="window.location.hash=''; switchTab('attendance');" class="text-xs bg-gray-800 px-3 py-1 rounded text-gray-300">Exit</button>
                 </div>
+                
+                <!-- Send Broadcast Notification Option -->
+                <div class="bg-black/40 p-4 rounded-xl border border-pink-500/40 space-y-3">
+                    <h4 class="text-xs font-bold text-pink-400"><i class="fa-solid fa-bullhorn"></i> Send Global Notification</h4>
+                    <textarea id="admin-notif-desc" rows="2" placeholder="Notification description (e.g. Portal updated with new features)..." class="w-full waterdrop border border-gray-700 rounded-xl px-3 py-2 text-xs text-white"></textarea>
+                    <button onclick="sendGlobalNotification()" class="bg-pink-600 hover:bg-pink-500 text-white text-xs font-bold px-4 py-2 rounded-xl w-full shadow-lg">Send Notification to All Visitors</button>
+                </div>
+
+                <!-- Admin Song Manager for Retro Player -->
+                <div class="bg-black/40 p-4 rounded-xl border border-cyan-500/40 space-y-3">
+                    <h4 class="text-xs font-bold text-cyan-400"><i class="fa-solid fa-music"></i> Add Song to Retro Player</h4>
+                    <input type="text" id="admin-song-title" placeholder="Song Title" class="w-full waterdrop border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
+                    <input type="text" id="admin-song-url" placeholder="Direct Audio URL (.mp3)" class="w-full waterdrop border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
+                    <button onclick="adminAddSong()" class="bg-cyan-600 hover:bg-cyan-500 text-black text-xs font-bold px-4 py-2 rounded-xl w-full">Add Song</button>
+                </div>
+
                 <h4 class="text-xs font-bold text-yellow-400">Pending Birthday Requests Approval</h4>
                 <div id="admin-bday-list" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
+
+                <!-- Stop Birthday Post By Serial No -->
+                <div class="bg-black/40 p-4 rounded-xl border border-yellow-500/40 space-y-3 pt-3">
+                    <h4 class="text-xs font-bold text-yellow-400"><i class="fa-solid fa-ban"></i> Stop/Remove Birthday Post by Serial No.</h4>
+                    <input type="text" id="admin-stop-serial" placeholder="Enter Serial No. (e.g. 1, 2, 3)..." class="w-full waterdrop border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
+                    <button onclick="adminStopBirthdayPost()" class="bg-yellow-600 text-black font-bold text-xs py-2 px-4 rounded-xl w-full">Stop Post</button>
+                </div>
+
                 <h4 class="text-xs font-bold text-neoncyan pt-3 border-t border-gray-800">Password Reset & VIP Manager</h4>
                 <div class="space-y-2">
                     <input type="text" id="admin-target-sr" placeholder="Target User SR No." class="w-full waterdrop border border-gray-700 rounded-xl px-3 py-2 text-xs text-white">
@@ -636,7 +712,6 @@
             </div>
         </div>
 
-        <!-- Footer -->
         <footer class="text-center text-[11px] sm:text-xs text-gray-500 py-4 border-t border-gray-800">
             <p>Designed with 💙 for Students • Aditya Birla Intermediate College, Renukoot</p>
         </footer>
@@ -665,15 +740,21 @@
 
     <!-- Firebase Logic & Portal Scripts -->
     <script>
+        const firebaseConfig = {
+            databaseURL: "https://hellobacchonportal-default-rtdb.firebaseio.com"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
         window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            preloader.style.opacity = '0';
-            setTimeout(() => preloader.style.display = 'none', 800);
             loadDashboardStats();
             loadApprovedBirthdays();
             checkUrlHashRoute();
             startRetroClock();
             checkActiveUserSession();
+            incrementAndDisplayVisitors();
+            checkGlobalNotifications();
+            loadRetroPlayerSongs();
             
             setTimeout(() => {
                 let bubble = document.getElementById('robo-bubble');
@@ -690,7 +771,7 @@
 
         function checkUrlHashRoute() {
             if (window.location.hash === '#admin') {
-                ['attendance', 'status', 'regsearch', 'otrsearch', 'suggestion', 'contact', 'birthday-req', 'learn', 'gapps'].forEach(t => {
+                ['attendance', 'status', 'regsearch', 'otrsearch', 'suggestion', 'contact', 'birthday-req', 'learn', 'gapps', 'musicplayer'].forEach(t => {
                     let el = document.getElementById(`panel-${t}`);
                     if(el) el.classList.add('hidden');
                 });
@@ -701,12 +782,6 @@
                 }
             }
         }
-
-        const firebaseConfig = {
-            databaseURL: "https://hellobacchonportal-default-rtdb.firebaseio.com"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
 
         function startRetroClock() {
             function updateClock() {
@@ -723,6 +798,116 @@
         function lightUpRetroWidget() {
             let widget = document.getElementById('retro-widget');
             if(widget) { widget.classList.add('litup'); setTimeout(() => widget.classList.remove('litup'), 3000); }
+        }
+
+        // 🚲 Classic Mechanical Odometer Visitors Counter (Starting 0911, 7 digits)
+        function incrementAndDisplayVisitors() {
+            let visitorsRef = db.ref('SiteVisitors/count');
+            visitorsRef.transaction((currentCount) => {
+                if (currentCount === null) {
+                    return 911;
+                } else {
+                    return currentCount + 1;
+                }
+            }, (error, committed, snapshot) => {
+                if (!error && committed) {
+                    let val = snapshot.val();
+                    updateOdometerDisplay(val);
+                }
+            });
+        }
+
+        function updateOdometerDisplay(num) {
+            let strNum = String(num).padStart(7, '0');
+            let digitsContainer = document.getElementById('visitor-odometer');
+            if(digitsContainer) {
+                digitsContainer.innerHTML = '';
+                for(let char of strNum) {
+                    digitsContainer.innerHTML += `<div class="odometer-digit">${char}</div>`;
+                }
+            }
+        }
+
+        // 📢 Global Broadcast Notification System
+        function sendGlobalNotification() {
+            let desc = document.getElementById('admin-notif-desc').value.trim();
+            if(!desc) { alert("Description enter karein!"); return; }
+            
+            db.ref('GlobalNotification').set({
+                Title: "WEBSITE UPDATED",
+                Description: desc,
+                Timestamp: Date.now()
+            }).then(() => {
+                alert("Notification sent to all visitors successfully!");
+                document.getElementById('admin-notif-desc').value = '';
+            });
+        }
+
+        function checkGlobalNotifications() {
+            db.ref('GlobalNotification').on('value', (snap) => {
+                if(snap.exists()) {
+                    let notif = snap.val();
+                    let lastSeenTime = localStorage.getItem('abic_last_notif_time') || 0;
+                    if(notif.Timestamp > lastSeenTime) {
+                        document.getElementById('notif-modal-title').innerText = notif.Title;
+                        document.getElementById('notif-modal-desc').innerText = notif.Description;
+                        document.getElementById('global-notification-modal').classList.remove('hidden');
+                        localStorage.setItem('abic_last_notif_time', notif.Timestamp);
+                    }
+                }
+            });
+        }
+
+        function closeGlobalNotification() {
+            document.getElementById('global-notification-modal').classList.add('hidden');
+        }
+
+        // 🎵 Retro Music Player Functions
+        function adminAddSong() {
+            let title = document.getElementById('admin-song-title').value.trim();
+            let url = document.getElementById('admin-song-url').value.trim();
+            if(!title || !url) { alert("Title aur URL dono bharein!"); return; }
+
+            db.ref('RetroSongs').push({ Title: title, URL: url }).then(() => {
+                alert("Song added successfully to Retro Player!");
+                document.getElementById('admin-song-title').value = '';
+                document.getElementById('admin-song-url').value = '';
+            });
+        }
+
+        function loadRetroPlayerSongs() {
+            let container = document.getElementById('playlist-songs-container');
+            if(!container) return;
+
+            db.ref('RetroSongs').on('value', (snapshot) => {
+                if(snapshot.exists()) {
+                    container.innerHTML = '';
+                    let songs = snapshot.val();
+                    Object.keys(songs).forEach((key, index) => {
+                        let song = songs[key];
+                        container.innerHTML += `
+                            <div class="bg-zinc-900 border border-zinc-700/80 p-2.5 rounded-lg flex justify-between items-center text-xs">
+                                <span class="text-zinc-200 truncate font-mono">🎵 ${index+1}. ${song.Title}</span>
+                                <button onclick="playRetroSong('${song.URL}', '${song.Title}')" class="bg-cyan-600 hover:bg-cyan-500 text-black font-bold px-3 py-1 rounded text-[11px] shrink-0">Play</button>
+                            </div>
+                        `;
+                    });
+                } else {
+                    container.innerHTML = `<p class="text-xs text-zinc-500 text-center py-2">No songs added by admin yet.</p>`;
+                }
+            });
+        }
+
+        function playRetroSong(url, title) {
+            let audioElem = document.getElementById('retro-audio-element');
+            let titleElem = document.getElementById('current-playing-title');
+            let badge = document.getElementById('player-status-badge');
+
+            audioElem.src = url;
+            titleElem.innerText = title;
+            badge.innerText = "Playing";
+            badge.className = "text-[10px] bg-green-950 text-green-400 px-2 py-0.5 rounded border border-green-800 animate-pulse";
+            audioElem.play().catch(e => console.log("Auto-play prevented", e));
         }
 
         function updateLedMarquee(bdayNames) {
@@ -825,7 +1010,7 @@
         }
 
         function switchTab(tabName) {
-            ['attendance', 'status', 'regsearch', 'otrsearch', 'suggestion', 'contact', 'birthday-req', 'admin', 'learn', 'gapps', 'profile-edit'].forEach(t => {
+            ['attendance', 'status', 'regsearch', 'otrsearch', 'suggestion', 'contact', 'birthday-req', 'admin', 'learn', 'gapps', 'musicplayer', 'profile-edit'].forEach(t => {
                 let el = document.getElementById(`panel-${t}`);
                 if(el) el.classList.add('hidden');
             });
@@ -887,7 +1072,6 @@
             });
         }
 
-        // 🌟 ID CARD MINIMIZE / MAXIMIZE FEATURE
         function toggleIdCardMinimize() {
             let cardBody = document.getElementById('id-card-body');
             let titleGroup = document.getElementById('id-card-title-group');
@@ -916,7 +1100,6 @@
             }
         }
 
-        // Login & ID Card Management
         function openLoginModal() { document.getElementById('login-modal').classList.remove('hidden'); }
         function closeLoginModal() { document.getElementById('login-modal').classList.add('hidden'); }
 
@@ -1088,7 +1271,7 @@
             db.ref(`PortalUsers/${sr}/VIP`).set(status).then(() => alert(`VIP status set to ${status}!`));
         }
 
-        // 🎂 BIRTHDAY SYSTEM
+        // 🎂 BIRTHDAY SYSTEM (Automatic 1, 2, 3... Serial Number assignment)
         function submitBirthdayRequest(e) {
             e.preventDefault();
             let name = document.getElementById('b-name').value.trim();
@@ -1099,12 +1282,17 @@
             if (fileInput.files && fileInput.files[0]) {
                 let reader = new FileReader();
                 reader.onload = function(event) {
-                    db.ref('BirthdayRequests').push({
-                        Name: name, Class: className, Message: msg, Photo: event.target.result, Status: 'Pending', Timestamp: Date.now()
-                    }).then(() => {
-                        alert("🎂 Birthday request successfully submit ho gayi hai! Admin approval ke baad yeh live dikhegi.");
-                        e.target.reset();
-                        switchTab('home');
+                    db.ref('BirthdayRequests').once('value').then(snap => {
+                        let count = snap.exists() ? Object.keys(snap.val()).length + 1 : 1;
+                        db.ref('BirthdayRequests').push({
+                            SerialNo: count,
+                            Name: name, Class: className, Message: msg, Photo: event.target.result, 
+                            Status: 'Pending', Timestamp: Date.now()
+                        }).then(() => {
+                            alert(`🎂 Birthday request submitted! Assigned Serial No: #${count}`);
+                            e.target.reset();
+                            switchTab('home');
+                        });
                     });
                 };
                 reader.readAsDataURL(fileInput.files[0]);
@@ -1119,9 +1307,14 @@
                 if (snapshot.exists()) {
                     let data = snapshot.val();
                     let list = [];
+                    let currentTime = Date.now();
+                    
                     Object.keys(data).forEach(key => {
                         let item = data[key];
                         if (item && item.Status && String(item.Status).toLowerCase() === 'approved') {
+                            if(item.DurationOption === '2 days' && (currentTime - item.ApprovedAt > 2 * 24 * 60 * 60 * 1000)) {
+                                return;
+                            }
                             list.push(item);
                         }
                     });
@@ -1135,7 +1328,8 @@
                             if(list.length === 0) return;
                             let b = list[idx % list.length];
                             container.innerHTML = `
-                                <div class="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+                                <div class="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left relative w-full">
+                                    <span class="absolute top-0 right-0 bg-black/60 text-yellow-400 font-mono text-[9px] px-2 py-0.5 rounded border border-yellow-500/30">SR: #${b.SerialNo || '1'}</span>
                                     <img src="${b.Photo}" alt="${b.Name}" class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-yellow-400 shadow-lg">
                                     <div>
                                         <span class="bg-yellow-500/20 text-yellow-300 text-[10px] font-bold px-2 py-0.5 rounded-full">✨ BIRTHDAY STAR ✨</span>
@@ -1174,17 +1368,29 @@
                         if (req && req.Status && String(req.Status).toLowerCase() === 'pending') {
                             hasPending = true;
                             list.innerHTML += `
-                                <div class="bg-black/40 p-3 rounded-xl border border-gray-800 flex items-center justify-between gap-3">
-                                    <div class="flex items-center gap-3">
-                                        <img src="${req.Photo}" class="w-12 h-12 rounded-lg object-cover">
-                                        <div>
-                                            <p class="font-bold text-white text-xs">${req.Name} <span class="text-gray-400 font-normal">(${req.Class})</span></p>
-                                            <p class="text-[11px] text-gray-400">"${req.Message}"</p>
+                                <div class="bg-black/40 p-3 rounded-xl border border-gray-800 space-y-2">
+                                    <div class="flex items-center justify-between gap-3">
+                                        <div class="flex items-center gap-3">
+                                            <img src="${req.Photo}" class="w-12 h-12 rounded-lg object-cover">
+                                            <div>
+                                                <p class="font-bold text-white text-xs">${req.Name} <span class="text-gray-400 font-normal">(${req.Class})</span></p>
+                                                <p class="text-[10px] text-yellow-400 font-mono">Serial No: #${req.SerialNo || '1'}</p>
+                                                <p class="text-[11px] text-gray-400">"${req.Message}"</p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="flex gap-1.5">
-                                        <button onclick="updateBirthdayStatus('${key}', 'Approved')" class="bg-green-600 text-black px-3 py-1.5 rounded-lg text-xs font-bold">Approve</button>
-                                        <button onclick="updateBirthdayStatus('${key}', 'Rejected')" class="bg-red-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold">Reject</button>
+                                    <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-gray-800">
+                                        <div class="flex items-center gap-1 text-[11px] text-gray-300">
+                                            <span>Duration:</span>
+                                            <select id="duration-${key}" class="bg-darkbg text-white border border-gray-700 rounded px-2 py-1 text-[10px]">
+                                                <option value="2 days">2 Days</option>
+                                                <option value="until stop">Until I Stop</option>
+                                            </select>
+                                        </div>
+                                        <div class="flex gap-1.5">
+                                            <button onclick="approveBirthdayWithDuration('${key}')" class="bg-green-600 text-black px-3 py-1.5 rounded-lg text-xs font-bold">Approve</button>
+                                            <button onclick="updateBirthdayStatus('${key}', 'Rejected')" class="bg-red-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold">Reject</button>
+                                        </div>
                                     </div>
                                 </div>
                             `;
@@ -1197,13 +1403,44 @@
             });
         }
 
+        function approveBirthdayWithDuration(key) {
+            let option = document.getElementById(`duration-${key}`).value;
+            db.ref(`BirthdayRequests/${key}`).update({
+                Status: 'Approved',
+                DurationOption: option,
+                ApprovedAt: Date.now()
+            }).then(() => alert("Birthday post approved successfully!"));
+        }
+
         function updateBirthdayStatus(key, status) {
-            db.ref(`BirthdayRequests/${key}/Status`).set(status).then(() => {
-                alert(`Request ${status} ho gayi!`);
+            db.ref(`BirthdayRequests/${key}/Status`).set(status).then(() => alert(`Request ${status} ho gayi!`));
+        }
+
+        function adminStopBirthdayPost() {
+            let serialInput = document.getElementById('admin-stop-serial').value.trim();
+            if(!serialInput) { alert("Kripya Serial No. dalein!"); return; }
+
+            db.ref('BirthdayRequests').once('value').then(snap => {
+                if(snap.exists()) {
+                    let foundKey = null;
+                    snap.forEach(child => {
+                        let val = child.val();
+                        if(String(val.SerialNo) === String(serialInput)) {
+                            foundKey = child.key;
+                        }
+                    });
+                    if(foundKey) {
+                        db.ref(`BirthdayRequests/${foundKey}`).remove().then(() => {
+                            alert(`Birthday post with Serial No: #${serialInput} stopped & removed successfully!`);
+                            document.getElementById('admin-stop-serial').value = '';
+                        });
+                    } else {
+                        alert("Yeh Serial No. database mein nahi mila!");
+                    }
+                }
             });
         }
 
-        // Standard Portal Functions
         function loadNoticeBoard() {
             let container = document.getElementById('notice-container');
             db.ref('NoticeBoard').once('value').then((snapshot) => {
@@ -1294,13 +1531,10 @@
             });
         }
 
-        // 🔍 ADVANCED SCHOLARSHIP ELIGIBILITY CHECKER (MERGED)
         function checkScholarshipEligibility() {
             let srQuery = document.getElementById('elig-sr-input').value.trim();
             let resultBox = document.getElementById('elig-result-box');
             let quickStatus = document.getElementById('quick-overall-status');
-            let bubble = document.getElementById('robo-bubble');
-            let avatarImg = document.getElementById('robo-img');
 
             resultBox.classList.remove('hidden');
             if (!srQuery) {
@@ -1353,7 +1587,6 @@
                 
                 let minRequiredMarks = (category === 'GEN' || category === 'OBC') ? 50 : 33;
                 let isMarksEligible = max > 0 ? (marksPercent >= minRequiredMarks) : true;
-
                 let overallEligible = isAttEligible && isMarksEligible;
 
                 quickStatus.classList.remove('hidden');
@@ -1376,27 +1609,7 @@
                         <p><strong>Scholarship Reg No:</strong> <span class="text-neoncyan">${regNo}</span></p>
                         <p><strong>Last Exam Marks:</strong> <span class="text-white">${max > 0 ? marksPercent.toFixed(1) + '%' : 'Data pending'} (OBT: ${obt} / MAX: ${max})</span></p>
                     </div>
-                    <div class="space-y-2 pt-2">
-                        <div class="flex justify-between items-center bg-black/30 p-2.5 rounded-lg border border-gray-800">
-                            <div class="flex items-center gap-2">
-                                <span class="text-gray-300">1. Marks Criteria (${minRequiredMarks}% required for ${category}):</span>
-                                ${isMarksEligible ? '<i class="fa-solid fa-circle-check text-green-400 text-base"></i>' : '<i class="fa-solid fa-circle-xmark text-red-500 text-base"></i>'}
-                            </div>
-                            <span class="cursor-pointer text-cyan-400 text-xs hover:underline" onclick="alert('Rule: General aur OBC ke liye 50% ya usse jyada aur baaki categories ke liye 33% marks anivarya hain.')"><i class="fa-solid fa-circle-info"></i> Remarks</span>
-                        </div>
-                        <div class="flex justify-between items-center bg-black/30 p-2.5 rounded-lg border border-gray-800">
-                            <div class="flex items-center gap-2">
-                                <span class="text-gray-300">2. Attendance Criteria (75% Minimum):</span>
-                                <span class="text-white font-bold">${attPercent}%</span>
-                                ${isAttEligible ? '<i class="fa-solid fa-circle-check text-green-400 text-base"></i>' : '<i class="fa-solid fa-circle-xmark text-red-500 text-base"></i>'}
-                            </div>
-                            <span class="cursor-pointer text-cyan-400 text-xs hover:underline" onclick="alert('Rule: Attendance kam se kam 75% honi chahiye.')"><i class="fa-solid fa-circle-info"></i> Remarks</span>
-                        </div>
-                    </div>
                 `;
-            }).catch(err => {
-                console.error("Eligibility Check Error:", err);
-                resultBox.innerHTML = `<p class="text-red-400">Data fetch karne mein error aayi.</p>`;
             });
         }
 
@@ -1427,7 +1640,6 @@
 
                         let currentStatus = getProp(foundStudent, ['Status', 'FormStatus']) || "Received";
                         if (String(currentStatus).toLowerCase() === 'final') currentStatus = 'Rejected';
-                        
                         let currentStep = statusMap[currentStatus] || 1;
 
                         for(let i=1; i<=6; i++) {
@@ -1511,13 +1723,7 @@
                         updateRobo('notfound');
                         resBox.innerHTML = `<p class="text-red-400 text-sm">Yeh Admission No. BREGI mein nahi mila!</p>`;
                     }
-                } else {
-                    updateRobo('notfound');
-                    resBox.innerHTML = `<p class="text-red-400 text-sm">BREGI database khali hai.</p>`;
                 }
-            }).catch((err) => {
-                console.error("BREGI Search Error:", err);
-                resBox.innerHTML = `<p class="text-red-400 text-sm">Connection Error!</p>`;
             });
         }
 
@@ -1575,8 +1781,6 @@
                         updateRobo('notfound');
                         resBox.innerHTML = `<p class="text-red-400 text-sm">Koi OTR record nahi mila!</p>`;
                     }
-                } else {
-                    resBox.innerHTML = `<p class="text-red-400 text-sm">OTR database empty hai.</p>`;
                 }
             });
         }
