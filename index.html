@@ -103,6 +103,20 @@
         }
         .left-side-btn:hover { border-color: #06b6d4; transform: translateY(-2px); }
 
+        /* Windows Folder Animation Hover Effect */
+        .win-folder-btn:hover .fa-folder {
+            transform: scale(1.1) rotate(-5deg);
+        }
+        .win-folder-btn:hover .fa-folder-open {
+            display: inline-block;
+        }
+        .win-folder-btn:hover .fa-folder-closed {
+            display: none;
+        }
+        .win-folder-btn .fa-folder-open {
+            display: none;
+        }
+
         @keyframes alexaGlow {
             0% { border-color: #06b6d4; box-shadow: 0 0 15px rgba(6, 182, 212, 0.5), inset 0 0 10px rgba(6, 182, 212, 0.2); }
             33% { border-color: #8b5cf6; box-shadow: 0 0 25px rgba(139, 92, 246, 0.7), inset 0 0 15px rgba(139, 92, 246, 0.3); }
@@ -185,6 +199,16 @@
         </button>
 
         <div id="left-menu-drawer" class="hidden sm:flex flex-col gap-2.5 items-start pointer-events-auto">
+            
+            <!-- 📁 Windows Folder Animated Drive Shortcut (Added Above Retro Station) -->
+            <a href="./drive.html" target="_blank" class="left-side-btn waterdrop border-blue-500/50 win-folder-btn w-full justify-start">
+                <span class="text-blue-400 text-sm transition-transform duration-300 inline-block">
+                    <i class="fa-solid fa-folder fa-folder-closed"></i>
+                    <i class="fa-solid fa-folder-open text-amber-400"></i>
+                </span>
+                <span class="font-bold tracking-wide">My Drive</span>
+            </a>
+
             <div id="retro-widget" class="retro-clock-box waterdrop">
                 <div class="flex justify-between items-center mb-1 border-b border-gray-700/50 pb-1">
                     <span class="text-[9px] uppercase tracking-wider text-gray-300 font-bold"><i class="fa-solid fa-clock"></i> Retro Station</span>
@@ -460,7 +484,6 @@
             <h3 class="text-lg sm:text-xl font-bold text-purple-400 flex items-center gap-2"><i class="fa-solid fa-cubes"></i> G Apps & Web Tools</h3>
             <p class="text-xs text-gray-400">Gaurav Shukla dwara banaye gaye smart applications:</p>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <!-- 🚀 Added Drive App Button -->
                 <a href="./drive.html" target="_blank" class="bg-black/40 p-4 rounded-xl border border-gray-800 text-center hover:border-blue-400 transition group">
                     <i class="fa-brands fa-google-drive text-3xl text-blue-400 mx-auto mb-2 group-hover:scale-110 transition block"></i>
                     <h4 class="font-bold text-xs text-white">Drive</h4>
